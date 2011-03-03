@@ -12,6 +12,7 @@ my $class = Module::Build->subclass(
 $class->new(
     module_name        => 'PGXN::Site',
     license            => 'postgresql',
+    script_files       => 'bin',
     configure_requires => { 'Module::Build' => '0.30', },
     build_requires     => {
         'Module::Build'        => '0.30',
@@ -19,7 +20,14 @@ $class->new(
         'Test::More'           => '0.70',
     },
     requires => {
+        'Encode'                       => '2.40',
         'perl'                         => 5.012,
+        'Plack'                        => '0.9956',
+        'Plack::Builder'               => 0,
+        'Plack::Request'               => '0.9956',
+        'Plack::Response'              => '0.9956',
+        'Template::Declare'            => '0.43',
+        'Template::Declare::Tags'      => '0.43',
     },
     recommends => {
         'Test::Pod'           => '1.41',

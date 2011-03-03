@@ -172,6 +172,10 @@ label {
   display: block;
 }
 
+label#inlabel {
+  display: inline;
+}
+
 input,
 textarea,
 select {
