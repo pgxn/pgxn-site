@@ -164,7 +164,7 @@ template home => sub {
                 form {
                     id is 'homesearch';
                     action is '#'; # XXX
-                    enctype is 'application/x-www-form-urlencoded; charset=UTF-8';
+                    enctype is 'application/x-www-form-urlencoded';
                     method is 'get';
                     fieldset {
                         input {
