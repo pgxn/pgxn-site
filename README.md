@@ -1,5 +1,5 @@
-PGXN
-====
+PGXN::Site
+==========
 
 [PGXN](http://www.pgxn.org/), the PostgreSQL Extention network, is a central
 distribution system for open-source PostgreSQL extension libraries. In its
@@ -13,8 +13,9 @@ first iteration it will consist of four basic parts:
 Project Status
 --------------
 
-We’re currently [raising funds](http://www.pgxn.org/) for the project. Once
-we’ve reached our goal, implementation will begin.
+The network is up and running! Use [PGXN Manager](http://manager.pgxn.org)
+to upload distributions to the network. The search site is currently
+in development.
 
 Who’s Doing This?
 -----------------
