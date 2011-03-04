@@ -14,7 +14,10 @@ sub app {
         my $controller = PGXN::Site::Controller->new;
         my $router = router {
             missing { $controller->missing(@_) };
-            resource '/' => sub { GET { $controller->home(@_) } };
+            resource qr{/(?:index[.]html)?$} => sub {
+                GET { $controller->home(@_) }
+            };
+
         };
         mount '/'   => builder { sub { $router->dispatch(shift) } };
         mount '/ui' => $files;
@@ -58,7 +61,7 @@ David E. Wheeler <david.wheeler@pgexperts.com>
 
 =head1 Copyright and License
 
-Copyright (c) 2010-2011 David E. Wheeler.
+Copyright (c) 2011 David E. Wheeler.
 
 This module is free software; you can redistribute it and/or modify it under
 the L<PostgreSQL License|http://www.opensource.org/licenses/postgresql>.
