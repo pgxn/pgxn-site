@@ -477,6 +477,11 @@ ul.sideMenu {
   right:40px;
 }
 
+#loading {
+  top:215px;
+  right:30px;
+}
+
 .dist .meta dt {
    text-align:right;
    width: 8em;
