@@ -7,12 +7,37 @@ use I18N::LangTags::Detect;
 
 # Allow unknown phrases to just pass-through.
 our %Lexicon = (
-    _AUTO => 1,
+#    _AUTO => 1,
     listcomma => ',',
     listand   => 'and',
     openquote => '“',
     shutquote => '”',
     in        => 'in',
+    hometitle => 'PGXN: PostgreSQL Extension Network',
+    'PostgreSQL Extension Network' => 'PostgreSQL Extension Network',
+    'PGXN Gear' => 'PGXN Gear',
+    'About' => 'About',
+    'About PGXN' => 'About PGXN',
+    'Owners' => 'Owners',
+    'Recent' => 'Recent',
+    'Recent Uploads' => 'Recent Uploads',
+    'News' => 'News',
+    'FAQ' => 'FAQ',
+    'Frequently Asked Questions' => 'Frequently Asked Questions',
+    code => 'code',
+    design => 'design',
+    logo => 'logo',
+    'Go to [_1]' => 'Go to [_1]',
+    Feedback => 'Feedback',
+    Extensions => 'Extensions',
+    Tags => 'Tags',
+    Owners => 'Owners',
+    Distributions => 'Distributions',
+    'PGXN Search' => 'PGXN Search',
+    pgxn_summary_paragraph => 'PGXN, the PostgreSQL Extension network, is a central distribution system for open-source PostgreSQL extension libraries.',
+    Founders => 'Founders',
+    Patrons => 'Patrons',
+    Benefactors => 'Benefactors',
 );
 
 sub accept {

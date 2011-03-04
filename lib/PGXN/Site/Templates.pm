@@ -3,7 +3,11 @@ package PGXN::Site::Templates;
 use 5.12.0;
 use utf8;
 use parent 'Template::Declare';
+use PGXN::Site::Locale;
 use Template::Declare::Tags;
+
+my $l = PGXN::Site::Locale->get_handle('en');
+sub T { $l->maketext(@_) }
 
 BEGIN { create_wrapper wrapper => sub {
     my ($code, $req, $args) = @_;
@@ -26,7 +30,7 @@ BEGIN { create_wrapper wrapper => sub {
         );
 
         head {
-            title { 'PGXN: PostgreSQL Extension Network' };
+            title { T 'hometitle' };
             meta {
                 name is 'keywords';
                 content is 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network';
@@ -59,19 +63,19 @@ BEGIN { create_wrapper wrapper => sub {
                     div {
                         id is 'title';
                         h1 { 'PGXN' };
-                        h2 { 'PostgreSQL Extension Network' };
+                        h2 { T 'PostgreSQL Extension Network' };
                     };
                     a {
                         href is '/';
                         rel is 'home';
                         img {
                             src   is '/ui/img/gear.png';
-                            alt   is 'PGXN Gear';
+                            alt   is T 'PGXN Gear';
                             class is 'gear';
                         };
                         img {
                             src   is '/ui/img/pgxn.png';
-                            alt   is 'PostgreSQL Extension Network';
+                            alt   is T 'PostgreSQL Extension Network';
                             class is 'right';
                         };
                     };
@@ -97,8 +101,8 @@ BEGIN { create_wrapper wrapper => sub {
                                 li {
                                     a {
                                         href is $spec->[0];
-                                        title is $spec->[1];
-                                        $spec->[2];
+                                        title is T $spec->[1];
+                                        T $spec->[2];
                                     };
                                 };
                             }
@@ -121,21 +125,21 @@ BEGIN { create_wrapper wrapper => sub {
                         outs 'code';
                         a {
                             href is 'http://www.justatheory.com/';
-                            title is 'Go to Just a Theory';
+                            title is T 'Go to [_1]', 'Just a Theory';
                             'theory';
                         };
                         span { class is 'grey'; '|' };
                         outs ' design';
                         a {
                             href is 'http://fullahead.org/';
-                            title is 'Go to Fullahead';
+                            title is T 'Go to [_1]', 'Fullahead';
                             'Fullahead';
                         };
                         span { class is 'grey'; '|' };
                         outs ' logo';
                         a {
                             href is 'http://www.strongrrl.com/';
-                            title is 'Go to Strongrrl';
+                            title is T 'Go to [_1]', 'Strongrrl';
                             'Strongrrl';
                         };
                     }; # /span.floatLeft
@@ -143,8 +147,8 @@ BEGIN { create_wrapper wrapper => sub {
                         class is 'floatRight';
                         a {
                             href is '#'; # XXX
-                            title is 'Feedback';
-                            'Feedback';
+                            title is T 'Feedback';
+                            T 'Feedback';
                         };
                     }; # /span.floatRight
                 }; # /div#width
@@ -174,7 +178,7 @@ template home => sub {
                         };
                     }; # /fieldset
                     fieldset {
-                        label { attr { id is 'inlabel'; for => 'searchin' }; 'in' };
+                        label { attr { id is 'inlabel'; for => 'searchin' }; T 'in' };
                         select {
                             id is 'searchin';
                             name is 'in';
@@ -186,13 +190,13 @@ template home => sub {
                             for my $doctype (qw(extensions distributions owners tags)) {
                                 option {
                                     value is $doctype;
-                                    ucfirst $doctype;
+                                    T ucfirst $doctype;
                                 };
                             }
                         };
                         input {
                             type  is 'submit';
-                            value is 'PGXN Search';
+                            value is T 'PGXN Search';
                             class is 'button';
                         };
                     }; # /fieldset
@@ -207,10 +211,9 @@ template home => sub {
             # 25 percent width column, aligned to the right.
             div {
                 class is 'hside floatLeft gradient';
-                p { 'PGXN, the PostgreSQL Extension network, is a central distribution
-          system for open-source PostgreSQL extension libraries.' };
+                p { T 'pgxn_summary_paragraph' };
 
-                h3 { 'Founders' };
+                h3 { T 'Founders' };
                 div {
                     id is 'founders';
                     a {
@@ -239,7 +242,7 @@ template home => sub {
                     };
                 }; # /div#founders
 
-                h3 { 'Patrons' };
+                h3 { T 'Patrons' };
                 div {
                     id is 'patrons';
                     h3 {
@@ -255,7 +258,7 @@ template home => sub {
                     };
                 }; # /div#patrons
 
-                h3 { 'Benefactors' };
+                h3 { T 'Benefactors' };
                 ul {
                     for my $spec (
                         [ 'http://www.etsy.com/'          => 'Etsy'                      ],
