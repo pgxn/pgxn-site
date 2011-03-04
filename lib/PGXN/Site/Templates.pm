@@ -288,3 +288,82 @@ template notfound => sub {
     } $req, $args;
 };
 
+=head1 Name
+
+PGXN::Site::Templates - HTML templates for PGXN::Site
+
+=head1 Synopsis
+
+  use PGXN::Site::Templates;
+  Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
+  print Template::Declare->show('home', $req, {
+      title   => 'PGXN::Site',
+  });
+
+=head1 Description
+
+This class defines the HTML templates used by PGXN::Site. They are used
+internally by L<PGXN::Site::Controller> to render the UI. They're implemented
+with L<Template::Declare>, but interface wise, all you need to do is C<show>
+them as in the L</Synopsis>.
+
+=head1 Templates
+
+=head2 Wrapper
+
+=head3 C<wrapper>
+
+Wrapper template called by all page view templates that wraps them in the
+basic structure of the site (logo, navigation, footer, etc.). It also handles
+the title of the site, and any status message or error message. These must be
+stored under the C<title>, C<status_msg>, and C<error_msg> keys in the args
+hash, respectively.
+
+=begin comment
+
+XXX Document all parameters.
+
+=end comment
+
+=head2 Full Page Templates
+
+=head3 C<home>
+
+Renders the home page of the app.
+
+=head2 Utility Functions
+
+=head3 C<T>
+
+  h1 { T 'Welcome!' };
+
+Translates the string using L<PGXN::Site::Locale>.
+
+=head1 Author
+
+David E. Wheeler <david.wheeler@pgexperts.com>
+
+=head1 Copyright and License
+
+Copyright (c) 2010-2011 David E. Wheeler.
+
+This module is free software; you can redistribute it and/or modify it under
+the L<PostgreSQL License|http://www.opensource.org/licenses/postgresql>.
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose, without fee, and without a written agreement is
+hereby granted, provided that the above copyright notice and this paragraph
+and the following two paragraphs appear in all copies.
+
+In no event shall David E. Wheeler be liable to any party for direct,
+indirect, special, incidental, or consequential damages, including lost
+profits, arising out of the use of this software and its documentation, even
+if David E. Wheeler has been advised of the possibility of such damage.
+
+David E. Wheeler specifically disclaims any warranties, including, but not
+limited to, the implied warranties of merchantability and fitness for a
+particular purpose. The software provided hereunder is on an "as is" basis,
+and David E. Wheeler has no obligations to provide maintenance, support,
+updates, enhancements, or modifications.
+
+=cut
