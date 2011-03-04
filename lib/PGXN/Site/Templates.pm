@@ -31,7 +31,7 @@ BEGIN { create_wrapper wrapper => sub {
         );
 
         head {
-            title { T 'hometitle' };
+            title { $args->{title} };
             meta {
                 name is 'keywords';
                 content is 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network';
@@ -49,10 +49,15 @@ BEGIN { create_wrapper wrapper => sub {
                 link {
                     rel   is 'stylesheet';
                     type  is 'text/css';
-                    href  is "ui/css/$spec->[0].css";
+                    href  is "/ui/css/$spec->[0].css";
                     media is $spec->[1];
                 };
             }
+            script {
+                # http://docs.jquery.com/Downloading_jQuery#CDN_Hosted_jQuery
+                type is 'text/javascript';
+                src is 'http://code.jquery.com/jquery-1.4.2.min.js';
+            } if $args->{with_jquery};
         }; # /head
 
         body {
@@ -89,6 +94,17 @@ BEGIN { create_wrapper wrapper => sub {
                     # class="here" to turn the current page tab on.
                     div {
                         id is 'mainMenu';
+                        if ($args->{loading}) {
+                            div {
+                                id is 'loading';
+                                class is 'floatLeft';
+                                img { src is '/ui/img/loading.gif' };
+                            };
+                        }
+                        ul {
+                            id is 'crumb';
+                            class is 'floatLeft';
+                        }
                         ul {
                             class is 'floatRight';
                             # XXX Fill in these links.
@@ -274,7 +290,25 @@ template home => sub {
             }; # /div.hside floatLeft gradient
 
         }; # /div#homepage
-    } $req, $args;
+    } $req, { title => T 'hometitle' };
+};
+
+sub title_with($) {
+    shift . ' / ' . T 'PostgreSQL Extension Network';
+}
+
+template distribution => sub {
+    my ($code, $req, $args) = @_;
+    wrapper {
+        div {
+            id is 'page';
+            class is 'dist';
+            div {
+                class is 'gradient meta';
+                h1 { $args->{name} };
+            };
+        };
+    } $req, { title => title_with $args->{name}, with_jquery => 1, loading => 1 };
 };
 
 template notfound => sub {

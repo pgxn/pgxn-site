@@ -14,6 +14,12 @@ sub app {
         my $controller = PGXN::Site::Controller->new;
         my $router = router {
             missing { $controller->missing(@_) };
+            resource qr{/dist/([^/]+)/?} => sub {
+                GET {
+                    my ($env, $args) = @_;
+                    $controller->distribution($env, @{ $args->{splat} } );
+                };
+            };
             resource qr{/(?:index[.]html)?$} => sub {
                 GET { $controller->home(@_) }
             };

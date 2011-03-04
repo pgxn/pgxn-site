@@ -60,6 +60,11 @@ sub home {
     $self->render('/home', { env => shift });
 }
 
+sub distribution {
+    my $self = shift;
+    $self->render('/distribution', { env => shift, vars => { name => shift } });
+}
+
 sub server_error {
     my ($self, $env) = @_;
 
