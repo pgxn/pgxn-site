@@ -38,6 +38,8 @@ our %Lexicon = (
     Founders => 'Founders',
     Patrons => 'Patrons',
     Benefactors => 'Benefactors',
+    'Not Found' => 'Not Found',
+    'Resource not found.' => 'Resource not found.',
 );
 
 sub accept {
