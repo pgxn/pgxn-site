@@ -261,6 +261,7 @@ template home => sub {
 
                 h3 { T 'Benefactors' };
                 ul {
+                    id is 'benefactors';
                     for my $spec (
                         [ 'http://www.etsy.com/'          => 'Etsy'                      ],
                         [ 'http://www.postgresql.us/'     => 'US PostgreSQL Association' ],
