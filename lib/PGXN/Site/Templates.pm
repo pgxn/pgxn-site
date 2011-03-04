@@ -11,6 +11,7 @@ sub T { $l->maketext(@_) }
 
 BEGIN { create_wrapper wrapper => sub {
     my ($code, $req, $args) = @_;
+    $l = PGXN::Site::Locale->accept($req->env->{HTTP_ACCEPT_LANGUAGE});
     outs_raw '<!DOCTYPE html>';
     html {
         attr {
