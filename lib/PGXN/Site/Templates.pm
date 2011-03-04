@@ -53,11 +53,6 @@ BEGIN { create_wrapper wrapper => sub {
                     media is $spec->[1];
                 };
             }
-            script {
-                # http://docs.jquery.com/Downloading_jQuery#CDN_Hosted_jQuery
-                type is 'text/javascript';
-                src is 'http://code.jquery.com/jquery-1.4.2.min.js';
-            } if $args->{with_jquery};
         }; # /head
 
         body {
@@ -94,13 +89,6 @@ BEGIN { create_wrapper wrapper => sub {
                     # class="here" to turn the current page tab on.
                     div {
                         id is 'mainMenu';
-                        if ($args->{loading}) {
-                            div {
-                                id is 'loading';
-                                class is 'floatLeft';
-                                img { src is '/ui/img/loading.gif' };
-                            };
-                        }
                         ul {
                             id is 'crumb';
                             class is 'floatLeft';
@@ -308,7 +296,7 @@ template distribution => sub {
                 h1 { $args->{name} };
             };
         };
-    } $req, { title => title_with $args->{name}, with_jquery => 1, loading => 1 };
+    } $req, { title => title_with $args->{name} };
 };
 
 template notfound => sub {
