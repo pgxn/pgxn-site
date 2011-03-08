@@ -6,25 +6,25 @@ use PGXN::Site::Controller;
 use Router::Resource;
 use Plack::Builder;
 use Plack::App::File;
-use Encode;
 
 sub app {
-    builder {
-        my $files      = Plack::App::File->new(root => './www/ui/');
-        my $controller = PGXN::Site::Controller->new;
-        my $router = router {
-            missing { $controller->missing(@_) };
-            resource qr{/dist/([^/]+)/?} => sub {
-                GET {
-                    my ($env, $args) = @_;
-                    $controller->distribution($env, @{ $args->{splat} } );
-                };
+    my $class = shift;
+    my $controller = PGXN::Site::Controller->new(@_);
+    my $files      = Plack::App::File->new(root => './www/ui/');
+    my $router = router {
+        missing { $controller->missing(@_) };
+        resource qr{/dist/([^/]+)/?} => sub {
+            GET {
+                my ($env, $args) = @_;
+                $controller->distribution($env, @{ $args->{splat} } );
             };
-            resource qr{/(?:index[.]html)?$} => sub {
-                GET { $controller->home(@_) }
-            };
-
         };
+        resource qr{/(?:index[.]html)?$} => sub {
+            GET { $controller->home(@_) }
+        };
+    };
+
+    builder {
         mount '/'   => builder { sub { $router->dispatch(shift) } };
         mount '/ui' => $files;
     }

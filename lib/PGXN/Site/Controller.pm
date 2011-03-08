@@ -7,19 +7,20 @@ use Plack::Request;
 use PGXN::Site::Locale;
 use PGXN::Site::Templates;
 use Encode;
+use WWW::PGXN;
 use namespace::autoclean;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
-my %message_for = (
-    success     => q{Success},
-    forbidden   => q{Sorry, you do not have permission to access this resource.},
-    notfound    => q{Resource not found.},
-    notallowed  => q{The requted method is not allowed for the resource.},
-    conflict    => q{There is a conflict in the current state of the resource.}, # Bleh
-    gone        => q{The resource is no longer available.},
-    servererror => q{Internal server error.}
-);
+# my %message_for = (
+#     success     => q{Success},
+#     forbidden   => q{Sorry, you do not have permission to access this resource.},
+#     notfound    => q{Resource not found.},
+#     notallowed  => q{The requted method is not allowed for the resource.},
+#     conflict    => q{There is a conflict in the current state of the resource.}, # Bleh
+#     gone        => q{The resource is no longer available.},
+#     servererror => q{Internal server error.}
+# );
 
 my %code_for = (
     success     => 200,
@@ -32,7 +33,12 @@ my %code_for = (
     servererror => 200, # Only handled by ErrorDocument, which keeps 500.
 );
 
-sub new { bless {} => shift }
+sub new {
+    my $class = shift;
+    bless { api => WWW::PGXN->new(@_) } => $class;
+}
+
+sub api { shift->{_api} }
 
 sub render {
     my ($self, $template, $p) = @_;
@@ -107,7 +113,7 @@ PGXN::Site::Controller - The PGXN::Site request controller
   use PGXN::Site::Controller;
   use Router::Resource;
 
-  my $controller = PGXN::Site::Controller->new;
+  my $controller = PGXN::Site::Controller->new(url => 'http://api.pgxn.org');
   my $router = router {
       resource '/' => sub {
           GET { $controller->home(@_) };
@@ -125,9 +131,17 @@ to be called from within Router::Resource HTTP methods.
 
 =head3 C<new>
 
-  my $controller = PGXN::Site::Controller->new;
+  my $controller = PGXN::Site::Controller->new(url => $api_url);
 
-Constructs and returns a new controller.
+Constructs and returns a new controller. The parameters are the same as those
+supported by L<WWW::PGXN>, which will be used to fetch the data needed to
+serve pages.
+
+=head2 Accessors
+
+=head3 C<api>
+
+Returns a L<WWW::PGXN> object used to access the PGXN API.
 
 =head2 Actions
 

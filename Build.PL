@@ -30,6 +30,7 @@ $class->new(
         'Plack::Response'              => '0.9956',
         'Template::Declare'            => '0.43',
         'Template::Declare::Tags'      => '0.43',
+        'WWW::PGXN'                    => '0.10',
     },
     recommends => {
         'Test::Pod'           => '1.41',
