@@ -137,6 +137,12 @@ Constructs and returns a new controller.
 
 Displays the HTML for the home page.
 
+=head3 C<distribution>
+
+  PGXN::Site::Controller->distribution($env);
+
+Displays the HTML for the distribution page.
+
 =head3 C<server_error>
 
 Handles subrequests from L<Plack::Middleware::ErrorDocument> when a 500 is

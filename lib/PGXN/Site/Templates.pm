@@ -281,7 +281,7 @@ template home => sub {
     } $req, { title => T 'hometitle' };
 };
 
-sub title_with($) {
+sub _title_with($) {
     shift . ' / ' . T 'PostgreSQL Extension Network';
 }
 
@@ -296,7 +296,7 @@ template distribution => sub {
                 h1 { $args->{name} };
             };
         };
-    } $req, { title => title_with $args->{name} };
+    } $req, { title => _title_with $args->{name} };
 };
 
 template notfound => sub {
