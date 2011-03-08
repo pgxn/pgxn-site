@@ -287,13 +287,26 @@ sub _title_with($) {
 
 template distribution => sub {
     my ($code, $req, $args) = @_;
+    my $dist = $args->{dist};
     wrapper {
         div {
             id is 'page';
             class is 'dist';
             div {
                 class is 'gradient meta';
-                h1 { $args->{name} };
+                h1 { $dist->name };
+                span {
+                    class is 'download';
+                    a {
+                        class is 'url';
+                        href is URI->new($args->{mirror} . $dist->relative_url);
+                        title is T 'Download [_1] [_2]', $dist->name, $dist->version;
+                        img {
+                            src is '/ui/img/download.png';
+                            alt is T 'Download';
+                        };
+                    };
+                };
             };
         };
     } $req, { title => _title_with $args->{name} };

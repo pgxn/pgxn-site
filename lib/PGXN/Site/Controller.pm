@@ -7,6 +7,7 @@ use Plack::Request;
 use PGXN::Site::Locale;
 use PGXN::Site::Templates;
 use Encode;
+use lib '/Users/david/dev/github/www-pgxn/lib';
 use WWW::PGXN;
 use namespace::autoclean;
 
@@ -34,11 +35,19 @@ my %code_for = (
 );
 
 sub new {
-    my $class = shift;
-    bless { api => WWW::PGXN->new(@_) } => $class;
+    my ($class, %p) = @_;
+    (my $mir = $p{mirror_url}) =~ s{/$}{};
+    bless {
+        mirror => URI->new($mir),
+        api    => WWW::PGXN->new(
+            url   => $p{api_url},
+            proxy => $p{proxy_url}
+        )
+    } => $class;
 }
 
-sub api { shift->{_api} }
+sub api    { shift->{api}    }
+sub mirror { shift->{mirror} }
 
 sub render {
     my ($self, $template, $p) = @_;
@@ -67,8 +76,13 @@ sub home {
 }
 
 sub distribution {
-    my $self = shift;
-    $self->render('/distribution', { env => shift, vars => { name => shift } });
+    my ($self, $env) = (shift, shift);
+    my $dist = $self->api->find_distribution(name => shift, version => shift)
+        or return $self->missing($env);
+    $self->render('/distribution', { env => $env, vars => {
+        dist   => $dist,
+        mirror => $self->mirror,
+    }});
 }
 
 sub server_error {
