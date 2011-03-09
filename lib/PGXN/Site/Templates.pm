@@ -5,6 +5,9 @@ use utf8;
 use parent 'Template::Declare';
 use PGXN::Site::Locale;
 use Template::Declare::Tags;
+use Software::License::PostgreSQL;
+use Software::License::BSD;
+use Software::License::MIT;
 
 my $l = PGXN::Site::Locale->get_handle('en');
 sub T { $l->maketext(@_) }
@@ -306,10 +309,235 @@ template distribution => sub {
                             alt is T 'Download';
                         };
                     };
-                };
-            };
-        };
-    } $req, { title => _title_with $args->{name} };
+                }; # /span#download
+                dl {
+                    dt { T 'This Release' };
+                    dd {
+                        span { class is 'fn';      $dist->name };
+                        span { class is 'version'; $dist->version };
+                    };
+                    dt { T 'Date' };
+                    dd {
+                        (my $date = $dist->release_date) =~ s{T.+}{};
+                        # Looking forward to HTML 5 in Template::Declare.
+                        outs_raw qq{<time class="bday">$date</time>};
+                    };
+                    dt { T 'Status' };
+                    dd { T $dist->release_status };
+                    dt { T 'Other Releases' };
+                    dd {
+                        form {
+                            name is 'rel';
+                            method is 'get';
+                            # XXX Add code to link from selected item.
+                            action is '#';
+                            my $rel = $dist->releases;
+                            select {
+                                my @rels = @{ $rel->{stable} || [] };
+                                if (my @others = @{ $rel->{testing}  || [] }, @{ $rel->{unstable} || [] }) {
+                                    @rels = sort { $a cmp $b } @rels, @others;
+                                }
+                                my $version = $dist->version;
+                                for my $rel (@rels) {
+                                    option {
+                                        # XXX Add date.
+                                        # <option>pgTAP 0.24.0 — 2010-05-24</option>
+                                        selected is 'selected' if $rel eq $version;
+                                        $dist->name . " $rel";
+                                    };
+                                }
+
+                            };
+                        };
+                    };
+                    dt { T 'Abstract' };
+                    dd { class is 'abstract'; $dist->abstract };
+                    if (my $descr = $dist->description) {
+                        dt { T 'Description' };
+                        dd { class is 'description'; $descr };
+                    }
+                    if (my @maints = $dist->maintainers) {
+                        dt { T 'Maintainer' . (@maints > 1 ? 's' : '') };
+                        dd {
+                            my $first = shift @maints;
+                            span {
+                                class is 'maintainer';
+                                span { class is 'vcard'; a {
+                                    class is 'url fn';
+                                    href is '#'; # XXX Add maintainer URL.
+                                    $first; # XXX Ignore email.
+                                }};
+                                if (@maints) {
+                                    my $last = pop @maints;
+                                    for my $maint (@maints) {
+                                        outs ',';
+                                    span { class is 'vcard'; a {
+                                        class is 'url fn';
+                                        href is '#'; # XXX Add maintainer URL.
+                                        $maint; # XXX Ignore email.
+                                    }};
+                                    }
+                                    outs 'and';
+                                    span { class is 'vcard'; a {
+                                        class is 'url fn';
+                                        href is '#'; # XXX Add maintainer URL.
+                                        $last; # XXX Ignore email.
+                                    }};
+                                }
+                            };
+                        };
+                    }
+                    dt { T 'License' };
+                    dd {
+                        if (ref $dist->license eq 'HASH') {
+                            my $licenses = $dist->license;
+                            for my $license (sort keys %{ $licenses }) {
+                                a {
+                                    rel is 'license';
+                                    href is $licenses->{$license};
+                                    $license;
+                                };
+                            }
+                        } else {
+                            for my $l (ref $dist->license ? @{ $dist->license } : ($dist->license)) {
+                                if (my $license = _license($l)) {
+                                    a {
+                                        rel is 'license';
+                                        href is $license->url;
+                                        $license->name;
+                                    };
+                                } else {
+                                    my %other_strings = (
+                                        map { $_ => 1 } qw(open_source restricted unrestricted)
+                                    );
+                                    outs $other_strings{$l} ? $l : 'unknonwn';
+                                }
+                            }
+                            for my $license (grep {
+                                defined
+                            } map {
+                                _license($_)
+                            } ref $dist->license ? @{ $dist->license } : ($dist->license)) {
+                            }
+                        }
+                    };
+                    if (my $res = $dist->resources) {
+                        dt { T 'Resources' };
+                        my @res;
+                        if (my $url = $res->{homepage}) {
+                            push @res => [ 'url', $url, T 'www' ];
+                        }
+                        if (my $repo = $res->{repository}) {
+                            if (my $url = $repo->{url}) {
+                                push @res => [ 'url', $url, $repo->{type} ];
+                            }
+                            if (my $url = $repo->{web}) {
+                                # XXX Think of a better name than "repo"?
+                                push @res => [ 'url', $url, T 'repo' ];
+                            }
+                        }
+                        if (my $bug = $res->{repository}) {
+                            if (my $url = $bug->{web}) {
+                                push @res => [ 'url', $url, T 'bugs' ]
+                            }
+
+                            if (my $email = $bug->{mailto}) {
+                                push @res => [ 'email', "mailto:$email", $email ]
+                            }
+                        }
+                        dd {
+                            class is 'resources';
+                            ul {
+                                my $last = pop @res;
+                                for my $spec (@res) {
+                                    li {
+                                        a {
+                                            class is $spec->[0];
+                                            href is $spec->[1];
+                                            $spec->[2];
+                                        };
+                                    };
+                                }
+                                li {
+                                    class is 'last';
+                                    a {
+                                        class is $last->[0];
+                                        href is $last->[1];
+                                        $last->[2];
+                                    };
+                                };
+                            };
+                        };
+                    }
+                    dt { T 'Special Files' };
+                    dd {
+                        class is 'files';
+                        ul {
+                            for my $file (qw(Makefile Changes README)) {
+                                # XXX Look up these files in the metadata.
+                                li {
+                                    class is 'last' if $file eq 'README';
+                                    a {
+                                        href is '#';
+                                        $file;
+                                    }
+                                };
+                            }
+                        }
+                    };
+                    if (my @tags = $dist->tags) {
+                        dt { T 'Tags' };
+                        dd {
+                            class is 'tags';
+                            ul {
+                                my $last = pop @tags;
+                                for my $tag (@tags) {
+                                    li { a {
+                                        # XXX Update this URL.
+                                        href is URI->new("/tag/$tag");
+                                        $tag;
+                                    } };
+                                }
+                                li {
+                                    class is 'last';
+                                    a {
+                                        # XXX Update this URL.
+                                        href is URI->new("/tag/$last");
+                                        $last;
+                                    };
+                                };
+                            };
+                        };
+                    }
+                }; # /dl
+            }; # /div.gradient meta
+
+            div {
+                class is 'gradient exts';
+                h3 { T 'Extensions' };
+                dl {
+                    my $provides = $dist->provides;
+                    for my $ext (sort { $a cmp $b } keys %{ $provides }) {
+                        my $info = $provides->{$ext};
+                        # XXX Link to doc URL.
+                        dt {
+                            span { class is 'fn';       $ext             };
+                            span { class is 'version';  $info->{version} };
+                        };
+                        dd { class is 'abstract'; $info->{abstract} };
+                    }
+                } # /dl
+            }; # /div.gradient exts
+
+            # XXX Add this.
+            # div {
+            #     class is 'gradient docs';
+            #     h3 { T 'Other Documentation' };
+            #     dl {
+            #     };
+            # }; # /div.gradient docs
+        }; # /div#page
+    } $req, { title => _title_with $dist->name . ': ' . $dist->abstract };
 };
 
 template notfound => sub {
@@ -322,6 +550,40 @@ template notfound => sub {
         };
     } $req, $args;
 };
+
+my %class_for = (
+    agpl_3       => 'AGPL_3',
+    apache_1_1   => 'Apache_1_1',
+    apache_2_0   => 'Apache_2_0',
+    artistic_1   => 'Artistic_1_0',
+    artistic_2   => 'Artistic_2_0',
+    bsd          => 'BSD',
+    freebsd      => 'FreeBSD',
+    gfdl_1_2     => 'GFDL_1_2',
+    gfdl_1_3     => undef,
+    gpl_1        => 'GPL_1',
+    gpl_2        => 'GPL_2',
+    gpl_3        => 'GPL_3',
+    lgpl_2_1     => 'LGPL_2_1',
+    lgpl_3_0     => 'LGPL_3_0',
+    mit          => 'MIT',
+    mozilla_1_0  => 'Mozilla_1_0',
+    mozilla_1_1  => 'Mozilla_1_1',
+    openssl      => 'OpenSSL',
+    perl_5       => 'Perl_5',
+    postgresql   => 'PostgreSQL',
+    qpl_1_0      => 'QPL_1_0',
+    ssleay       => 'SSLeay',
+    sun          => 'Sun',
+    zlib         => 'Zlib',
+);
+
+sub _license($) {
+    my $class = $class_for{+shift} or return;
+    $class = "Software::License::$class";
+    eval "require $class; 1" or die;
+    return $class;
+}
 
 =head1 Name
 
