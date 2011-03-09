@@ -318,9 +318,10 @@ template distribution => sub {
                     };
                     dt { T 'Date' };
                     dd {
-                        (my $date = $dist->release_date) =~ s{T.+}{};
+                        my $datetime = $dist->release_date;
+                        (my $date = $datetime) =~ s{T.+}{};
                         # Looking forward to HTML 5 in Template::Declare.
-                        outs_raw qq{<time class="bday">$date</time>};
+                        outs_raw qq{<time class="bday" datetime="$datetime">$date</time>};
                     };
                     dt { T 'Status' };
                     dd { T $dist->release_status };
