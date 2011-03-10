@@ -43,7 +43,7 @@ BEGIN { create_wrapper wrapper => sub {
             meta {
                 name is 'description';
                 content is 'Search all indexed extensions, distributions, '
-                         . 'owners, and tags on the PostgreSQL Extension Network.';
+                         . 'users, and tags on the PostgreSQL Extension Network.';
             };
             for my $spec (
                 [ html   => 'screen, projection, tv' ],
@@ -102,7 +102,7 @@ BEGIN { create_wrapper wrapper => sub {
                             # XXX Fill in these links.
                             for my $spec (
                                 [ '#', 'About PGXN',                 'About'  ],
-                                [ '#', 'Owners',                     'Owners' ],
+                                [ '#', 'Users',                      'Users'  ],
                                 [ '#', 'Recent Uploads',             'Recent' ],
                                 [ '#', 'News',                       'News'   ],
                                 [ '#', 'Frequently Asked Questions', 'FAQ'    ],
@@ -196,7 +196,7 @@ template home => sub {
                                 selected is 'selected';
                                 'All';
                             };
-                            for my $doctype (qw(extensions distributions owners tags)) {
+                            for my $doctype (qw(extensions distributions user tags)) {
                                 option {
                                     value is $doctype;
                                     T ucfirst $doctype;
@@ -319,7 +319,7 @@ template distribution => sub {
                     };
                     dt { T 'Date' };
                     dd {
-                        my $datetime = $dist->release_date;
+                        my $datetime = $dist->date;
                         (my $date = $datetime) =~ s{T.+}{};
                         # Looking forward to HTML 5 in Template::Declare.
                         outs_raw qq{<time class="bday" datetime="$datetime">$date</time>};
@@ -362,12 +362,12 @@ template distribution => sub {
                         dt { T 'Description' };
                         dd { class is 'description'; $descr };
                     }
-                    dt { T 'Owner' };
+                    dt { T 'Released By' };
                     dd {
                         span { class is 'vcard'; a {
                             class is 'url fn';
-                            href is '/owner/' . $dist->owner; # XXX update URL.
-                            $dist->owner;
+                            href is '/user/' . $dist->user; # XXX update URL.
+                            $dist->user;
                         }};
                     };
                     # if (my @maints = $dist->maintainers) {

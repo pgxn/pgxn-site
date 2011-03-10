@@ -18,7 +18,7 @@ our %Lexicon = (
     'PGXN Gear' => 'PGXN Gear',
     'About' => 'About',
     'About PGXN' => 'About PGXN',
-    'Owners' => 'Owners',
+    'Users' => 'Users',
     'Recent' => 'Recent',
     'Recent Uploads' => 'Recent Uploads',
     'News' => 'News',
@@ -31,7 +31,6 @@ our %Lexicon = (
     Feedback => 'Feedback',
     Extensions => 'Extensions',
     Tags => 'Tags',
-    Owners => 'Owners',
     Distributions => 'Distributions',
     'PGXN Search' => 'PGXN Search',
     pgxn_summary_paragraph => 'PGXN, the PostgreSQL Extension network, is a central distribution system for open-source PostgreSQL extension libraries.',
@@ -61,7 +60,7 @@ our %Lexicon = (
     'Special Files' => 'Special Files',
     'Tags' => 'Tags',
     'Other Documentation' => 'Other Documentation',
-    'Owner' => 'Owner',
+    'Released By' => 'Released By',
 );
 
 sub accept {
