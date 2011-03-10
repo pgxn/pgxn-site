@@ -8,6 +8,7 @@ use Template::Declare::Tags;
 use Software::License::PostgreSQL;
 use Software::License::BSD;
 use Software::License::MIT;
+use SemVer;
 
 my $l = PGXN::Site::Locale->get_handle('en');
 sub T { $l->maketext(@_) }
@@ -336,15 +337,18 @@ template distribution => sub {
                             select {
                                 my @rels = @{ $rel->{stable} || [] };
                                 if (my @others = @{ $rel->{testing}  || [] }, @{ $rel->{unstable} || [] }) {
-                                    @rels = sort { $a cmp $b } @rels, @others;
+                                    @rels =
+                                        map  { $_->[0] }
+                                        sort { $b->[1] <=> $a->[1] }
+                                        map  { [ $_ => SemVer->new($_->{version}) ] } @rels, @others;
                                 }
                                 my $version = $dist->version;
                                 for my $rel (@rels) {
                                     option {
-                                        # XXX Add date.
-                                        # <option>pgTAP 0.24.0 — 2010-05-24</option>
-                                        selected is 'selected' if $rel eq $version;
-                                        $dist->name . " $rel";
+                                        selected is 'selected' if $rel->{version} eq $version;
+                                        (my $date = $rel->{date}) =~ s{T.+}{};
+                                        outs $dist->name . " $rel->{version} — ";
+                                        outs_raw qq{<time datetime="$rel->{date}">$date</time>};
                                     };
                                 }
 
