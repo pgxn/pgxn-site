@@ -61,6 +61,7 @@ our %Lexicon = (
     'Special Files' => 'Special Files',
     'Tags' => 'Tags',
     'Other Documentation' => 'Other Documentation',
+    'Owner' => 'Owner',
 );
 
 sub accept {

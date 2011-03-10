@@ -361,37 +361,45 @@ template distribution => sub {
                         dt { T 'Description' };
                         dd { class is 'description'; $descr };
                     }
-                    if (my @maints = $dist->maintainers) {
-                        dt { T 'Maintainer' . (@maints > 1 ? 's' : '') };
-                        dd {
-                            my $first = shift @maints;
-                            span {
-                                class is 'maintainer';
-                                span { class is 'vcard'; a {
-                                    class is 'url fn';
-                                    href is '#'; # XXX Add maintainer URL.
-                                    $first; # XXX Ignore email.
-                                }};
-                                if (@maints) {
-                                    my $last = pop @maints;
-                                    for my $maint (@maints) {
-                                        outs ',';
-                                    span { class is 'vcard'; a {
-                                        class is 'url fn';
-                                        href is '#'; # XXX Add maintainer URL.
-                                        $maint; # XXX Ignore email.
-                                    }};
-                                    }
-                                    outs 'and';
-                                    span { class is 'vcard'; a {
-                                        class is 'url fn';
-                                        href is '#'; # XXX Add maintainer URL.
-                                        $last; # XXX Ignore email.
-                                    }};
-                                }
-                            };
-                        };
-                    }
+                    dt { T 'Owner' };
+                    dd {
+                        span { class is 'vcard'; a {
+                            class is 'url fn';
+                            href is '/owner/' . $dist->owner; # XXX update URL.
+                            $dist->owner;
+                        }};
+                    };
+                    # if (my @maints = $dist->maintainers) {
+                    #     dt { T 'Maintainer' . (@maints > 1 ? 's' : '') };
+                    #     dd {
+                    #         my $first = shift @maints;
+                    #         span {
+                    #             class is 'maintainer';
+                    #             span { class is 'vcard'; a {
+                    #                 class is 'url fn';
+                    #                 href is '#'; # XXX Add maintainer URL.
+                    #                 $first; # XXX Ignore email.
+                    #             }};
+                    #             if (@maints) {
+                    #                 my $last = pop @maints;
+                    #                 for my $maint (@maints) {
+                    #                     outs ',';
+                    #                 span { class is 'vcard'; a {
+                    #                     class is 'url fn';
+                    #                     href is '#'; # XXX Add maintainer URL.
+                    #                     $maint; # XXX Ignore email.
+                    #                 }};
+                    #                 }
+                    #                 outs 'and';
+                    #                 span { class is 'vcard'; a {
+                    #                     class is 'url fn';
+                    #                     href is '#'; # XXX Add maintainer URL.
+                    #                     $last; # XXX Ignore email.
+                    #                 }};
+                    #             }
+                    #         };
+                    #     };
+                    # }
                     dt { T 'License' };
                     dd {
                         if (ref $dist->license eq 'HASH') {
