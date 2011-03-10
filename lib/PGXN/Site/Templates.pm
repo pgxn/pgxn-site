@@ -326,35 +326,36 @@ template distribution => sub {
                     };
                     dt { T 'Status' };
                     dd { T $dist->release_status };
-                    dt { T 'Other Releases' };
-                    dd {
-                        form {
-                            name is 'rel';
-                            method is 'get';
-                            # XXX Add code to link from selected item.
-                            action is '#';
-                            my $rel = $dist->releases;
-                            select {
-                                my @rels = @{ $rel->{stable} || [] };
-                                if (my @others = @{ $rel->{testing}  || [] }, @{ $rel->{unstable} || [] }) {
-                                    @rels =
-                                        map  { $_->[0] }
-                                        sort { $b->[1] <=> $a->[1] }
-                                        map  { [ $_ => SemVer->new($_->{version}) ] } @rels, @others;
-                                }
-                                my $version = $dist->version;
-                                for my $rel (@rels) {
-                                    option {
-                                        selected is 'selected' if $rel->{version} eq $version;
-                                        (my $date = $rel->{date}) =~ s{T.+}{};
-                                        outs $dist->name . " $rel->{version} — ";
-                                        outs_raw qq{<time datetime="$rel->{date}">$date</time>};
-                                    };
-                                }
-
+                    my $rel = $dist->releases;
+                    my @rels = @{ $rel->{stable} || [] };
+                    if (my @others = @{ $rel->{testing}  || [] }, @{ $rel->{unstable} || [] }) {
+                        @rels =
+                            map  { $_->[0] }
+                            sort { $b->[1] <=> $a->[1] }
+                            map  { [ $_ => SemVer->new($_->{version}) ] } @rels, @others;
+                    }
+                    if (@rels > 1) {
+                        dt { T 'Other Releases' };
+                        dd {
+                            form {
+                                name is 'rel';
+                                method is 'get';
+                                # XXX Add code to link from selected item.
+                                action is '#';
+                                select {
+                                    my $version = $dist->version;
+                                    for my $rel (@rels) {
+                                        option {
+                                            selected is 'selected' if $rel->{version} eq $version;
+                                            (my $date = $rel->{date}) =~ s{T.+}{};
+                                            outs $dist->name . " $rel->{version} — ";
+                                            outs_raw qq{<time datetime="$rel->{date}">$date</time>};
+                                        };
+                                    }
+                                };
                             };
                         };
-                    };
+                    }
                     dt { T 'Abstract' };
                     dd { class is 'abstract'; $dist->abstract };
                     if (my $descr = $dist->description) {
