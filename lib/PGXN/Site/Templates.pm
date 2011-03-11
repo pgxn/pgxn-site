@@ -338,23 +338,17 @@ template distribution => sub {
                         # XXX Add Latest Release if this isn't it.
                         dt { T 'Other Releases' };
                         dd {
-                            form {
-                                name is 'rel';
-                                method is 'get';
-                                # XXX Add code to link from selected item.
-                                action is '#';
-                                select {
-                                    onchange is 'window.location.href = this.options[this.selectedIndex].value';
-                                    my $version = $dist->version;
-                                    for my $rel (@rels) {
-                                        option {
-                                            value is '/dist/' . $dist->name . "/$rel->{version}/";
-                                            selected is 'selected' if $rel->{version} eq $version;
-                                            (my $date = $rel->{date}) =~ s{T.+}{};
-                                            $dist->name . " $rel->{version} — $date";
-                                        };
-                                    }
-                                };
+                            select {
+                                onchange is 'window.location.href = this.options[this.selectedIndex].value';
+                                my $version = $dist->version;
+                                for my $rel (@rels) {
+                                    option {
+                                        value is '/dist/' . $dist->name . "/$rel->{version}/";
+                                        selected is 'selected' if $rel->{version} eq $version;
+                                        (my $date = $rel->{date}) =~ s{T.+}{};
+                                        $dist->name . " $rel->{version} — $date";
+                                    };
+                                }
                             };
                         };
                     }
