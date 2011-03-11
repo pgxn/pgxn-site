@@ -483,22 +483,24 @@ template distribution => sub {
                             };
                         };
                     }
-                    dt { T 'Special Files' };
-                    dd {
-                        class is 'files';
-                        ul {
-                            for my $file (qw(Makefile Changes README)) {
-                                # XXX Look up these files in the metadata.
-                                li {
-                                    class is 'last' if $file eq 'README';
-                                    a {
-                                        href is '#';
-                                        $file;
-                                    }
-                                };
+                    if (my @files = $dist->special_files) {
+                        dt { T 'Special Files' };
+                        dd {
+                            class is 'files';
+                            ul {
+                                my $uri = $args->{mirror} . $dist->relative_source_url;
+                                for my $file (@files) {
+                                    li {
+                                        class is 'last' if $file eq $files[-1];
+                                        a {
+                                            href is URI->new("$uri/$file");
+                                            $file;
+                                        };
+                                    };
+                                }
                             }
-                        }
-                    };
+                        };
+                    }
                     if (my @tags = $dist->tags) {
                         dt { T 'Tags' };
                         dd {
