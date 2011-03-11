@@ -328,14 +328,30 @@ template distribution => sub {
                     dd { T $dist->release_status };
                     my $rel = $dist->releases;
                     my @rels = @{ $rel->{stable} || [] };
-                    if (my @others = @{ $rel->{testing}  || [] }, @{ $rel->{unstable} || [] }) {
+                    if (my @others = (@{ $rel->{testing}  || [] }, @{ $rel->{unstable} || [] })) {
                         @rels =
                             map  { $_->[0] }
                             sort { $b->[1] <=> $a->[1] }
                             map  { [ $_ => SemVer->new($_->{version}) ] } @rels, @others;
                     }
                     if (@rels > 1) {
-                        # XXX Add Latest Release if this isn't it.
+                        # Show latest version for other statuses.
+                        for my $status (qw(Stable Testing Unstable)) {
+                            my $stat_version = $dist->version_for(lc $status) or next;
+                            if ($dist->version ne $stat_version) {
+                                dt { T "Latest $status" };
+                                dd {
+                                    my $datetime = $dist->date_for(lc $status);
+                                    (my $date = $datetime) =~ s{T.+}{};
+                                    a {
+                                        href is '/dist/' . $dist->name . "/$stat_version/";
+                                        outs $dist->name . " $stat_version — ";
+                                        outs_raw qq{<time datetime="$datetime">$date</time>};
+                                    }
+                                };
+                            }
+                        }
+                        # Create a select list of all other versions.
                         dt { T 'Other Releases' };
                         dd {
                             select {
