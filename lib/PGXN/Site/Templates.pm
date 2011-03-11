@@ -366,41 +366,10 @@ template distribution => sub {
                     dd {
                         span { class is 'vcard'; a {
                             class is 'url fn';
-                            href is '/user/' . $dist->user; # XXX update URL.
+                            href is '/by/user/' . $dist->user;
                             $dist->user;
                         }};
                     };
-                    # if (my @maints = $dist->maintainers) {
-                    #     dt { T 'Maintainer' . (@maints > 1 ? 's' : '') };
-                    #     dd {
-                    #         my $first = shift @maints;
-                    #         span {
-                    #             class is 'maintainer';
-                    #             span { class is 'vcard'; a {
-                    #                 class is 'url fn';
-                    #                 href is '#'; # XXX Add maintainer URL.
-                    #                 $first; # XXX Ignore email.
-                    #             }};
-                    #             if (@maints) {
-                    #                 my $last = pop @maints;
-                    #                 for my $maint (@maints) {
-                    #                     outs ',';
-                    #                 span { class is 'vcard'; a {
-                    #                     class is 'url fn';
-                    #                     href is '#'; # XXX Add maintainer URL.
-                    #                     $maint; # XXX Ignore email.
-                    #                 }};
-                    #                 }
-                    #                 outs 'and';
-                    #                 span { class is 'vcard'; a {
-                    #                     class is 'url fn';
-                    #                     href is '#'; # XXX Add maintainer URL.
-                    #                     $last; # XXX Ignore email.
-                    #                 }};
-                    #             }
-                    #         };
-                    #     };
-                    # }
                     dt { T 'License' };
                     dd {
                         if (ref $dist->license eq 'HASH') {
@@ -450,7 +419,7 @@ template distribution => sub {
                                 push @res => [ 'url', $url, T 'repo' ];
                             }
                         }
-                        if (my $bug = $res->{repository}) {
+                        if (my $bug = $res->{bugtracker}) {
                             if (my $url = $bug->{web}) {
                                 push @res => [ 'url', $url, T 'bugs' ]
                             }
@@ -509,16 +478,14 @@ template distribution => sub {
                                 my $last = pop @tags;
                                 for my $tag (@tags) {
                                     li { a {
-                                        # XXX Update this URL.
-                                        href is URI->new("/tag/$tag");
+                                        href is URI->new("/by/tag/$tag");
                                         $tag;
                                     } };
                                 }
                                 li {
                                     class is 'last';
                                     a {
-                                        # XXX Update this URL.
-                                        href is URI->new("/tag/$last");
+                                        href is URI->new("/by/tag/$last");
                                         $last;
                                     };
                                 };
