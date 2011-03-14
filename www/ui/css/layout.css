@@ -167,22 +167,22 @@
 }
 
 /**************************************************************
-   .docNav: The side bar documentation nav menu
+   #pgxntoc: The side bar documentation nav menu
  **************************************************************/
 
-ul.docNav {
+#pgxntoc ul.pgxntocroot {
   margin: 0;
   padding: 0;
   list-style-position: inside;
   text-indent:-21px;
 }
 
-/* Not sure why this is necessary, but it is to override the margin in html.css. */
-#toc ul {
+/* Override the margin from html.css. */
+#pgxntoc ul {
   margin: 0;
 }
 
-#toc h3 {
+#pgxntoc h3 {
   margin-left:7px;
 }
 
