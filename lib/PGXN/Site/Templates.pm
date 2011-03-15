@@ -358,6 +358,7 @@ template distribution => sub {
                                 onchange is 'window.location.href = this.options[this.selectedIndex].value';
                                 my $version = $dist->version;
                                 for my $rel (@rels) {
+                                    # Include release status in the option name?
                                     option {
                                         value is '/dist/' . $dist->name . "/$rel->{version}/";
                                         selected is 'selected' if $rel->{version} eq $version;
@@ -524,6 +525,14 @@ template distribution => sub {
                 } # /dl
             }; # /div.gradient exts
 
+            if (my $body = $dist->body_for_doc('README')) {
+                utf8::decode $body;
+                div {
+                    class is 'gradient exts readme';
+                    h3 { T 'README' };
+                    outs_raw $body;
+                };
+            }
             # XXX Add this.
             # div {
             #     class is 'gradient docs';

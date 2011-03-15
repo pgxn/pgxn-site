@@ -559,3 +559,7 @@ table .dist .name a {
 .dist .meta .download:hover {
   background:#202020;
 }
+
+.readme #pgxntoc {
+  display:none;
+}

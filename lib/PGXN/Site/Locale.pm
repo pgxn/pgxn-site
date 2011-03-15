@@ -18,6 +18,7 @@ our %Lexicon = (
     'PGXN Gear' => 'PGXN Gear',
     'About' => 'About',
     'About PGXN' => 'About PGXN',
+    'User' => 'User',
     'Users' => 'Users',
     'Recent' => 'Recent',
     'Recent Uploads' => 'Recent Uploads',
@@ -64,6 +65,7 @@ our %Lexicon = (
     'Tags' => 'Tags',
     'Other Documentation' => 'Other Documentation',
     'Released By' => 'Released By',
+    'README' => 'README',
 );
 
 sub accept {
