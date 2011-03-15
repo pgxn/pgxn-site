@@ -1,0 +1,25 @@
+{
+   "extension": "pair",
+   "latest": "stable",
+   "stable": {
+      "abstract": "A key/value pair data type",
+      "dist": "pair",
+      "version": "0.1.1"
+   },
+   "versions": {
+      "0.1.0": [
+         {
+            "dist": "pair",
+            "date": "2010-10-19T03:59:54Z",
+            "version": "0.1.0"
+         }
+      ],
+      "0.1.1": [
+         {
+            "dist": "pair",
+            "date": "2010-10-29T22:44:42Z",
+            "version": "0.1.1"
+         }
+      ]
+   }
+}

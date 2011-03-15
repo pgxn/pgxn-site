@@ -1,0 +1,18 @@
+{
+   "extension": "pgtap",
+   "latest": "stable",
+   "stable": {
+      "abstract": "Unit testing for PostgreSQL",
+      "dist": "pgTAP",
+      "version": "0.25.0"
+   },
+   "versions": {
+      "0.25.0": [
+         {
+            "dist": "pgTAP",
+            "date": "2011-02-02T03:25:17Z",
+            "version": "0.25.0"
+         }
+      ]
+   }
+}
