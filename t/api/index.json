@@ -4,7 +4,7 @@
    "by-user": "/by/user/{user}.json",
    "by-tag": "/by/tag/{tag}.json",
    "dist": "/dist/{dist}/{dist}-{version}.pgz",
-   "doc": "/dist/{dist}/{dist}-{version}/{doc}.html",
+   "doc": "/dist/{dist}/{dist}-{version}/{+path}.html",
    "meta": "/dist/{dist}/{dist}-{version}.json",
    "readme": "/dist/{dist}/{dist}-{version}.readme",
    "source": "/src/{dist}/{dist}-{version}/"

@@ -8,6 +8,8 @@ use Template::Declare::Tags;
 use Software::License::PostgreSQL;
 use Software::License::BSD;
 use Software::License::MIT;
+use List::Util qw(first);
+use namespace::autoclean;
 use SemVer;
 
 my $l = PGXN::Site::Locale->get_handle('en');
@@ -508,6 +510,7 @@ template distribution => sub {
                 }; # /dl
             }; # /div.gradient meta
 
+            my $docs = $dist->docs;
             div {
                 class is 'gradient exts';
                 h3 { T 'Extensions' };
@@ -515,17 +518,47 @@ template distribution => sub {
                     my $provides = $dist->provides;
                     for my $ext (sort { $a cmp $b } keys %{ $provides }) {
                         my $info = $provides->{$ext};
-                        # XXX Link to doc URL.
+                        my $path = first { delete $docs->{"$_$ext"} } 'doc/', 'docs/', '';
                         dt {
-                            span { class is 'fn';       $ext             };
-                            span { class is 'version';  $info->{version} };
+                            if (defined $path) {
+                                a {
+                                    href is $dist->relative_url_for_doc("$path$ext");
+                                    span { class is 'fn';       $ext             };
+                                    span { class is 'version';  $info->{version} };
+                                };
+                            } else {
+                                span { class is 'fn';       $ext             };
+                                span { class is 'version';  $info->{version} };
+                            }
                         };
                         dd { class is 'abstract'; $info->{abstract} };
                     }
                 } # /dl
             }; # /div.gradient exts
 
-            if (my $body = $dist->body_for_doc('README')) {
+            my $has_readme = delete $docs->{README};
+
+            if (%{ $docs }) {
+                div {
+                    class is 'gradient docs';
+                    h3 { T 'Documentation' };
+                    dl {
+                        while (my ($path, $title) = each %{ $docs }) {
+                            dt {
+                                class is 'doc';
+                                a {
+                                    href is $dist->relative_url_for_doc($path);
+                                    span { class is 'fn'; $path };
+                                };
+                            };
+                            dd { class is 'abstract'; $title };
+                        }
+                    };
+                };
+            }
+
+            if ($has_readme) {
+                my $body = $dist->body_for_doc('README');
                 utf8::decode $body;
                 div {
                     class is 'gradient exts readme';
@@ -533,13 +566,6 @@ template distribution => sub {
                     outs_raw $body;
                 };
             }
-            # XXX Add this.
-            # div {
-            #     class is 'gradient docs';
-            #     h3 { T 'Other Documentation' };
-            #     dl {
-            #     };
-            # }; # /div.gradient docs
         }; # /div#page
     } $req, { title => _title_with $dist->name . ': ' . $dist->abstract };
 };

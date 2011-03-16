@@ -66,6 +66,7 @@ our %Lexicon = (
     'Other Documentation' => 'Other Documentation',
     'Released By' => 'Released By',
     'README' => 'README',
+    'Documentation' => 'Documentation',
 );
 
 sub accept {
