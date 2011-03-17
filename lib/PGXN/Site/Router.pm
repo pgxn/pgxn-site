@@ -13,7 +13,7 @@ sub app {
     my $files      = Plack::App::File->new(root => './www/ui/');
     my $router = router {
         missing { $controller->missing(@_) };
-        resource qr{/dist/([^/]+)(?:/([^/]+))?/?} => sub {
+        resource qr{/dist/([^/]+)(?:/([^/]+))?/?$} => sub {
             GET {
                 my ($env, $args) = @_;
                 $controller->distribution($env, @{ $args->{splat} } );
