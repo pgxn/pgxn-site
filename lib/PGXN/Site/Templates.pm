@@ -477,7 +477,7 @@ template distribution => sub {
                                     li {
                                         class is 'last' if $file eq $files[-1];
                                         a {
-                                            href is URI->new("$uri/$file");
+                                            href is URI->new("$uri$file");
                                             $file;
                                         };
                                     };
