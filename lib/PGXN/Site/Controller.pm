@@ -37,10 +37,11 @@ my %code_for = (
 sub new {
     my ($class, %p) = @_;
     (my $mir = $p{mirror_url}) =~ s{/$}{};
+    (my $api = $p{api_url}) =~ s{/$}{};
     bless {
         mirror => URI->new($mir),
         api    => WWW::PGXN->new(
-            url   => $p{api_url},
+            url   => $api,
             proxy => $p{proxy_url}
         )
     } => $class;
