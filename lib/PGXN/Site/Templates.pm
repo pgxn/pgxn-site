@@ -95,9 +95,12 @@ BEGIN { create_wrapper wrapper => sub {
                     # class="here" to turn the current page tab on.
                     div {
                         id is 'mainMenu';
-                        ul {
-                            id is 'crumb';
-                            class is 'floatLeft';
+                        if (my $crumb = $args->{crumb}) {
+                            ul {
+                                id is 'crumb';
+                                class is 'floatLeft';
+                                $crumb->();
+                            }
                         }
                         ul {
                             class is 'floatRight';
@@ -521,7 +524,7 @@ template distribution => sub {
                         dt {
                             if (defined $path) {
                                 a {
-                                    href is $dist->relative_url_for_doc("$path$ext");
+                                    href is $req->uri . "$path$ext.html";
                                     span { class is 'fn';       $ext             };
                                     span { class is 'version';  $info->{version} };
                                 };
@@ -572,13 +575,41 @@ template distribution => sub {
 
 template document => sub {
     my ($code, $req, $args) = @_;
-    my $dist = $args->{dist};
+    my $dist  = $args->{dist};
+    my $title = $dist->docs->{$args->{path}};
+
     wrapper {
         div {
             id is 'page';
             outs_raw $args->{doc};
         }; # /div#page
-    } $req, { title => _title_with $dist->name . ': ' . $dist->docs->{$args->{path}} };
+    } $req, {
+        title => _title_with "$args->{dist_name}: $title",
+        crumb => sub {
+            li { a {
+                href is '/by/user/' . $dist->user;
+                title is $dist->user;
+                $dist->user;
+            } };
+            li {
+                class is 'sub';
+                a {
+                    href is $args->{dist_uri};
+                    title is $args->{dist_name};
+                    $args->{dist_name};
+                }
+            };
+            li {
+                class is 'sub here';
+                a {
+                    href is $req->uri;
+                    title is $title;
+                    $title;
+                    # $args->{path};
+                }
+            };
+        },
+    };
 };
 
 template notfound => sub {

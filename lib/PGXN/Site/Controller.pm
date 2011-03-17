@@ -92,11 +92,17 @@ sub document {
         or return $self->missing($env);
     $path =~ s/[.]html$//;
     my $doc = $dist->body_for_doc($path) or return $self->missing($env);
+
+    my ($dist_uri, $dist_name) = $version
+        ? ("/dist/$name/$version/", "$name $version")
+        : ("/dist/$name/", $name);
     $self->render('/document', { env => $env, vars => {
-        dist   => $dist,
-        path   => $path,
-        doc    => $doc,
-        mirror => $self->mirror,
+        dist      => $dist,
+        path      => $path,
+        doc       => $doc,
+        mirror    => $self->mirror,
+        dist_uri  => $dist_uri,
+        dist_name => $dist_name,
     }});
 }
 
