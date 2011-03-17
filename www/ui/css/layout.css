@@ -170,10 +170,21 @@
    #pgxntoc: The side bar documentation nav menu
  **************************************************************/
 
+#pgxntoc {
+  background: #555;
+  margin-left:-21px;
+  padding-left:26px;
+  padding-bottom: 25px;
+}
+
 #pgxntoc ul.pgxntocroot {
   margin: 0;
   padding: 0;
   list-style-position: inside;
+  text-indent:-21px;
+}
+
+#pgxntoc ul.pgxntocroot li {
   text-indent:-21px;
 }
 
@@ -299,6 +310,15 @@ ul.sideMenu {
   font: 400 1.3em "trebuchet ms", serif;
 }
 
+#pgxntoc li a {
+  display: block;
+}
+
+#pgxntoc li a:hover {
+  display: block;
+  text-decoration: none;
+}
+
 .sideMenu li a {
   display: block;
   margin: 0.2em 0;
@@ -308,7 +328,7 @@ ul.sideMenu {
   color: #FFF;
 } 
 
-.sideMenu li a:hover {
+.sideMenu li a:hover, #pgxntoc li a:hover {
   color: #65EBFF;
   background: #5F5F5F;
 }
@@ -390,7 +410,7 @@ ul.sideMenu {
   width: 100%;
 }
 
-.width75 {
+.width75, #pgxnbod {
   width: 74%;
 }
 
@@ -402,7 +422,7 @@ ul.sideMenu {
   width: 32.7%;
 }
 
-.width25 {
+.width25, #pgxntoc {
   width: 24.7%;
 }
 
@@ -411,11 +431,11 @@ ul.sideMenu {
    Alignment classes
  **************************************************************/
 
-.floatLeft {
+.floatLeft, #pgxntoc {
   float: left;
 }
 
-.floatRight {
+.floatRight, #pgxnbod {
   float: right;
 }
 
@@ -465,7 +485,7 @@ ul.sideMenu {
   color: #EEE;
 }
 
-.gradient {
+.gradient, #pgxnbod {
   margin-bottom: 2em;
   background: #555 url(../img/gradient.jpg) repeat-x bottom left; 
 }

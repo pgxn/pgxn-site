@@ -13,10 +13,20 @@ sub app {
     my $files      = Plack::App::File->new(root => './www/ui/');
     my $router = router {
         missing { $controller->missing(@_) };
-        resource qr{/dist/([^/]+)(?:/([^/]+))?/?$} => sub {
+        # /dist/{dist}
+        # /dist/{dist}/{version}
+        resource qr{/dist/([^/]+)(?:/(\d[^/]+))?/?$} => sub {
             GET {
                 my ($env, $args) = @_;
                 $controller->distribution($env, @{ $args->{splat} } );
+            };
+        };
+        # /dist/{dist}/{path}
+        # /dist/{dist}/{version}/{path}
+        resource qr{/dist/([^/]+)(?:/(\d[^/]+))?/(.+)/?$} => sub {
+            GET {
+                my ($env, $args) = @_;
+                $controller->document($env, @{ $args->{splat} } );
             };
         };
         resource qr{/(?:index[.]html)?$} => sub {

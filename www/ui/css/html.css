@@ -75,13 +75,13 @@ table {
 /* Done so the leftmost column aligns properly with the header.
    If the leftmost column has class gradient applied to it, 
    this class isn't required. */
-.leftColumn h1,
-.leftColumn h2, 
-.leftColumn h3,
-.leftColumn h4,
-.leftColumn h5,
-.leftColumn h6,
-.leftColumn p,
+.leftColumn h1, #pgxntoc h1,
+.leftColumn h2, #pgxntoc h2, 
+.leftColumn h3, #pgxntoc h3,
+.leftColumn h4, #pgxntoc h4,
+.leftColumn h5, #pgxntoc h5,
+.leftColumn h6, #pgxntoc h6,
+.leftColumn p, #pgxntoc p,
 .leftColumn dl {
   padding-left: 0;
 }
@@ -142,7 +142,7 @@ pre {
   line-height: 120%;
 }
 
-.leftColumn code {
+.leftColumn code, #pgxntoc code {
   margin-left: 0;
 }
 

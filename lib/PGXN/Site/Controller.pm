@@ -86,6 +86,20 @@ sub distribution {
     }});
 }
 
+sub document {
+    my ($self, $env, $name, $version, $path) = @_;
+    my $dist = $self->api->find_distribution(name => $name, version => $version)
+        or return $self->missing($env);
+    $path =~ s/[.]html$//;
+    my $doc = $dist->body_for_doc($path) or return $self->missing($env);
+    $self->render('/document', { env => $env, vars => {
+        dist   => $dist,
+        path   => $path,
+        doc    => $doc,
+        mirror => $self->mirror,
+    }});
+}
+
 sub server_error {
     my ($self, $env) = @_;
 

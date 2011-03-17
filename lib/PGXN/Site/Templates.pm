@@ -569,6 +569,18 @@ template distribution => sub {
     } $req, { title => _title_with $dist->name . ': ' . $dist->abstract };
 };
 
+
+template document => sub {
+    my ($code, $req, $args) = @_;
+    my $dist = $args->{dist};
+    wrapper {
+        div {
+            id is 'page';
+            outs_raw $args->{doc};
+        }; # /div#page
+    } $req, { title => _title_with $dist->name . ': ' . $dist->docs->{$args->{path}} };
+};
+
 template notfound => sub {
     my ($self, $req, $args) = @_;
     wrapper {
