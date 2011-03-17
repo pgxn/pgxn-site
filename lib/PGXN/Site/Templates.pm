@@ -599,6 +599,7 @@ template document => sub {
     wrapper {
         div {
             id is 'page';
+            class is 'doc';
             outs_raw $args->{doc};
         }; # /div#page
     } $req, {

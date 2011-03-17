@@ -410,7 +410,7 @@ ul.sideMenu {
   width: 100%;
 }
 
-.width75, #pgxnbod {
+.width75, .doc #pgxnbod {
   width: 74%;
 }
 
@@ -422,7 +422,7 @@ ul.sideMenu {
   width: 32.7%;
 }
 
-.width25, #pgxntoc {
+.width25, .doc #pgxntoc {
   width: 24.7%;
 }
 
@@ -431,11 +431,11 @@ ul.sideMenu {
    Alignment classes
  **************************************************************/
 
-.floatLeft, #pgxntoc {
+.floatLeft, .doc #pgxntoc {
   float: left;
 }
 
-.floatRight, #pgxnbod {
+.floatRight, .doc #pgxnbod {
   float: right;
 }
 
@@ -485,7 +485,7 @@ ul.sideMenu {
   color: #EEE;
 }
 
-.gradient, #pgxnbod {
+.gradient, .doc #pgxnbod {
   margin-bottom: 2em;
   background: #555 url(../img/gradient.jpg) repeat-x bottom left; 
 }
