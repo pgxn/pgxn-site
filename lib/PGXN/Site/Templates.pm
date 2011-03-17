@@ -383,7 +383,7 @@ template distribution => sub {
                     dd {
                         span { class is 'vcard'; a {
                             class is 'url fn';
-                            href is '/by/user/' . $dist->user;
+                            href is '/user/' . $dist->user;
                             $dist->user;
                         }};
                     };
@@ -495,14 +495,14 @@ template distribution => sub {
                                 my $last = pop @tags;
                                 for my $tag (@tags) {
                                     li { a {
-                                        href is URI->new("/by/tag/$tag");
+                                        href is URI->new("/tag/$tag");
                                         $tag;
                                     } };
                                 }
                                 li {
                                     class is 'last';
                                     a {
-                                        href is URI->new("/by/tag/$last");
+                                        href is URI->new("/tag/$last");
                                         $last;
                                     };
                                 };
@@ -582,7 +582,7 @@ template distribution => sub {
         title => _title_with $args->{dist_name} . ': ' . $dist->abstract,
         crumb => sub {
             li { a {
-                href is '/by/user/' . $dist->user;
+                href is '/user/' . $dist->user;
                 title is $dist->user;
                 $dist->user;
             } };
@@ -618,7 +618,7 @@ template document => sub {
         title => _title_with $title . ($info->{abstract} ? ": $info->{abstract}" : ''),
         crumb => sub {
             li { a {
-                href is '/by/user/' . $dist->user;
+                href is '/user/' . $dist->user;
                 title is $dist->user;
                 $dist->user;
             } };
