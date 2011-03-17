@@ -593,8 +593,9 @@ template distribution => sub {
 
 template document => sub {
     my ($code, $req, $args) = @_;
-    my $dist  = $args->{dist};
-    my $title = $dist->docs->{$args->{path}};
+    my $dist    = $args->{dist};
+    my $absract = $dist->docs->{$args->{path}};
+    (my $page = $args->{path}) =~ s{^doc/}{};
 
     wrapper {
         div {
@@ -603,7 +604,7 @@ template document => sub {
             outs_raw $args->{doc};
         }; # /div#page
     } $req, {
-        title => _title_with "$args->{dist_name}: $title",
+        title => _title_with "$page: $absract",
         crumb => sub {
             li { a {
                 href is '/by/user/' . $dist->user;
@@ -622,8 +623,8 @@ template document => sub {
                 class is 'sub here';
                 a {
                     href is $req->uri;
-                    title is $title;
-                    $title;
+                    title is $page;
+                    $page;
                     # $args->{path};
                 }
             };
