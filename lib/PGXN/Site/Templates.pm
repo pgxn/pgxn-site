@@ -104,8 +104,7 @@ BEGIN { create_wrapper wrapper => sub {
                             # XXX Fill in these links.
                             for my $spec (
                                 [ '#', 'About PGXN',                 'About'  ],
-                                [ '#', 'Users',                      'Users'  ],
-                                [ '#', 'Recent Uploads',             'Recent' ],
+                                # [ '#', 'Recent Uploads',             'Recent' ],
                                 [ '#', 'News',                       'News'   ],
                                 [ '#', 'Frequently Asked Questions', 'FAQ'    ],
                             ) {
