@@ -546,15 +546,23 @@ template distribution => sub {
                     class is 'gradient docs';
                     h3 { T 'Documentation' };
                     dl {
-                        while (my ($path, $title) = each %{ $docs }) {
+                        while (my ($path, $info) = each %{ $docs }) {
                             dt {
                                 class is 'doc';
                                 a {
                                     href is $req->uri . "$sep$path.html";
-                                    span { class is 'fn'; $path };
+                                    span {
+                                        class is 'fn';
+                                        if ($info->{abstract}) {
+                                            outs $info->{title}
+                                        } else {
+                                            (my $page = $path) =~ s{^docs?/}{};
+                                            outs $page;
+                                        }
+                                    };
                                 };
                             };
-                            dd { class is 'abstract'; $title };
+                            dd { class is 'abstract'; $info->{abstract} || $info->{title} };
                         }
                     };
                 };
@@ -593,9 +601,12 @@ template distribution => sub {
 
 template document => sub {
     my ($code, $req, $args) = @_;
-    my $dist    = $args->{dist};
-    my $absract = $dist->docs->{$args->{path}};
-    (my $page = $args->{path}) =~ s{^doc/}{};
+    my $dist = $args->{dist};
+    my $info = $dist->docs->{$args->{path}};
+    my $title = $info->{abstract} ? $info->{title} : do {
+        (my $page = $args->{path}) =~ s{^docs?/}{};
+        $page;
+    };
 
     wrapper {
         div {
@@ -604,7 +615,7 @@ template document => sub {
             outs_raw $args->{doc};
         }; # /div#page
     } $req, {
-        title => _title_with "$page: $absract",
+        title => _title_with $title . ($info->{abstract} ? ": $info->{abstract}" : ''),
         crumb => sub {
             li { a {
                 href is '/by/user/' . $dist->user;
@@ -623,9 +634,8 @@ template document => sub {
                 class is 'sub here';
                 a {
                     href is $req->uri;
-                    title is $page;
-                    $page;
-                    # $args->{path};
+                    title is $title;
+                    $title;
                 }
             };
         },
