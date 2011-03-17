@@ -77,12 +77,14 @@ sub home {
 }
 
 sub distribution {
-    my ($self, $env) = (shift, shift);
-    my $dist = $self->api->find_distribution(name => shift, version => shift)
+    my ($self, $env, $name, $version) = @_;
+    my $dist = $self->api->find_distribution(name => $name, version => $version)
         or return $self->missing($env);
+
     $self->render('/distribution', { env => $env, vars => {
-        dist   => $dist,
-        mirror => $self->mirror,
+        dist      => $dist,
+        mirror    => $self->mirror,
+        dist_name => $version ? "$name $version" : $name,
     }});
 }
 

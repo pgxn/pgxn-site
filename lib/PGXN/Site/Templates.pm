@@ -302,7 +302,7 @@ template distribution => sub {
             class is 'dist';
             div {
                 class is 'gradient meta';
-                h1 { $dist->name };
+                h1 { $args->{dist_name} };
                 span {
                     class is 'download';
                     a {
@@ -513,6 +513,7 @@ template distribution => sub {
             }; # /div.gradient meta
 
             my $docs = $dist->docs;
+            my $sep = $req->uri =~ m{/$} ? '' : '/';
             div {
                 class is 'gradient exts';
                 h3 { T 'Extensions' };
@@ -524,7 +525,7 @@ template distribution => sub {
                         dt {
                             if (defined $path) {
                                 a {
-                                    href is $req->uri . "$path$ext.html";
+                                    href is $req->uri . "$sep$path$ext.html";
                                     span { class is 'fn';       $ext             };
                                     span { class is 'version';  $info->{version} };
                                 };
@@ -549,7 +550,7 @@ template distribution => sub {
                             dt {
                                 class is 'doc';
                                 a {
-                                    href is $dist->relative_url_for_doc($path);
+                                    href is $req->uri . "$sep$path.html";
                                     span { class is 'fn'; $path };
                                 };
                             };
@@ -569,7 +570,24 @@ template distribution => sub {
                 };
             }
         }; # /div#page
-    } $req, { title => _title_with $dist->name . ': ' . $dist->abstract };
+    } $req, {
+        title => _title_with $args->{dist_name} . ': ' . $dist->abstract,
+        crumb => sub {
+            li { a {
+                href is '/by/user/' . $dist->user;
+                title is $dist->user;
+                $dist->user;
+            } };
+            li {
+                class is 'sub';
+                a {
+                    href is $req->uri;
+                    title is $args->{dist_name};
+                    $args->{dist_name};
+                }
+            };
+        },
+    };
 };
 
 
