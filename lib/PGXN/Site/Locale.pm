@@ -73,6 +73,7 @@ our %Lexicon = (
     'Email' => 'Email',
     'Twitter' => 'Twitter',
     'Browse' => 'Browse',
+    'Tag: [_1]' => 'Tag: “[_1]”',
 );
 
 sub accept {

@@ -707,16 +707,17 @@ template tag => sub {
     my ($self, $req, $args) = @_;
     my $tag = $args->{tag};
     my $api = $args->{api};
+    my $title = T 'Tag: [_1]', $tag->name;
 
     wrapper {
         div {
             id is 'page';
             class is 'dist';
-            h1 { $tag->name };
+            h1 { $title };
             show release_table => $req, $tag->releases, $args;
         }; # /div#page
     } $req, {
-        title => _title_with $tag->name,
+        title => _title_with $title,
     };
 };
 
