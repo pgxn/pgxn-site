@@ -498,6 +498,12 @@ ul.sideMenu {
 .dist .meta .download {
   position: absolute;
   top:205px;
+  right:82px;
+}
+
+.dist .meta .browse {
+  position: absolute;
+  top:205px;
   right:40px;
 }
 
@@ -575,12 +581,12 @@ table .dist .name a {
   background: url(../img/favicon.png) no-repeat 4px 3px;
 }
 
-.dist .meta .download a {
+.dist .meta .download a, .dist .meta .browse a {
   display:block;
   margin:0;
   padding:10px 10px 5px;
 }
-.dist .meta .download:hover {
+.dist .meta .download:hover, .dist .meta .browse:hover {
   background:#202020;
 }
 

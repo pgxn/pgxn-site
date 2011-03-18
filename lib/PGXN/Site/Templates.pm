@@ -314,7 +314,19 @@ template distribution => sub {
                             alt is T 'Download';
                         };
                     };
-                }; # /span#download
+                }; # /span.download
+                span {
+                    class is 'browse';
+                    a {
+                        class is 'url';
+                        href is URI->new($args->{mirror} . $dist->source_path);
+                        title is T 'Browse [_1] [_2]', $dist->name, $dist->version;
+                        img {
+                            src is '/ui/img/package.png';
+                            alt is T 'Browse';
+                        };
+                    };
+                }; # /span.download
                 dl {
                     dt { T 'This Release' };
                     dd {
