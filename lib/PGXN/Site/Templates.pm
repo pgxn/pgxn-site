@@ -717,7 +717,7 @@ template user => sub {
                             cell { a{
                                 class is 'url';
                                 href is URI->new($args->{mirror} . $api->download_path_for($dist => $info->{version}));
-                                title is T 'Download [_1]', $dist, $info->{version};
+                                title is T 'Download [_1] [_2]', $dist, $info->{version};
                                 img {
                                     src is '/ui/img/download.png';
                                     alt is T 'Download';
@@ -726,7 +726,7 @@ template user => sub {
                             cell { a{
                                 class is 'url';
                                 href is URI->new($args->{mirror} . $api->source_path_for($dist => $info->{version}));
-                                title is T 'Browse [_1]', $dist, $info->{version};
+                                title is T 'Browse [_1] [_2]', $dist, $info->{version};
                                 img {
                                     src is '/ui/img/package.png';
                                     alt is T 'Browse';

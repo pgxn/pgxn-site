@@ -42,6 +42,7 @@ our %Lexicon = (
     'Resource not found.' => 'Resource not found.',
     'Download' => 'Download',
     'Download [_1] [_2]' => 'Download [_1] [_2]',
+    'Browse [_1] [_2]' => 'Browse [_1] [_2]',
     'This Release' => 'This Release',
     'Date' => 'Date',
     'Latest Stable' => 'Latest Stable',
@@ -71,8 +72,6 @@ our %Lexicon = (
     'URL' => 'URL',
     'Email' => 'Email',
     'Twitter' => 'Twitter',
-    'Download [_1]' => 'Download [_1]',
-    'Browse [_1]' => 'Browse [_1]',
     'Browse' => 'Browse',
 );
 
