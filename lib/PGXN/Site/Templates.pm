@@ -764,24 +764,30 @@ template release_table => sub {
                         # Looking forward to HTML 5 in Template::Declare.
                         outs_raw qq{<time class="bday" datetime="$info->{date}">$date</time>};
                     };
-                    cell { a{
-                        class is 'url';
-                        href is URI->new($args->{mirror} . $api->download_path_for($dist => $info->{version}));
-                        title is T 'Download [_1] [_2]', $dist, $info->{version};
-                        img {
-                            src is '/ui/img/download.png';
-                            alt is T 'Download';
+                    cell {
+                        class is 'download';
+                        a {
+                            class is 'url';
+                            href is URI->new($args->{mirror} . $api->download_path_for($dist => $info->{version}));
+                            title is T 'Download [_1] [_2]', $dist, $info->{version};
+                            img {
+                                src is '/ui/img/download.png';
+                                alt is T 'Download';
+                            };
                         };
-                    } };
-                    cell { a{
-                        class is 'url';
-                        href is URI->new($args->{mirror} . $api->source_path_for($dist => $info->{version}));
-                        title is T 'Browse [_1] [_2]', $dist, $info->{version};
-                        img {
-                            src is '/ui/img/package.png';
-                            alt is T 'Browse';
-                        };
-                    } };
+                    };
+                    cell {
+                        class is 'browse';
+                        a {
+                            class is 'url';
+                            href is URI->new($args->{mirror} . $api->source_path_for($dist => $info->{version}));
+                            title is T 'Browse [_1] [_2]', $dist, $info->{version};
+                            img {
+                                src is '/ui/img/package.png';
+                                alt is T 'Browse';
+                            };
+                        }
+                    };
                 }; # /tr.dist
             }
         } }; # /table

@@ -508,6 +508,10 @@ ul.sideMenu {
   padding-left:0;
 }
 
+.dists .browse, .dists .download {
+  width:22px;
+}
+
 .dist .meta .download {
   position: absolute;
   top:205px;
