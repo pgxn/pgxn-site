@@ -21,14 +21,24 @@ sub app {
                 $controller->distribution($env, @{ $args->{splat} } );
             };
         };
+
         # /dist/{dist}/{path}
         # /dist/{dist}/{version}/{path}
-        resource qr{/dist/([^/]+)(?:/(\d[^/]+))?/(.+)/?$} => sub {
+        resource qr{/dist/([^/]+)(?:/(\d[^/]+))?/(.+)[.]html$} => sub {
             GET {
                 my ($env, $args) = @_;
                 $controller->document($env, @{ $args->{splat} } );
             };
         };
+
+        # /user/{user}/
+        resource qr{/user/([^/]+)/?$} => sub {
+            GET {
+                my ($env, $args) = @_;
+                $controller->user($env, @{ $args->{splat} } );
+            };
+        };
+
         resource qr{/(?:index[.]html)?$} => sub {
             GET { $controller->home(@_) }
         };

@@ -102,9 +102,19 @@ sub document {
         dist      => $dist,
         path      => $path,
         doc       => $doc,
-        mirror    => $self->mirror,
         dist_uri  => $dist_uri,
         dist_name => $dist_name,
+    }});
+}
+
+sub user {
+    my ($self, $env, $nick) = @_;
+    my $user = $self->api->find_user($nick) or return $self->missing($env);
+
+    $self->render('/user', { env => $env, vars => {
+        user   => $user,
+        api    => $self->api,
+        mirror => $self->mirror,
     }});
 }
 

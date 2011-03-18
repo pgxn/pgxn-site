@@ -642,6 +642,108 @@ template document => sub {
     };
 };
 
+template user => sub {
+    my ($code, $req, $args) = @_;
+    my $user = $args->{user};
+    my $api  = $args->{api};
+
+    wrapper {
+        div {
+            id is 'page';
+            class is 'dist';
+            div {
+                class is 'gradient meta vcard';
+                h1 { class is 'fn'; $user->name };
+                dl {
+                    dt { T 'Nickname' };
+                    dd {a {
+                        class is 'nickname';
+                        href is '/user/' . $user->nickname;
+                        $user->nickname;
+                    } };
+                    dt { T 'Email' };
+                    dd {
+                        class is 'email';
+                        outs_raw '<a href="'
+                            . _obscure('mailto:' . $user->email)
+                            . '">' . _obscure($user->email)
+                            . '</a>';
+                    };
+                    dt { T 'URL' };
+                    dd {
+                        class is 'url';
+                        a { href is $user->uri; $user->uri; };
+                    };
+                    if (my $t = $user->twitter) {
+                        dt { T 'Twitter' };
+                        dd {
+                            class is 'twitter';
+                            a { href is "http://twitter.com/$t"; $t };
+                        };
+                    }
+                };
+            }; # /div.grdient meta vcard
+
+            div {
+                class is 'gradient dists';
+                h3 { T 'Distributions' };
+                table { tbody {
+                    my $rel = $user->releases;
+                    for my $dist (sort keys %{ $rel }) {
+                        my $status = first { $rel->{$dist}{$_} } qw(stable testing unstable);
+                        my $info   = $rel->{$dist}{$status}[0];
+                        row {
+                            class is 'dist';
+                            cell {
+                                class is 'name';
+                                a {
+                                    class is 'url';
+                                    href is "/dist/$dist/";
+                                    span { class is 'fn'; $dist };
+                                    span { class is 'version'; $info->{version} };
+                                    span { class is 'status'; "($status)" } if $status ne 'stable';
+                                };
+                            };
+                            cell {
+                                class is 'abstract';
+                                $rel->{$dist}{abstract};
+                            };
+                            cell {
+                                class is 'bday';
+                                (my $date = $info->{date}) =~ s{T.+}{};
+                                # Looking forward to HTML 5 in Template::Declare.
+                                outs_raw qq{<time class="bday" datetime="$info->{date}">$date</time>};
+                            };
+                            cell { a{
+                                class is 'url';
+                                # XXX Add uri_for interface to API.
+                                href is URI->new($args->{mirror} . $api->_uri_for(dist => name => $dist));
+                                title is T 'Download [_1]', $dist, $info->{version};
+                                img {
+                                    src is '/ui/img/download.png';
+                                    alt is T 'Download';
+                                };
+                            } };
+                            cell { a{
+                                class is 'url';
+                                # XXX Add uri_for interface to API.
+                                href is URI->new($args->{mirror} . $api->_uri_for(source => name => $dist, version => $info->{version}));
+                                title is T 'Browse [_1]', $dist, $info->{version};
+                                img {
+                                    src is '/ui/img/package.png';
+                                    alt is T 'Browse';
+                                };
+                            } };
+                        }; # /tr.dist
+                    }
+                } }; # /table
+            }; # /div.grdient dists
+        }, # /div#page
+    } $req, {
+        title => _title_with $user->name . ' (' . $user->nickname . ')',
+    };
+};
+
 template notfound => sub {
     my ($self, $req, $args) = @_;
     wrapper {
@@ -685,6 +787,51 @@ sub _license($) {
     $class = "Software::License::$class";
     eval "require $class; 1" or die;
     return $class;
+}
+
+sub _obscure ($) {
+#
+#   Input: an email address, e.g. "foo@example.com"
+#
+#   Output: the email address as a mailto link, with each character
+#       of the address encoded as either a decimal or hex entity, in
+#       the hopes of foiling most address harvesting spam bots. E.g.:
+#
+#     <a href="&#x6D;&#97;&#105;&#108;&#x74;&#111;:&#102;&#111;&#111;&#64;&#101;
+#       x&#x61;&#109;&#x70;&#108;&#x65;&#x2E;&#99;&#111;&#109;">&#102;&#111;&#111;
+#       &#64;&#101;x&#x61;&#109;&#x70;&#108;&#x65;&#x2E;&#99;&#111;&#109;</a>
+#
+#   Based on a filter by Matthew Wickline, posted to the BBEdit-Talk
+#   mailing list: <http://tinyurl.com/yu7ue>
+#
+    my $addr = shift;
+
+    my @encode = (
+        sub { '&#' .                 ord(shift)   . ';' },
+        sub { '&#x' . sprintf( "%X", ord(shift) ) . ';' },
+        sub {                            shift          },
+    );
+
+    $addr =~ s{(.)}{
+        my $char = $1;
+        if ( $char eq '@' ) {
+            # this *must* be encoded. I insist.
+            $char = $encode[int rand 1]->($char);
+        }
+        elsif ( $char ne ':' ) {
+            # leave ':' alone (to spot mailto: later)
+            my $r = rand;
+            # roughly 10% raw, 45% hex, 45% dec
+            $char = (
+                $r > .9   ?  $encode[2]->($char)  :
+                $r < .45  ?  $encode[1]->($char)  :
+                             $encode[0]->($char)
+            );
+        }
+        $char;
+    }gex;
+
+    return $addr;
 }
 
 =head1 Name

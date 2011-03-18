@@ -67,6 +67,13 @@ our %Lexicon = (
     'Released By' => 'Released By',
     'README' => 'README',
     'Documentation' => 'Documentation',
+    'Nickname' => 'Nickname',
+    'URL' => 'URL',
+    'Email' => 'Email',
+    'Twitter' => 'Twitter',
+    'Download [_1]' => 'Download [_1]',
+    'Browse [_1]' => 'Browse [_1]',
+    'Browse' => 'Browse',
 );
 
 sub accept {

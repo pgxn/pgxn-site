@@ -543,6 +543,10 @@ ul.sideMenu {
    color:white;
 }
 
+.dists table {
+  /* width: 100%; /* Figure out why the table overflows the right side of the div it's in. */
+}
+
 table td {
    padding: 5px;
 }
