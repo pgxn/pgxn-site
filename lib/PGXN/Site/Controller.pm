@@ -78,7 +78,7 @@ sub home {
 
 sub distribution {
     my ($self, $env, $name, $version) = @_;
-    my $dist = $self->api->find_distribution(name => $name, version => $version)
+    my $dist = $self->api->find_distribution($name => $version)
         or return $self->missing($env);
 
     $self->render('/distribution', { env => $env, vars => {
@@ -90,7 +90,7 @@ sub distribution {
 
 sub document {
     my ($self, $env, $name, $version, $path) = @_;
-    my $dist = $self->api->find_distribution(name => $name, version => $version)
+    my $dist = $self->api->find_distribution($name => $version)
         or return $self->missing($env);
     $path =~ s/[.]html$//;
     my $doc = $dist->body_for_doc($path) or return $self->missing($env);
