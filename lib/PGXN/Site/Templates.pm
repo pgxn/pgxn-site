@@ -294,7 +294,7 @@ sub _title_with($) {
 }
 
 template distribution => sub {
-    my ($code, $req, $args) = @_;
+    my ($self, $req, $args) = @_;
     my $dist = $args->{dist};
     wrapper {
         div {
@@ -507,14 +507,14 @@ template distribution => sub {
                                 my $last = pop @tags;
                                 for my $tag (@tags) {
                                     li { a {
-                                        href is URI->new("/tag/$tag");
+                                        href is URI->new("/tag/$tag/");
                                         $tag;
                                     } };
                                 }
                                 li {
                                     class is 'last';
                                     a {
-                                        href is URI->new("/tag/$last");
+                                        href is URI->new("/tag/$last/");
                                         $last;
                                     };
                                 };
@@ -612,7 +612,7 @@ template distribution => sub {
 
 
 template document => sub {
-    my ($code, $req, $args) = @_;
+    my ($self, $req, $args) = @_;
     my $dist = $args->{dist};
     my $info = $dist->docs->{$args->{path}};
     my $title = $info->{abstract} ? $info->{title} : do {
@@ -655,7 +655,7 @@ template document => sub {
 };
 
 template user => sub {
-    my ($code, $req, $args) = @_;
+    my ($self, $req, $args) = @_;
     my $user = $args->{user};
     my $api  = $args->{api};
 
@@ -694,63 +694,29 @@ template user => sub {
                         };
                     }
                 };
-            }; # /div.grdient meta vcard
+            }; # /div.gradient meta vcard
 
-            div {
-                class is 'gradient dists';
-                h3 { T 'Distributions' };
-                table { tbody {
-                    my $rel = $user->releases;
-                    for my $dist (sort keys %{ $rel }) {
-                        my $status = first { $rel->{$dist}{$_} } qw(stable testing unstable);
-                        my $info   = $rel->{$dist}{$status}[0];
-                        row {
-                            class is 'dist';
-                            cell {
-                                class is 'name';
-                                a {
-                                    class is 'url';
-                                    href is "/dist/$dist/";
-                                    span { class is 'fn'; $dist };
-                                    span { class is 'version'; $info->{version} };
-                                    span { class is 'status'; "($status)" } if $status ne 'stable';
-                                };
-                            };
-                            cell {
-                                class is 'abstract';
-                                $rel->{$dist}{abstract};
-                            };
-                            cell {
-                                class is 'bday';
-                                (my $date = $info->{date}) =~ s{T.+}{};
-                                # Looking forward to HTML 5 in Template::Declare.
-                                outs_raw qq{<time class="bday" datetime="$info->{date}">$date</time>};
-                            };
-                            cell { a{
-                                class is 'url';
-                                href is URI->new($args->{mirror} . $api->download_path_for($dist => $info->{version}));
-                                title is T 'Download [_1] [_2]', $dist, $info->{version};
-                                img {
-                                    src is '/ui/img/download.png';
-                                    alt is T 'Download';
-                                };
-                            } };
-                            cell { a{
-                                class is 'url';
-                                href is URI->new($args->{mirror} . $api->source_path_for($dist => $info->{version}));
-                                title is T 'Browse [_1] [_2]', $dist, $info->{version};
-                                img {
-                                    src is '/ui/img/package.png';
-                                    alt is T 'Browse';
-                                };
-                            } };
-                        }; # /tr.dist
-                    }
-                } }; # /table
-            }; # /div.grdient dists
-        }, # /div#page
+            show release_table => $req, $user->releases, $args;
+        }; # /div#page
     } $req, {
         title => _title_with $user->name . ' (' . $user->nickname . ')',
+    };
+};
+
+template tag => sub {
+    my ($self, $req, $args) = @_;
+    my $tag = $args->{tag};
+    my $api = $args->{api};
+
+    wrapper {
+        div {
+            id is 'page';
+            class is 'dist';
+            h1 { $tag->name };
+            show release_table => $req, $tag->releases, $args;
+        }; # /div#page
+    } $req, {
+        title => _title_with $tag->name,
     };
 };
 
@@ -763,6 +729,62 @@ template notfound => sub {
             T q{Resource not found.};
         };
     } $req, $args;
+};
+
+template release_table => sub {
+    my ($self, $req, $rel, $args) = @_;
+    my $api = $args->{api};
+    div {
+        class is 'gradient dists';
+        h3 { T 'Distributions' };
+        table { tbody {
+            for my $dist (sort keys %{ $rel }) {
+                my $status = first { $rel->{$dist}{$_} } qw(stable testing unstable);
+                my $info   = $rel->{$dist}{$status}[0];
+                row {
+                    class is 'dist';
+                    cell {
+                        class is 'name';
+                        a {
+                            class is 'url';
+                            href is "/dist/$dist/";
+                            span { class is 'fn'; $dist };
+                            span { class is 'version'; $info->{version} };
+                            span { class is 'status'; "($status)" } if $status ne 'stable';
+                        };
+                    };
+                    cell {
+                        class is 'abstract';
+                        $rel->{$dist}{abstract};
+                    };
+                    cell {
+                        class is 'bday';
+                        (my $date = $info->{date}) =~ s{T.+}{};
+                        # Looking forward to HTML 5 in Template::Declare.
+                        outs_raw qq{<time class="bday" datetime="$info->{date}">$date</time>};
+                    };
+                    cell { a{
+                        class is 'url';
+                        href is URI->new($args->{mirror} . $api->download_path_for($dist => $info->{version}));
+                        title is T 'Download [_1] [_2]', $dist, $info->{version};
+                        img {
+                            src is '/ui/img/download.png';
+                            alt is T 'Download';
+                        };
+                    } };
+                    cell { a{
+                        class is 'url';
+                        href is URI->new($args->{mirror} . $api->source_path_for($dist => $info->{version}));
+                        title is T 'Browse [_1] [_2]', $dist, $info->{version};
+                        img {
+                            src is '/ui/img/package.png';
+                            alt is T 'Browse';
+                        };
+                    } };
+                }; # /tr.dist
+            }
+        } }; # /table
+    }; # /div.gradient dists
 };
 
 my %class_for = (

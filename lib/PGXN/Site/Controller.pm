@@ -118,6 +118,17 @@ sub user {
     }});
 }
 
+sub tag {
+    my ($self, $env, $tag) = @_;
+    $tag = $self->api->find_tag($tag) or return $self->missing($env);
+
+    $self->render('/tag', { env => $env, vars => {
+        tag    => $tag,
+        api    => $self->api,
+        mirror => $self->mirror,
+    }});
+}
+
 sub server_error {
     my ($self, $env) = @_;
 
