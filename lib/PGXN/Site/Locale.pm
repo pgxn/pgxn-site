@@ -74,6 +74,10 @@ our %Lexicon = (
     'Twitter' => 'Twitter',
     'Browse' => 'Browse',
     'Tag: [_1]' => 'Tag: “[_1]”',
+    'PGXN Search' => 'PGXN Search',
+    'In the [_1] distribution' => 'In the [_1] distribution',
+    'Uploaded by [_1]' => 'Uploaded by [_1]',
+    'Search matched no documents.' => 'Search matched no documents.',
 );
 
 sub accept {

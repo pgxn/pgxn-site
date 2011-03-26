@@ -178,42 +178,7 @@ template home => sub {
             id is 'homepage';
             div {
                 class is 'hsearch floatLeft';
-                form {
-                    id is 'homesearch';
-                    action is '#'; # XXX
-                    enctype is 'application/x-www-form-urlencoded';
-                    method is 'get';
-                    fieldset {
-                        input {
-                            type  is 'text';
-                            class is 'width50';
-                            name  is 'q';
-                        };
-                    }; # /fieldset
-                    fieldset {
-                        label { attr { id is 'inlabel'; for => 'searchin' }; T 'in' };
-                        select {
-                            id is 'searchin';
-                            name is 'in';
-                            option {
-                                value is '';
-                                selected is 'selected';
-                                'All';
-                            };
-                            for my $doctype (qw(extensions distributions user tags)) {
-                                option {
-                                    value is $doctype;
-                                    T ucfirst $doctype;
-                                };
-                            }
-                        };
-                        input {
-                            type  is 'submit';
-                            value is T 'PGXN Search';
-                            class is 'button';
-                        };
-                    }; # /fieldset
-                }; # /form#homesearch
+                show search_form => { id => 'homesearch' };
 
                 div {
                     id is 'cloud';
@@ -721,6 +686,68 @@ template tag => sub {
     };
 };
 
+template search => sub {
+    my ($self, $req, $args) = @_;
+    my $api  = $args->{api};
+    my $hits = $args->{results}{hits};
+
+    wrapper {
+        div {
+            id is 'page';
+            show search_form => { id => 'homesearch', query => $args->{results}{query}, in => $args->{by} };
+            div {
+                id is 'results';
+                class is 'gradient';
+
+                if (@{ $hits }) {
+                    for my $hit (@{ $hits }) {
+                        div {
+                            class is 'res';
+                            h2 {
+                                a {
+                                    href is $api->doc_path_for(
+                                        @{ $hit}{qw(dist version path)}
+                                    );
+                                    $hit->{title}
+                                };
+                            };
+                            p { outs_raw $hit->{excerpt} };
+                            ul {
+                                li {
+                                    class is 'dist';
+                                    a {
+                                        href is "/dist/$hit->{dist}/";
+                                        title is T 'In the [_1] distribution', $hit->{dist};
+                                        "$hit->{dist} $hit->{version}";
+                                    };
+                                };
+                                li {
+                                    class is 'date';
+                                    (my $date = $hit->{date}) =~ s{T.+}{};
+                                    # Looking forward to HTML 5 in Template::Declare.
+                                    outs_raw qq{<time class="bday" datetime="$hit->{date}">$date</time>};
+                                };
+                                li {
+                                    class is 'user';
+                                    a {
+                                        href is $api->user_path_for($hit->{user});
+                                        title is T 'Uploaded by [_1]', $hit->{user_name};
+                                        $hit->{user_name};
+                                    };
+                                };
+                            };
+                        };
+                    }
+                } else {
+                    h3 { T 'Search matched no documents.' }
+                }
+            }; # /div.gradient
+        }; # div#page
+    } $req, {
+        title => $args->{results}{query} . ' / ' . T 'PGXN Search',
+    };
+};
+
 template notfound => sub {
     my ($self, $req, $args) = @_;
     wrapper {
@@ -730,6 +757,47 @@ template notfound => sub {
             T q{Resource not found.};
         };
     } $req, $args;
+};
+
+template search_form => sub {
+    my ($self, $args) = @_;
+    form {
+        id is $args->{id};
+        action is '/search';
+        enctype is 'application/x-www-form-urlencoded';
+        method is 'get';
+        fieldset {
+            input {
+                type  is 'text';
+                class is 'width50';
+                name  is 'q';
+                value is $args->{query};
+            };
+        }; # /fieldset
+        fieldset {
+            label { attr { id is 'inlabel'; for => 'searchin' }; T 'in' };
+            select {
+                id is 'searchin';
+                name is 'in';
+                option {
+                    value is $args->{in};
+                    selected is 'selected';
+                                'All';
+                };
+                for my $doctype (qw(extensions distributions user tags)) {
+                    option {
+                        value is $doctype;
+                        T ucfirst $doctype;
+                    };
+                }
+            };
+            input {
+                type  is 'submit';
+                value is T 'PGXN Search';
+                class is 'button';
+            };
+        }; # /fieldset
+    }; # /form#homesearch
 };
 
 template release_table => sub {

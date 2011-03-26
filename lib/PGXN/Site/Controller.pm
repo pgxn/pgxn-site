@@ -26,6 +26,7 @@ Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 my %code_for = (
     success     => 200,
     seeother    => 303,
+    badrequest  => 400,
     forbidden   => 403,
     notfound    => 404,
     notallowed  => 405,
@@ -126,6 +127,27 @@ sub tag {
         tag    => $tag,
         api    => $self->api,
         mirror => $self->mirror,
+    }});
+}
+
+sub search {
+    my ($self, $env, $by) = @_;
+    my $req = Plack::Request->new($env);
+    my $params = $req->query_parameters;
+    my $q = $params->{q} or return $self->render(
+        '/badrequest', { env => $env, code => $code_for{badrequest} }
+    );
+    $by ||= $params->{in} || 'doc';
+
+    $self->render('/search', { req => $req, vars => {
+        api     => $self->api,
+        query   => $q,
+        by      => $by,
+        results => $self->api->search($by => {
+            query  => decode_utf8($q),
+            offset => $params->{o},
+            limit  => $params->{l},
+        })
     }});
 }
 

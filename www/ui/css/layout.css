@@ -288,7 +288,7 @@
   display: inline;
 }
 
-.res ul li.date:before, .res ul li.owner:before {
+.res ul li.date:before, .res ul li.user:before {
    content:"■ ";
 }
 

@@ -19,6 +19,14 @@ sub app {
             GET { $controller->home(@_) }
         };
 
+        # /by
+        resource qr{^/search(?:/(d(?:oc|ist)|extension|user|tag)/?)?$} => sub {
+            GET {
+                my ($env, $args) = @_;
+                $controller->search($env, @{ $args->{splat} } );
+            }
+        };
+
         # /dist/{dist}
         # /dist/{dist}/{version}
         resource qr{/dist/([^/]+)(?:/(\d[^/]+))?/?$} => sub {
