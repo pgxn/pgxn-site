@@ -78,6 +78,10 @@ our %Lexicon = (
     'In the [_1] distribution' => 'In the [_1] distribution',
     'Uploaded by [_1]' => 'Uploaded by [_1]',
     'Search matched no documents.' => 'Search matched no documents.',
+    'Previous results' => 'Previous results',
+    'Next results' => 'Next results',
+    '← Prev' => '← Prev',
+    'Next →' => 'Next →',
 );
 
 sub accept {

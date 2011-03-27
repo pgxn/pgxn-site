@@ -178,7 +178,7 @@ template home => sub {
             id is 'homepage';
             div {
                 class is 'hsearch floatLeft';
-                show search_form => { id => 'homesearch' };
+                show search_form => { id => 'homesearch', in => 'doc' };
 
                 div {
                     id is 'cloud';
@@ -689,18 +689,56 @@ template tag => sub {
 template search => sub {
     my ($self, $req, $args) = @_;
     my $api  = $args->{api};
-    my $hits = $args->{results}{hits};
+    my $res  = $args->{results};
 
     wrapper {
         div {
             id is 'page';
-            show search_form => { id => 'homesearch', query => $args->{results}{query}, in => $args->{by} };
             div {
                 id is 'results';
                 class is 'gradient';
 
-                if (@{ $hits }) {
-                    for my $hit (@{ $hits }) {
+                if (my @hits = @{ $res->{hits} || [] }) {
+                    my $links = sub {
+                       if (my $c = $res->{count}) {
+                           my $uri = $req->uri;
+                           my @params = ( q => $res->{query}, l => $res->{limit} );
+                           div {
+                               class is 'searchnav';
+                               if ($res->{offset}) {
+                                   p {
+                                       class is 'floatLeft';
+                                       a {
+                                           $uri->query_form(
+                                               @params,
+                                               o => $res->{offset} - $res->{limit}
+                                           );
+                                           href is $uri;
+                                           title is T 'Previous results';
+                                           T '← Prev';
+                                       };
+                                   };
+                               }
+                               if ($c > $res->{offset} + $res->{limit}) {
+                                   p {
+                                       class is 'floatRight';
+                                       style is 'clear:right';
+                                       a {
+                                           $uri->query_form(
+                                               @params,
+                                               o => $res->{offset} + $res->{limit}
+                                           );
+                                           href is $uri;
+                                           title is T 'Next results';
+                                           T 'Next →';
+                                       };
+                                   };
+                               }
+                           };
+                       }
+                   };
+                    $links->();
+                    for my $hit (@hits) {
                         div {
                             class is 'res';
                             h2 {
@@ -738,13 +776,24 @@ template search => sub {
                             };
                         };
                     }
+                    $links->();
                 } else {
                     h3 { T 'Search matched no documents.' }
                 }
             }; # /div.gradient
         }; # div#page
     } $req, {
-        title => $args->{results}{query} . ' / ' . T 'PGXN Search',
+        title => $args->{results}{query} . ' / ' . T('PGXN Search'),
+        crumb => sub {
+            li {
+                class is 'notmenu';
+                show search_form => {
+                    id    => 'resultsearch',
+                    query => $args->{results}{query},
+                    in    => $args->{by}
+                };
+            }
+        },
     };
 };
 
@@ -767,26 +816,30 @@ template search_form => sub {
         enctype is 'application/x-www-form-urlencoded';
         method is 'get';
         fieldset {
+            class is 'query';
             input {
                 type  is 'text';
                 class is 'width50';
                 name  is 'q';
                 value is $args->{query};
             };
-        }; # /fieldset
+        }; # /fieldset.query
         fieldset {
+            class is 'submitin';
             label { attr { id is 'inlabel'; for => 'searchin' }; T 'in' };
             select {
                 id is 'searchin';
                 name is 'in';
+                my $in = $args->{in};
                 option {
-                    value is $args->{in};
-                    selected is 'selected';
-                                'All';
+                    value is 'doc';
+                    selected is 'selected' if $in eq 'doc';
+                    'Documentation';
                 };
                 for my $doctype (qw(extensions distributions user tags)) {
                     option {
                         value is $doctype;
+                        selected is 'selected' if $in eq $doctype;
                         T ucfirst $doctype;
                     };
                 }
@@ -796,8 +849,8 @@ template search_form => sub {
                 value is T 'PGXN Search';
                 class is 'button';
             };
-        }; # /fieldset
-    }; # /form#homesearch
+        }; # /fieldset.submitin
+    }; # /form#resultsearch
 };
 
 template release_table => sub {

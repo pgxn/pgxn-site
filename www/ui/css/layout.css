@@ -149,6 +149,10 @@
   border-bottom: 0;
 }
 
+#mainMenu li.notmenu:hover {
+  border-top:0;
+}
+
 #mainMenu li:hover a,
 #mainMenu li.here a {
   color: #65EBFF;
@@ -256,6 +260,19 @@
   text-align:center;
 }
 
+#resultsearch fieldset {
+  border:0;
+  display:inline;
+}
+
+#resultsearch fieldset.query input {
+  width: 250px;
+}
+
+#resultsearch fieldset {
+  padding:0;
+}
+
 .center {
   margin-left: auto;
   margin-right: auto;
@@ -269,6 +286,7 @@
   /* background: #555 url(../img/gradient.jpg) repeat-x top left;  */
   background: url(../img/favicon.png) no-repeat 10px 19px;
   padding:15px 15px 15px 35px;
+  clear:both;
 }
 
 .res:hover {
