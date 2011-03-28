@@ -686,10 +686,6 @@ template tag => sub {
     };
 };
 
-# Integrate non-doc searches.
-# Integrate non-doc results.
-# Include scores in results?
-
 template search => sub {
     my ($self, $req, $args) = @_;
     my $api  = $args->{api};
