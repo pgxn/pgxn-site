@@ -20,10 +20,9 @@ sub app {
         };
 
         # /search
-        resource qr{^/search(?:/(d(?:oc|ist)|extension|user|tag)/?)?$} => sub {
+        resource qr{^/search$} => sub {
             GET {
-                my ($env, $args) = @_;
-                $controller->search($env, @{ $args->{splat} } );
+                $controller->search(shift);
             }
         };
 

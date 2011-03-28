@@ -131,23 +131,21 @@ sub tag {
 }
 
 sub search {
-    my ($self, $env, $by) = @_;
+    my ($self, $env) = @_;
     my $req = Plack::Request->new($env);
     my $params = $req->query_parameters;
     my $q = $params->{q} or return $self->render(
         '/badrequest', { env => $env, code => $code_for{badrequest} }
     );
-    $by ||= $params->{in} || 'doc';
 
     $self->render('/search', { req => $req, vars => {
         api     => $self->api,
-        query   => $q,
-        by      => $by,
-        results => $self->api->search($by => {
+        results => $self->api->search(
+            index  => scalar $params->{in},
             query  => decode_utf8($q),
-            offset => $params->{o},
-            limit  => $params->{l},
-        })
+            offset => scalar $params->{o},
+            limit  => scalar $params->{l},
+        ),
     }});
 }
 

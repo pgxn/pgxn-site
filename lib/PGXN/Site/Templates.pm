@@ -686,6 +686,10 @@ template tag => sub {
     };
 };
 
+# Integrate non-doc searches.
+# Integrate non-doc results.
+# Include scores in results?
+
 template search => sub {
     my ($self, $req, $args) = @_;
     my $api  = $args->{api};
@@ -699,84 +703,53 @@ template search => sub {
                 class is 'gradient';
 
                 if (my @hits = @{ $res->{hits} || [] }) {
-                    my $links = sub {
-                        if (my $c = $res->{count}) {
-                            my $uri = $req->uri;
-                            my @params = ( q => $res->{query}, l => $res->{limit} );
-                            div {
-                                class is 'searchnav';
-                                if ($res->{offset}) {
-                                    p {
-                                        class is 'floatLeft';
-                                        a {
-                                            $uri->query_form(
-                                                @params,
-                                                o => $res->{offset} - $res->{limit}
-                                            );
-                                            href is $uri;
-                                            title is T 'Previous results';
-                                            T '← Prev';
-                                        };
-                                    };
-                                }
-                                if ($c > $res->{offset} + $res->{limit}) {
-                                    p {
-                                        class is 'floatRight';
-                                        style is 'clear:right';
-                                        a {
-                                            $uri->query_form(
-                                                @params,
-                                                o => $res->{offset} + $res->{limit}
-                                            );
-                                            href is $uri;
-                                            title is T 'Next results';
-                                            T 'Next →';
-                                        };
-                                    };
-                                }
-                            };
-                        }
+                    h3 {
+                        T '[_1]-[_2] of [_3] found',
+                            $res->{offset} + 1,
+                            $res->{offset} + @hits,
+                            $res->{count};
                     };
-                    $links->();
-                    for my $hit (@hits) {
+                    show "results/$res->{index}" => @hits;
+                    if (my $c = $res->{count}) {
+                        my $uri = $req->uri;
+                        my @params = (
+                            in => $res->{index},
+                            q  => $res->{query},
+                            l  => $res->{limit},
+                        );
                         div {
-                            class is 'res';
-                            h2 {
-                                a {
-                                    href is $api->doc_path_for(
-                                        @{ $hit}{qw(dist version path)}
-                                    );
-                                    $hit->{title}
-                                };
-                            };
-                            p { outs_raw $hit->{excerpt} };
-                            ul {
-                                li {
-                                    class is 'dist';
+                            class is 'searchnav';
+                            if ($res->{offset}) {
+                                p {
+                                    class is 'floatLeft';
                                     a {
-                                        href is "/dist/$hit->{dist}/";
-                                        title is T 'In the [_1] distribution', $hit->{dist};
-                                        "$hit->{dist} $hit->{version}";
+                                        $uri->query_form(
+                                            @params,
+                                            o => $res->{offset} - $res->{limit}
+                                        );
+                                        href is $uri;
+                                        title is T 'Previous results';
+                                        T '← Prev';
                                     };
                                 };
-                                li {
-                                    class is 'date';
-                                    (my $date = $hit->{date}) =~ s{T.+}{};
-                                    # Looking forward to HTML 5 in Template::Declare.
-                                    outs_raw qq{<time class="bday" datetime="$hit->{date}">$date</time>};
-                                };
-                                li {
-                                    class is 'user';
+                            }
+                            if ($c > $res->{offset} + $res->{limit}) {
+                                p {
+                                    class is 'floatRight';
+                                    style is 'clear:right';
                                     a {
-                                        href is "/user/$hit->{user}/";
-                                        title is T 'Uploaded by [_1]', $hit->{user_name};
-                                        $hit->{user_name};
+                                        $uri->query_form(
+                                            @params,
+                                            o => $res->{offset} + $res->{limit}
+                                        );
+                                        href is $uri;
+                                        title is T 'Next results';
+                                        T 'Next →';
                                     };
                                 };
-                            };
+                            }
                         };
                     }
-                    $links->();
                 } else {
                     h3 { T 'Search matched no documents.' }
                 }
@@ -789,12 +762,67 @@ template search => sub {
                 class is 'notmenu';
                 show search_form => {
                     id    => 'resultsearch',
-                    query => $args->{results}{query},
-                    in    => $args->{by}
+                    query => $res->{query},
+                    in    => $res->{index},
                 };
             }
         },
     };
+};
+
+template 'results/doc' => sub {
+    my $self = shift;
+    for my $hit (@_) {
+        div {
+            class is 'res';
+            h2 {
+                a {
+                    href is "/dist/$hit->{dist}/$hit->{path}.html";
+                    $hit->{title}
+                };
+            };
+            p { outs_raw $hit->{excerpt} };
+            ul {
+                li {
+                    class is 'dist';
+                    a {
+                        href is "/dist/$hit->{dist}/";
+                        title is T 'In the [_1] distribution', $hit->{dist};
+                        "$hit->{dist} $hit->{version}";
+                    };
+                };
+                li {
+                    class is 'date';
+                    (my $date = $hit->{date}) =~ s{T.+}{};
+                    # Looking forward to HTML 5 in Template::Declare.
+                    outs_raw qq{<time class="bday" datetime="$hit->{date}">$date</time>};
+                };
+                li {
+                    class is 'user';
+                    a {
+                        href is "/user/$hit->{user}/";
+                        title is T 'Uploaded by [_1]', $hit->{user_name};
+                        $hit->{user_name};
+                    };
+                };
+            };
+        };
+    }
+};
+
+template 'results/tag' => sub {
+    my $self = shift;
+    for my $hit (@_) {
+        div {
+            class is 'res';
+            h2 {
+                a {
+                    href is "/tag/$hit->{tag}";
+                    $hit->{tag}
+                };
+            };
+        }
+    }
 };
 
 template notfound => sub {
@@ -851,11 +879,16 @@ template search_form => sub {
                     selected is 'selected' if $in eq 'doc';
                     'Documentation';
                 };
-                for my $doctype (qw(extensions distributions user tags)) {
+                for my $spec (
+                    [ extension => 'Extensions'    ],
+                    [ dist      => 'Distributions' ],
+                    [ user      => 'Users'         ],
+                    [ tag       => 'Tags'          ]
+                ) {
                     option {
-                        value is $doctype;
-                        selected is 'selected' if $in eq $doctype;
-                        T ucfirst $doctype;
+                        value is $spec->[0];
+                        selected is 'selected' if $in eq $spec->[0];
+                        T $spec->[1];
                     };
                 }
             };

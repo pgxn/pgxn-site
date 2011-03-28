@@ -286,7 +286,6 @@
   /* background: #555 url(../img/gradient.jpg) repeat-x top left;  */
   background: url(../img/favicon.png) no-repeat 10px 19px;
   padding:15px 15px 15px 35px;
-  clear:both;
 }
 
 .res:hover {

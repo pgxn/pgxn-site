@@ -85,6 +85,7 @@ our %Lexicon = (
     'Next results' => 'Next results',
     '← Prev' => '← Prev',
     'Next →' => 'Next →',
+    '[_1]-[_2] of [_3] found' => '[_1]-[_2] of [_3] found',
 );
 
 sub accept {
