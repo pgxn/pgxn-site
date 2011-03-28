@@ -19,7 +19,7 @@ sub app {
             GET { $controller->home(@_) }
         };
 
-        # /by
+        # /search
         resource qr{^/search(?:/(d(?:oc|ist)|extension|user|tag)/?)?$} => sub {
             GET {
                 my ($env, $args) = @_;

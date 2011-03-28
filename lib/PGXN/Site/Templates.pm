@@ -686,6 +686,12 @@ template tag => sub {
     };
 };
 
+# Fix all links.
+# Make search button a bit smaller?
+# Integrate non-doc searches.
+# Integrate non-doc results.
+# Include scores in results?
+
 template search => sub {
     my ($self, $req, $args) = @_;
     my $api  = $args->{api};
@@ -700,43 +706,43 @@ template search => sub {
 
                 if (my @hits = @{ $res->{hits} || [] }) {
                     my $links = sub {
-                       if (my $c = $res->{count}) {
-                           my $uri = $req->uri;
-                           my @params = ( q => $res->{query}, l => $res->{limit} );
-                           div {
-                               class is 'searchnav';
-                               if ($res->{offset}) {
-                                   p {
-                                       class is 'floatLeft';
-                                       a {
-                                           $uri->query_form(
-                                               @params,
-                                               o => $res->{offset} - $res->{limit}
-                                           );
-                                           href is $uri;
-                                           title is T 'Previous results';
-                                           T '← Prev';
-                                       };
-                                   };
-                               }
-                               if ($c > $res->{offset} + $res->{limit}) {
-                                   p {
-                                       class is 'floatRight';
-                                       style is 'clear:right';
-                                       a {
-                                           $uri->query_form(
-                                               @params,
-                                               o => $res->{offset} + $res->{limit}
-                                           );
-                                           href is $uri;
-                                           title is T 'Next results';
-                                           T 'Next →';
-                                       };
-                                   };
-                               }
-                           };
-                       }
-                   };
+                        if (my $c = $res->{count}) {
+                            my $uri = $req->uri;
+                            my @params = ( q => $res->{query}, l => $res->{limit} );
+                            div {
+                                class is 'searchnav';
+                                if ($res->{offset}) {
+                                    p {
+                                        class is 'floatLeft';
+                                        a {
+                                            $uri->query_form(
+                                                @params,
+                                                o => $res->{offset} - $res->{limit}
+                                            );
+                                            href is $uri;
+                                            title is T 'Previous results';
+                                            T '← Prev';
+                                        };
+                                    };
+                                }
+                                if ($c > $res->{offset} + $res->{limit}) {
+                                    p {
+                                        class is 'floatRight';
+                                        style is 'clear:right';
+                                        a {
+                                            $uri->query_form(
+                                                @params,
+                                                o => $res->{offset} + $res->{limit}
+                                            );
+                                            href is $uri;
+                                            title is T 'Next results';
+                                            T 'Next →';
+                                        };
+                                    };
+                                }
+                            };
+                        }
+                    };
                     $links->();
                     for my $hit (@hits) {
                         div {
