@@ -48,7 +48,6 @@ sub app {
         # /user/{user}/
         resource qr{/user/([^/]+)/?$} => sub {
             GET {
-                die 'WTF!';
                 my ($env, $args) = @_;
                 $controller->user($env, @{ $args->{splat} } );
             };
