@@ -770,15 +770,26 @@ template search => sub {
     };
 };
 
+template 'results/extension' => sub {
+    $_[0] = 'extension';
+    &_detailed_results;
+};
+
 template 'results/doc' => sub {
-    my $self = shift;
+    $_[0] = 'title';
+    &_detailed_results;
+};
+
+# template 'results/detailed' => sub {
+sub _detailed_results {
+    my $label = shift;
     for my $hit (@_) {
         div {
             class is 'res';
             h2 {
                 a {
                     href is "/dist/$hit->{dist}/$hit->{path}.html";
-                    $hit->{title}
+                    $hit->{$label}
                 };
             };
             p { outs_raw $hit->{excerpt} };
