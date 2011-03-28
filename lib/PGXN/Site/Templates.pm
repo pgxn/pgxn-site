@@ -825,6 +825,22 @@ template 'results/tag' => sub {
     }
 };
 
+template 'results/user' => sub {
+    my $self = shift;
+    for my $hit (@_) {
+        div {
+            class is 'res';
+            h2 {
+                a {
+                    href is "/user/$hit->{user}";
+                    $hit->{user};
+                };
+            };
+            p { outs_raw $hit->{name} };
+        }
+    }
+};
+
 template notfound => sub {
     my ($self, $req, $args) = @_;
     wrapper {
