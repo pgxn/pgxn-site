@@ -161,26 +161,35 @@ sub server_error {
             ? /plack[.]stacktrace[.]/ ? () : ($_ => $env->{$k} )
             : ();
     } keys %{ $env } };
-    my $uri = Request->new($err_env)->uri_for($err_env->{PATH_INFO});
+    my $uri = Plack::Request->new($err_env)->uri;
 
     if (%{ $err_env }) {
-        # Send an email to the administrators.
-        # my $pgxn = PGXN::Site->instance;
-        # my $config = $pgxn->config;
-        # $pgxn->send_email({
-        #     from    => $config->{admin_email},
-        #     to      => $config->{alert_email},
-        #     subject => "PGXN Internal Server Error",
-        #     body    => "An error occurred during a request to $uri.\n\n"
-        #              . "Environment:\n\n" . pp($err_env)
-        #              . "\n\nTrace:\n\n"
-        #              . ($env->{'plack.stacktrace.text'} || 'None found. :-(')
-        #              . "\n",
-        # });
+        # Send an email to the administrator.
+        # XXX Need configuration.
+        require Email::MIME;
+        require Email::Sender::Simple;
+        require Data::Dump;
+        my $email = Email::MIME->create(
+            header     => [
+                From    => 'errors@pgxn.org',
+                To      => 'pgxn@pgexperts.com',
+                Subject => 'PGXN Internal Server Error',
+            ],
+            attributes => {
+                content_type => 'text/plain',
+                charset      => 'UTF-8',
+            },
+            body    => "An error occurred during a request to $uri.\n\n"
+                     . "Environment:\n\n" . Data::Dump::pp($err_env)
+                     . "\n\nTrace:\n\n"
+                     . ($env->{'plack.stacktrace.text'} || 'None found. :-(')
+                     . "\n",
+        );
+        Email::Sender::Simple->send($email);
     }
 
-    $self->respond_with('servererror', Request->new($env));
-}
+    $self->render('/servererror', { env => $env, code => $code_for{notfound} });
+ }
 
 1;
 

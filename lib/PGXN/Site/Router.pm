@@ -48,6 +48,7 @@ sub app {
         # /user/{user}/
         resource qr{/user/([^/]+)/?$} => sub {
             GET {
+                die 'WTF!';
                 my ($env, $args) = @_;
                 $controller->user($env, @{ $args->{splat} } );
             };
@@ -60,9 +61,18 @@ sub app {
                 $controller->tag($env, @{ $args->{splat} } );
             };
         };
+
+        # /error (500 error responder).
+        resource '/error' => sub {
+            GET { $controller->server_error(@_) };
+        };
+
     };
 
     builder {
+        enable 'ErrorDocument', 500, '/error', subrequest => 1;
+        enable 'HTTPExceptions';
+        enable 'StackTrace', no_print_errors => 1;
         mount '/'   => builder { sub { $router->dispatch(shift) } };
         mount '/ui' => $files;
     }

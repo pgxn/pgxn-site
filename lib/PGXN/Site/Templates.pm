@@ -810,6 +810,19 @@ template notfound => sub {
     };
 };
 
+template servererror => sub {
+    my ($self, $req, $args) = @_;
+    wrapper {
+        h1 { T 'Internal Server Error' };
+        p {
+            class is 'error';
+            T q{Internal server error.};
+        };
+    } $req, {
+        title => _title_with T 'Internal Server Error',
+    };
+};
+
 template search_form => sub {
     my ($self, $args) = @_;
     form {
