@@ -686,12 +686,6 @@ template tag => sub {
     };
 };
 
-# Fix all links.
-# Make search button a bit smaller?
-# Integrate non-doc searches.
-# Integrate non-doc results.
-# Include scores in results?
-
 template search => sub {
     my ($self, $req, $args) = @_;
     my $api  = $args->{api};
@@ -774,7 +768,7 @@ template search => sub {
                                 li {
                                     class is 'user';
                                     a {
-                                        href is $api->user_path_for($hit->{user});
+                                        href is "/user/$hit->{user}/";
                                         title is T 'Uploaded by [_1]', $hit->{user_name};
                                         $hit->{user_name};
                                     };
@@ -811,7 +805,9 @@ template notfound => sub {
             class is 'warning';
             T q{Resource not found.};
         };
-    } $req, $args;
+    } $req, {
+        title => _title_with T 'Resource Not Found',
+    };
 };
 
 template search_form => sub {

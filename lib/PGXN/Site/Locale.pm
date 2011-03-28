@@ -40,6 +40,7 @@ our %Lexicon = (
     Benefactors => 'Benefactors',
     'Not Found' => 'Not Found',
     'Resource not found.' => 'Resource not found.',
+    'Resource Not Found' => 'Resource Not Found',
     'Download' => 'Download',
     'Download [_1] [_2]' => 'Download [_1] [_2]',
     'Browse [_1] [_2]' => 'Browse [_1] [_2]',
