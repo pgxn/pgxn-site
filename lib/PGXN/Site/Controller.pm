@@ -8,7 +8,6 @@ use Plack::Response;
 use PGXN::Site::Locale;
 use PGXN::Site::Templates;
 use Encode;
-use lib '/Users/david/dev/github/www-pgxn/lib';
 use WWW::PGXN;
 use namespace::autoclean;
 
@@ -38,21 +37,20 @@ my %code_for = (
 
 sub new {
     my ($class, %p) = @_;
-    (my $mir = $p{mirror_url}) =~ s{/$}{};
-    (my $api = $p{api_url}) =~ s{/$}{};
+    (my $api_url = $p{api_url}) =~ s{/$}{};
     bless {
         errors_to   => $p{errors_to},
         errors_from => $p{errors_from},
-        mirror      => URI->new($mir),
+        api_url     => URI->new($api_url),
         api         => WWW::PGXN->new(
-            url   => $api,
+            url   =>  $p{private_api_url} || $api_url,
             proxy => $p{proxy_url}
         )
     } => $class;
 }
 
 sub api         { shift->{api}         }
-sub mirror      { shift->{mirror}      }
+sub api_url     { shift->{api_url}     }
 sub errors_to   { shift->{errors_to}   }
 sub errors_from { shift->{errors_from} }
 
@@ -82,7 +80,7 @@ sub distribution {
 
     $self->render('/distribution', { env => $env, vars => {
         dist      => $dist,
-        mirror    => $self->mirror,
+        api_url   => $self->api_url,
         dist_name => $version ? "$name $version" : $name,
     }});
 }
@@ -111,9 +109,9 @@ sub user {
     my $user = $self->api->get_user($nick) or return $self->missing($env);
 
     $self->render('/user', { env => $env, vars => {
-        user   => $user,
-        api    => $self->api,
-        mirror => $self->mirror,
+        user    => $user,
+        api     => $self->api,
+        api_url => $self->api_url,
     }});
 }
 
@@ -122,9 +120,9 @@ sub tag {
     $tag = $self->api->get_tag($tag) or return $self->missing($env);
 
     $self->render('/tag', { env => $env, vars => {
-        tag    => $tag,
-        api    => $self->api,
-        mirror => $self->mirror,
+        tag     => $tag,
+        api     => $self->api,
+        api_url => $self->api_url,
     }});
 }
 
@@ -226,7 +224,7 @@ to be called from within Router::Resource HTTP methods.
 
 =head3 C<new>
 
-  my $controller = PGXN::Site::Controller->new(url => $api_url);
+  my $controller = PGXN::Site::Controller->new(url => $private_api_url);
 
 Constructs and returns a new controller. The parameters are the same as those
 supported by L<WWW::PGXN>, which will be used to fetch the data needed to

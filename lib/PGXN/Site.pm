@@ -12,7 +12,6 @@ PGXN::Site - Maintain and serve a PGXN web site
 =head1 Synopsis
 
   plackup pgxn_site.psgi api_url     http://api.pgxn.org/ \
-                         mirror_url  http://api.pgxn.org/ \
                          errors_from oops@example.com \
                          errors_to   alerts@example.com
 
@@ -29,22 +28,19 @@ C<pgxn_site.psgi> L<Plack> server, passing it the following options:
 
 =item C<api_url>
 
-A URL for a L<PGXN::API>-powered API. The URL can point to either an API web
-server provided by L<PGXN::API> or be a C<file:> URI pointing to the document
-root managed by L<PGXN::API> on the local file system. The latter is useful if
-you're serving the site and the API from the same box (or with access to the
-same file system) and want it to be fast.
+The URL to use to access the L<PGXN::API> server. Required.
 
-=item C<mirror_url>
+=item C<private_api_url>
 
-The URL to use for links to the API server in the UI. If you're using an
-C<http://> URL for the C<api_url> option, this should probably have the same
-value. But if C<api_url> uses a C<file:> URL, C<mirror_url> B<must> point to
-the corresponding HTTP server provided by L<PGXN::API>.
+A private URL to use to access the L<PGXN::API>-powered API. Optional. Useful
+if you're serving the site and the API from the same box (or with access to
+the same file system) and want it to be fast: just specify a C<file:> URL here
+and the API will be read directly from the file system. The C<api_url> option
+will still be used for public URLs pointing to the API in the UI.
 
 =item C<proxy_url>
 
-If you need to access C<api_url> via a proxy server, provide the URL for that
+If you need to access C<private_api_url> via a proxy server, provide the URL for that
 proxy server in this option.
 
 =item C<errors_to>

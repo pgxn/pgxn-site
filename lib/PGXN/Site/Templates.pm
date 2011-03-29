@@ -272,7 +272,7 @@ template distribution => sub {
                     class is 'download';
                     a {
                         class is 'url';
-                        href is URI->new($args->{mirror} . $dist->download_path);
+                        href is URI->new($args->{api_url} . $dist->download_path);
                         title is T 'Download [_1] [_2]', $dist->name, $dist->version;
                         img {
                             src is '/ui/img/download.png';
@@ -284,7 +284,7 @@ template distribution => sub {
                     class is 'browse';
                     a {
                         class is 'url';
-                        href is URI->new($args->{mirror} . $dist->source_path);
+                        href is URI->new($args->{api_url} . $dist->source_path);
                         title is T 'Browse [_1] [_2]', $dist->name, $dist->version;
                         img {
                             src is '/ui/img/package.png';
@@ -452,7 +452,7 @@ template distribution => sub {
                         dd {
                             class is 'files';
                             ul {
-                                my $uri = $args->{mirror} . $dist->source_path;
+                                my $uri = $args->{api_url} . $dist->source_path;
                                 for my $file (@files) {
                                     li {
                                         class is 'last' if $file eq $files[-1];
@@ -998,7 +998,7 @@ template release_table => sub {
                         class is 'download';
                         a {
                             class is 'url';
-                            href is URI->new($args->{mirror} . $api->download_path_for($dist => $info->{version}));
+                            href is URI->new($args->{api_url} . $api->download_path_for($dist => $info->{version}));
                             title is T 'Download [_1] [_2]', $dist, $info->{version};
                             img {
                                 src is '/ui/img/download.png';
@@ -1010,7 +1010,7 @@ template release_table => sub {
                         class is 'browse';
                         a {
                             class is 'url';
-                            href is URI->new($args->{mirror} . $api->source_path_for($dist => $info->{version}));
+                            href is URI->new($args->{api_url} . $api->source_path_for($dist => $info->{version}));
                             title is T 'Browse [_1] [_2]', $dist, $info->{version};
                             img {
                                 src is '/ui/img/package.png';
