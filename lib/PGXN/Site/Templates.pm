@@ -398,7 +398,8 @@ template distribution => sub {
                             }
                         }
                     };
-                    if (my $res = $dist->resources) {
+                    my $res = $dist->resources;
+                    if (%{ $res }) {
                         dt { T 'Resources' };
                         my @res;
                         if (my $url = $res->{homepage}) {
