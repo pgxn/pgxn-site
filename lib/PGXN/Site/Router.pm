@@ -10,7 +10,8 @@ use Plack::App::File;
 sub app {
     my $class      = shift;
     my $controller = PGXN::Site::Controller->new(@_);
-    my $files      = Plack::App::File->new(root => './ui/');
+    (my $ui = __FILE__) =~ s{Router[.]pm$}{ui};
+    my $files      = Plack::App::File->new(root => $ui);
     my $router     = router {
         missing { $controller->missing(@_) };
 

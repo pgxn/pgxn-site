@@ -9,7 +9,7 @@ my $class = Module::Build->subclass(
     },
 );
 
-$class->new(
+my $build = $class->new(
     module_name        => 'PGXN::Site',
     license            => 'postgresql',
     script_files       => 'bin',
@@ -45,4 +45,7 @@ $class->new(
             repository => 'http://github.com/theory/pgxn/tree/',
         },
     },
-)->create_build_script;
+);
+
+$build->add_build_element($_) for qw(css gif png jpg js);
+$build->create_build_script;
