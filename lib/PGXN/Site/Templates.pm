@@ -899,6 +899,20 @@ template notfound => sub {
     };
 };
 
+template badrequest => sub {
+    my ($self, $req, $args) = @_;
+    wrapper {
+        h1 { T 'Bad Request' };
+        p {
+            class is 'error';
+            T 'Bad request: Missing or invalid "[_1]" query parameter.',
+              $args->{param};
+        };
+    } $req, {
+        title => _title_with T 'Bad Request',
+    };
+};
+
 template servererror => sub {
     my ($self, $req, $args) = @_;
     wrapper {

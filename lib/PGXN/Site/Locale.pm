@@ -86,6 +86,8 @@ our %Lexicon = (
     '← Prev' => '← Prev',
     'Next →' => 'Next →',
     '[_1]-[_2] of [_3] found' => '[_1]-[_2] of [_3] found',
+    'Bad Request' => 'Bad Request',
+    'Bad request: Missing or invalid "[_1]" query parameter.' => 'Bad request: Missing or invalid “[_1]” query parameter.',
 );
 
 sub accept {

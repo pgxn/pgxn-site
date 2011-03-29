@@ -18,6 +18,7 @@ my $build = $class->new(
         'Module::Build'        => '0.30',
         'Software::License'    => '0.102340',
         'Test::More'           => '0.70',
+        'Test::MockModule'     => '0.05',
     },
     requires => {
         'Encode'                       => '2.40',

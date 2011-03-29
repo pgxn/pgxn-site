@@ -146,9 +146,15 @@ sub search {
     my ($self, $env) = @_;
     my $req = Plack::Request->new($env);
     my $params = $req->query_parameters;
-    my $q = $params->{q} or return $self->render(
-        '/badrequest', { env => $env, code => $code_for{badrequest} }
-    );
+    my $q = $params->{q};;
+
+    unless ($q && $params->{in} ~~ ['', qw(doc dist extension user tag)]) {
+        return $self->render(
+            '/badrequest', { env => $env, code => $code_for{badrequest}, vars => {
+                param => $q ? 'in' : 'q',
+            } }
+        );
+    }
 
     $self->render('/search', { req => $req, vars => {
         api     => $self->api,
