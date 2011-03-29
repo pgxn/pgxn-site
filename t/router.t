@@ -13,8 +13,20 @@ BEGIN {
     use_ok 'PGXN::Site::Router' or die;
 }
 
+local $@;
+eval { PGXN::Site::Router->app };
+is $@, "Missing required parameters api_url, errors_to and errors_from\n",
+    'Should get proper error for missing parameters';
+
+ok my $app = PGXN::Site::Router->app(
+    api_url         => 'http://api.pgxn.org/',
+    private_api_url => 'file:t/api',
+    errors_to       => 'alerts@pgxn.org',
+    errors_from     => 'api@pgxn.org',
+), 'Instantiate the app';
+
 # Test home page.
-test_psgi +PGXN::Site::Router->app => sub {
+test_psgi $app => sub {
     my $cb = shift;
     ok my $res = $cb->(GET '/'), 'Fetch /';
     is $res->code, 200, 'Should get 200 response';
@@ -22,16 +34,16 @@ test_psgi +PGXN::Site::Router->app => sub {
 };
 
 # Test static file.
-test_psgi +PGXN::Site::Router->app => sub {
+test_psgi $app => sub {
     my $cb = shift;
     ok my $res = $cb->(GET '/ui/css/html.css'), 'Fetch /pub/ui/css/html.css';
     is $res->code, 200, 'Should get 200 response';
-    file_contents_is 'www/ui/css/html.css', $res->content,
+    file_contents_is 'lib/PGXN/Site/ui/css/html.css', $res->content,
         'The file should have been served';
 };
 
 # Test bogus URL.
-test_psgi +PGXN::Site::Router->app => sub {
+test_psgi $app => sub {
     my $cb = shift;
     ok my $res = $cb->(GET '/nonexistentpage'), 'Fetch /nonexistentpage';
     is $res->code, 404, 'Should get 404 response';

@@ -37,6 +37,11 @@ my %code_for = (
 
 sub new {
     my ($class, %p) = @_;
+
+    unless ($p{api_url} && $p{errors_to} && $p{errors_from}) {
+        die "Missing required parameters api_url, errors_to and errors_from\n";
+    }
+
     (my $api_url = $p{api_url}) =~ s{/$}{};
     bless {
         errors_to   => $p{errors_to},
