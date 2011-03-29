@@ -41,16 +41,20 @@ sub new {
     (my $mir = $p{mirror_url}) =~ s{/$}{};
     (my $api = $p{api_url}) =~ s{/$}{};
     bless {
-        mirror => URI->new($mir),
-        api    => WWW::PGXN->new(
+        errors_to   => $p{errors_to},
+        errors_from => $p{errors_from},
+        mirror      => URI->new($mir),
+        api         => WWW::PGXN->new(
             url   => $api,
             proxy => $p{proxy_url}
         )
     } => $class;
 }
 
-sub api    { shift->{api}    }
-sub mirror { shift->{mirror} }
+sub api         { shift->{api}         }
+sub mirror      { shift->{mirror}      }
+sub errors_to   { shift->{errors_to}   }
+sub errors_from { shift->{errors_from} }
 
 sub render {
     my ($self, $template, $p) = @_;
@@ -168,14 +172,13 @@ sub server_error {
 
     if (%{ $err_env }) {
         # Send an email to the administrator.
-        # XXX Need configuration.
         require Email::MIME;
         require Email::Sender::Simple;
         require Data::Dump;
         my $email = Email::MIME->create(
             header     => [
-                From    => 'errors@pgxn.org',
-                To      => 'pgxn@pgexperts.com',
+                From    => $self->errors_from,
+                To      => $self->errors_to,
                 Subject => 'PGXN Internal Server Error',
             ],
             attributes => {

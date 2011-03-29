@@ -8,10 +8,10 @@ use Plack::Builder;
 use Plack::App::File;
 
 sub app {
-    my $class = shift;
+    my $class      = shift;
     my $controller = PGXN::Site::Controller->new(@_);
     my $files      = Plack::App::File->new(root => './ui/');
-    my $router = router {
+    my $router     = router {
         missing { $controller->missing(@_) };
 
         # /

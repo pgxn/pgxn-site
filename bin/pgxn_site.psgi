@@ -6,8 +6,11 @@ use lib 'lib';
 use PGXN::Site::Router;
 
 my $self = shift;
-unless (@ARGV >= 4) {
-    say STDERR "\n  Usage: $self api_url \$api_url \\
+unless (@ARGV >= 8) {
+    say STDERR "\n  Usage: $self \\
+                            errors_to alert\@example.com \\
+                            errors_from pgxn-site\@example.com \\
+                            api_url \$api_url \\
                             mirror_url \$mirror_url \\
                             [proxy_url \$proxy_url]\n";
     exit 1;
