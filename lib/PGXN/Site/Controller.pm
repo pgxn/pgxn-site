@@ -101,8 +101,8 @@ sub document {
         : ("/dist/$name/", $name);
     $self->render('/document', { env => $env, vars => {
         dist      => $dist,
-        path      => $path,
-        doc       => $doc,
+        doc       => $path,
+        body      => $doc,
         dist_uri  => $dist_uri,
         dist_name => $dist_name,
     }});

@@ -579,7 +579,7 @@ template distribution => sub {
 template document => sub {
     my ($self, $req, $args) = @_;
     my $dist = $args->{dist};
-    my $info = $dist->docs->{$args->{path}};
+    my $info = $dist->docs->{$args->{doc}};
     my $title = $info->{abstract} ? $info->{title} : do {
         (my $page = $args->{path}) =~ s{^docs?/}{};
         $page;
@@ -589,7 +589,7 @@ template document => sub {
         div {
             id is 'page';
             class is 'doc';
-            outs_raw $args->{doc};
+            outs_raw $args->{body};
         }; # /div#page
     } $req, {
         title => _title_with $title . ($info->{abstract} ? ": $info->{abstract}" : ''),
@@ -783,10 +783,14 @@ sub _detailed_results {
         div {
             class is 'res';
             h2 {
-                a {
-                    href is "/dist/$hit->{dist}/$hit->{path}.html";
+                if ($hit->{doc}) {
+                    a {
+                        href is "/dist/$hit->{dist}/$hit->{doc}.html";
+                        $hit->{$label}
+                    };
+                } else {
                     $hit->{$label}
-                };
+                }
             };
             p { outs_raw $hit->{excerpt} };
             ul {

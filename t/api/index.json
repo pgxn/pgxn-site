@@ -8,5 +8,5 @@
    "tag":       "/tag/{tag}.json",
    "mirrors":   "/meta/mirrors.json",
    "source":    "/src/{dist}/{dist}-{version}/",
-   "doc":       "/dist/{dist}/{version}/{+path}.html"
+   "doc":       "/dist/{dist}/{version}/{+doc}.html"
 }
