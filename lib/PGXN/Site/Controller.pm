@@ -148,12 +148,21 @@ sub search {
     my $params = $req->query_parameters;
     my $q = $params->{q};;
 
-    unless ($q && $params->{in} ~~ ['', qw(doc dist extension user tag)]) {
-        return $self->render(
-            '/badrequest', { env => $env, code => $code_for{badrequest}, vars => {
-                param => $q ? 'in' : 'q',
-            } }
-        );
+    unless ($q && $params->{in} ~~ ['', undef, qw(doc dist extension user tag)]) {
+        return $self->render('/badrequest', {
+            env => $env,
+            code => $code_for{badrequest},
+            vars => { param => $q ? 'in' : 'q' },
+        });
+    }
+
+    for my $param (qw(o l)) {
+        my $val = $params->{$param};
+        return $self->render('/badrequest', {
+            env => $env,
+            code => $code_for{badrequest},
+            vars => { param => $param },
+        }) if $val && $val !~ /^\d+$/;
     }
 
     $self->render('/search', { req => $req, vars => {

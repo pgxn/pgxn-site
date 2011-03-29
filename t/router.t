@@ -105,10 +105,25 @@ test_psgi $app => sub {
         'The body should have the invalid q param error';
 
     # Make sure an invalid "in" value resturns 400.
-    ok my $res = $cb->(GET '/search?q=whu&in=foo'), 'Fetch /search with bad in=';
+    ok $res = $cb->(GET '/search?q=whu&in=foo'), 'Fetch /search with bad in=';
     ok $res->is_error, 'Should return an error';
     is $res->code, 400, 'Should get 400 response';
     like decode_utf8($res->content),
         qr{<p class="error">Bad request: Missing or invalid “in” query parameter\.</p>},
+        'The body should have the invalid in param error';
+
+    # Make sure an invalid "o" and "l" values resturn 400.
+    ok $res = $cb->(GET '/search?q=whu&o=foo'), 'Fetch /search with bad o=';
+    ok $res->is_error, 'Should return an error';
+    is $res->code, 400, 'Should get 400 response';
+    like decode_utf8($res->content),
+        qr{<p class="error">Bad request: Missing or invalid “o” query parameter\.</p>},
+        'The body should have the invalid in param error';
+
+    ok $res = $cb->(GET '/search?q=whu&l=foo'), 'Fetch /search with bad l=';
+    ok $res->is_error, 'Should return an error';
+    is $res->code, 400, 'Should get 400 response';
+    like decode_utf8($res->content),
+        qr{<p class="error">Bad request: Missing or invalid “l” query parameter\.</p>},
         'The body should have the invalid in param error';
 };
