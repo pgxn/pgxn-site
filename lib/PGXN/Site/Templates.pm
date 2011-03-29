@@ -823,6 +823,38 @@ sub _detailed_results {
     }
 };
 
+template 'results/dist' => sub {
+    my $self = shift;
+    for my $hit (@_) {
+        div {
+            class is 'res';
+            h2 {
+                a {
+                    href is "/dist/$hit->{dist}";
+                    $hit->{dist}
+                };
+            };
+            p { outs_raw $hit->{excerpt} };
+            ul {
+                li {
+                    class is 'date';
+                    (my $date = $hit->{date}) =~ s{T.+}{};
+                    # Looking forward to HTML 5 in Template::Declare.
+                    outs_raw qq{<time class="bday" datetime="$hit->{date}">$date</time>};
+                };
+                li {
+                    class is 'user';
+                    a {
+                        href is "/user/$hit->{user}/";
+                        title is T 'Uploaded by [_1]', $hit->{user_name};
+                        $hit->{user_name};
+                    };
+                };
+            };
+        }
+    }
+};
+
 template 'results/tag' => sub {
     my $self = shift;
     for my $hit (@_) {

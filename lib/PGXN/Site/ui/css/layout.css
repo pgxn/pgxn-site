@@ -306,7 +306,7 @@
   display: inline;
 }
 
-.res ul li.date:before, .res ul li.user:before {
+.res ul li.dist:after, .res ul li.date:after {
    content:"■ ";
 }
 
