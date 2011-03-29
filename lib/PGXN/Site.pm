@@ -7,16 +7,57 @@ use utf8;
 
 =head1 Name
 
-PGXN::Site - Maintain and serve a REST Site to search PGXN mirrors
+PGXN::Site - Maintain and serve a PGXN web site
 
 =head1 Synopsis
 
-  use PGXN::Site;
-  my $site = PGXN::Site->instance;
+  plackup pgxn_site.psgi api_url     http://api.pgxn.org/ \
+                         mirror_url  http://api.pgxn.org/ \
+                         errors_from oops@example.com \
+                         errors_to   alerts@example.com
 
 =head1 Description
 
-More to come.
+This module provides a simple PGXN web site. All it needs is a
+L<PGXN::API>-powered API to get the data it needs. Such an API can be accessed
+either remotely or via the local file system.
+
+To run your own PGXN web server, just install this module and run the included
+C<pgxn_site.psgi> L<Plack> server, passing it the following options:
+
+=over
+
+=item C<api_url>
+
+A URL for a L<PGXN::API>-powered API. The URL can point to either an API web
+server provided by L<PGXN::API> or be a C<file:> URI pointing to the document
+root managed by L<PGXN::API> on the local file system. The latter is useful if
+you're serving the site and the API from the same box (or with access to the
+same file system) and want it to be fast.
+
+=item C<mirror_url>
+
+The URL to use for links to the API server in the UI. If you're using an
+C<http://> URL for the C<api_url> option, this should probably have the same
+value. But if C<api_url> uses a C<file:> URL, C<mirror_url> B<must> point to
+the corresponding HTTP server provided by L<PGXN::API>.
+
+=item C<proxy_url>
+
+If you need to access C<api_url> via a proxy server, provide the URL for that
+proxy server in this option.
+
+=item C<errors_to>
+
+An email address to which error emails should be sent. In the event of an
+internal server error, the server will send an email to this address with
+diagnostic information.
+
+=item C<errors_from>
+
+An email address from which alert emails should be sent.
+
+=back
 
 =head1 Author
 
