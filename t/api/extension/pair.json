@@ -1,6 +1,7 @@
 {
    "extension": "pair",
    "latest": "stable",
+   "doc": "doc/pair",
    "stable": {
       "abstract": "A key/value pair data type",
       "dist": "pair",

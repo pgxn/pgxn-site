@@ -14,6 +14,7 @@
    "provides": {
       "pair": {
          "abstract": "A key/value pair data type",
+         "doc": "doc/pair",
          "file": "sql/pair.sql",
          "version": "0.1.1"
       }
