@@ -60,6 +60,14 @@ sub app {
             };
         };
 
+        # /extension/{extension}/
+        resource qr{/extension/([^/]+)/?$} => sub {
+            GET {
+                my ($env, $args) = @_;
+                $controller->extension($env, @{ $args->{splat} } );
+            };
+        };
+
         # /error (500 error responder).
         resource '/error' => sub {
             GET { $controller->server_error(@_) };

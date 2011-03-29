@@ -4,6 +4,7 @@ use 5.12.0;
 use utf8;
 #use aliased 'PGXN::Site::Request';
 use Plack::Request;
+use Plack::Response;
 use PGXN::Site::Locale;
 use PGXN::Site::Templates;
 use Encode;
@@ -57,13 +58,6 @@ sub render {
     my $res = $req->new_response($p->{code} || 200);
     $res->content_type($p->{type} || 'text/html; charset=UTF-8');
     $res->body(encode_utf8 +Template::Declare->show($template, $p->{req}, $p->{vars}));
-    $res->finalize;
-}
-
-sub redirect {
-    my ($self, $uri, $req, $code) = @_;
-    my $res = $req->new_response;
-    $res->redirect($req->uri_for($uri), $code || $code_for{seeother});
     $res->finalize;
 }
 
@@ -128,6 +122,17 @@ sub tag {
         api    => $self->api,
         mirror => $self->mirror,
     }});
+}
+
+sub extension {
+    my ($self, $env, $ext) = @_;
+    $ext = $self->api->get_extension($ext) or return $self->missing($env);
+    my $data = $ext->{$ext->{latest}};
+    my $uri = "/dist/$data->{dist}/";
+    $uri .= "$data->{doc}.html" if $data->{doc};
+    my $res = Plack::Response->new;
+    $res->redirect($uri, $code_for{seeother});
+    $res->finalize;
 }
 
 sub search {
