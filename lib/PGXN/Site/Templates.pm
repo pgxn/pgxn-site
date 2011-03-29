@@ -498,11 +498,12 @@ template distribution => sub {
                     my $provides = $dist->provides;
                     for my $ext (sort { $a cmp $b } keys %{ $provides }) {
                         my $info = $provides->{$ext};
-                        my $path = first { delete $docs->{"$_$ext"} } 'doc/', 'docs/', '';
+                        my $path = $info->{doc};
                         dt {
-                            if (defined $path) {
+                            if ($path) {
+                                delete $docs->{$path};
                                 a {
-                                    href is $req->uri . "$sep$path$ext.html";
+                                    href is $req->uri . "$sep$path.html";
                                     span { class is 'fn';       $ext             };
                                     span { class is 'version';  $info->{version} };
                                 };
