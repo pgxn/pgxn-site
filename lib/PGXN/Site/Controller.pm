@@ -212,7 +212,7 @@ sub server_error {
         Email::Sender::Simple->send($email);
     }
 
-    $self->render('/servererror', { env => $env, code => $code_for{notfound} });
+    $self->render('/servererror', { env => $env });
  }
 
 1;
