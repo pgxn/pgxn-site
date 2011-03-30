@@ -566,9 +566,9 @@ template distribution => sub {
                 $dist->user;
             } };
             li {
-                class is 'sub';
+                class is 'sub here';
                 a {
-                    href is $req->uri;
+                    href is $req->uri->path;
                     title is $args->{dist_name};
                     $args->{dist_name};
                 }
@@ -611,8 +611,9 @@ template document => sub {
             };
             li {
                 class is 'sub here';
+                $title;
                 a {
-                    href is $req->uri;
+                    href is $req->uri->path;
                     title is $title;
                     $title;
                 }

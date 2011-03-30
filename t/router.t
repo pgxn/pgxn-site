@@ -128,7 +128,7 @@ test_psgi $app => sub {
         'The body should have the invalid in param error';
 };
 
-# Test /dist/
+# Test /dist/$dist and /dist/$dist/$version
 test_psgi $app => sub {
     my $cb = shift;
 
@@ -143,8 +143,46 @@ test_psgi $app => sub {
         my $title = $uri =~ /0/ ? 'pair 0.1.1' : 'pair';
         like $res->content, qr{<h1>\Q$title</h1>},
             "The body should have the h1 $title";
-
     }
 
+};
+
+# Test /dist/$dist/$path and /dist/$dist/$version/$path/
+test_psgi $app => sub {
+    my $cb = shift;
+
+    my $uri = '/dist/pair/doc/pair.html';
+    ok my $res = $cb->(GET $uri), "Fetch $uri";
+    ok $res->is_success, 'Should be a success';
+    like $res->content, qr{<a href="/dist/pair/" title="pair">pair</a>},
+        "The body should have the distribution link";
+    like $res->content, qr{<a href="/dist/pair/doc/pair\.html" title="pair">pair</a>},
+        "The body should have the doc link";
+
+    $uri = '/dist/pair/0.1.1/doc/pair.html';
+    ok $res = $cb->(GET $uri), "Fetch $uri";
+    ok $res->is_success, 'Should be a success';
+    like $res->content, qr{\Q<a href="/dist/pair/0.1.1/" title="pair 0.1.1">pair 0.1.1</a>},
+        "The body should have the distribution link";
+    like $res->content, qr{\Q<a href="/dist/pair/0.1.1/doc/pair.html" title="pair">pair</a>},
+        "The body should have the doc link";
+
+    # Make sure we get 404 for nonexistent doc.
+    for my $version ('', '/0.1.1') {
+        my $uri = "/dist/pair$version/doc/nonexistent.html";
+        ok my $res = $cb->(GET $uri), "Fetch $uri";
+        ok !$res->is_success, 'Should not be a success';
+        is $res->code, 404, 'Should get 404 response';
+        like $res->content, qr/Resource not found\./,
+            'The body should have the error';
+    }
+
+    # Make sure we get 404 for nonexistent dist.
+    $uri = '/dist/nonesuch/doc/nonesuch.html';
+    ok $res = $cb->(GET $uri), "Fetch $uri";
+    ok !$res->is_success, 'Should not be a success';
+    is $res->code, 404, 'Should get 404 response';
+    like $res->content, qr/Resource not found\./,
+        'The body should have the error';
 };
 
