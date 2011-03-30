@@ -212,7 +212,7 @@ test_psgi $app => sub {
 test_psgi $app => sub {
     my $cb = shift;
 
-    for my $tag('pair', 'key value') {
+    for my $tag ('pair', 'key value') {
         for my $uri (
             "/tag/$tag",
             "/tag/$tag/",
@@ -237,5 +237,38 @@ test_psgi $app => sub {
         like $res->content, qr/Resource not found\./,
             'The body should have the error';
     }
+};
 
+# Test /extension/{extension}/
+test_psgi $app => sub {
+    my $cb = shift;
+
+    for my $ext ( 'pair', 'pgtap') {
+        for my $uri (
+            "/extension/$ext",
+            "/extension/$ext/",
+        ) {
+            ok my $res = $cb->(GET $uri), "Fetch $uri";
+            ok !$res->is_success, 'Should not be a success';
+            is $res->code, 303, 'Should get 303 response';
+            my $loc = $ext eq 'pgtap' ? '/dist/pgTAP/'
+                : '/dist/pair/doc/pair.html';
+            is $res->headers->header('location'), $loc,
+                "Should redirect to $loc";
+        }
+    }
+
+    # We should get 404s for non-existent extensions.
+    for my $uri (qw(
+        /extension
+        /extension/
+        /extension/nonesuch
+        /extension/nonesuch/
+    )) {
+        ok my $res = $cb->(GET $uri), "Fetch $uri";
+        ok !$res->is_success, 'Should not be a success';
+        is $res->code, 404, 'Should get 404 response';
+        like $res->content, qr/Resource not found\./,
+            'The body should have the error';
+    }
 };
