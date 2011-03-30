@@ -9,8 +9,8 @@ use Software::License::PostgreSQL;
 use Software::License::BSD;
 use Software::License::MIT;
 use List::Util qw(first);
-use namespace::autoclean;
 use SemVer;
+#use namespace::autoclean; # Do not use; breaks sort {}
 
 my $l = PGXN::Site::Locale->get_handle('en');
 sub T { $l->maketext(@_) }

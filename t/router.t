@@ -127,3 +127,24 @@ test_psgi $app => sub {
         qr{<p class="error">Bad request: Missing or invalid “l” query parameter\.</p>},
         'The body should have the invalid in param error';
 };
+
+# Test /dist/
+test_psgi $app => sub {
+    my $cb = shift;
+
+    for my $uri (qw(
+        /dist/pair
+        /dist/pair/
+        /dist/pair/0.1.1
+        /dist/pair/0.1.1/
+    )) {
+        ok my $res = $cb->(GET $uri), "Fetch $uri";
+        ok $res->is_success, 'Should be a success';
+        my $title = $uri =~ /0/ ? 'pair 0.1.1' : 'pair';
+        like $res->content, qr{<h1>\Q$title</h1>},
+            "The body should have the h1 $title";
+
+    }
+
+};
+
