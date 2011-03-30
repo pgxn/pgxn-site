@@ -207,3 +207,35 @@ test_psgi $app => sub {
             'The body should have the error';
     }
 };
+
+# Test /tag/{tag}/
+test_psgi $app => sub {
+    my $cb = shift;
+
+    for my $tag('pair', 'key value') {
+        for my $uri (
+            "/tag/$tag",
+            "/tag/$tag/",
+        ) {
+            ok my $res = $cb->(GET $uri), "Fetch $uri";
+            ok $res->is_success, 'Should be a success';
+            like decode_utf8($res->content), qr{\Q<h1>Tag: “$tag”</h1>},
+                "The body should have the h1 with $tag";
+        }
+    }
+
+    # We should get 404s for non-existent tags.
+    for my $uri (qw(
+        /tag
+        /tag/
+        /tag/nonesuch
+        /tag/nonesuch/
+    )) {
+        ok my $res = $cb->(GET $uri), "Fetch $uri";
+        ok !$res->is_success, 'Should not be a success';
+        is $res->code, 404, 'Should get 404 response';
+        like $res->content, qr/Resource not found\./,
+            'The body should have the error';
+    }
+
+};
