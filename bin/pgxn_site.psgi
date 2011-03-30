@@ -13,7 +13,7 @@ while (my $v = shift @ARGV) {
         if $v ~~ [qw(errors_to errors_from private_api_url api_url proxy_url)];
 }
 
-unless (@args >= 8) {
+unless (@args >= 6) {
     say STDERR "\n  Usage: $self \\
          errors_to alert\@example.com \\
          errors_from pgxn-site\@example.com \\
