@@ -611,7 +611,6 @@ template document => sub {
             };
             li {
                 class is 'sub here';
-                $title;
                 a {
                     href is $req->uri->path;
                     title is $title;

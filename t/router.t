@@ -128,7 +128,7 @@ test_psgi $app => sub {
         'The body should have the invalid in param error';
 };
 
-# Test /dist/$dist and /dist/$dist/$version
+# Test /dist/{dist} and /dist/{dist}/{version}
 test_psgi $app => sub {
     my $cb = shift;
 
@@ -144,10 +144,9 @@ test_psgi $app => sub {
         like $res->content, qr{<h1>\Q$title</h1>},
             "The body should have the h1 $title";
     }
-
 };
 
-# Test /dist/$dist/$path and /dist/$dist/$version/$path/
+# Test /dist/{dist}/{+path} and /dist/{dist}/{version}/{+path}/
 test_psgi $app => sub {
     my $cb = shift;
 
@@ -186,3 +185,25 @@ test_psgi $app => sub {
         'The body should have the error';
 };
 
+# Test /user/{user}/
+test_psgi $app => sub {
+    my $cb = shift;
+
+    for my $uri (qw(
+        /user/theory
+        /user/theory/
+    )) {
+        ok my $res = $cb->(GET $uri), "Fetch $uri";
+        ok $res->is_success, 'Should be a success';
+        like $res->content, qr{\Q<h1 class="fn">David E. Wheeler</h1>},
+            "The body should have the h1 with user's name";
+
+        # Make sure we get 404 for nonexistent user.
+        (my $bad = $uri) =~ s/theory/nonesuch/;
+        ok $res = $cb->(GET $bad), "Fetch $bad";
+        ok !$res->is_success, 'Should not be a success';
+        is $res->code, 404, 'Should get 404 response';
+        like $res->content, qr/Resource not found\./,
+            'The body should have the error';
+    }
+};
