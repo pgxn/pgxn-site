@@ -35,7 +35,7 @@ my $build = $class->new(
         'Template::Declare::Tags'      => '0.43',
         'WWW::PGXN'                    => '0.10',
     },
-    recommends => {
+    test_recommends => {
         'HTTP::Request::Common' => '5.824',
         'Test::Pod'             => '1.41',
         'Test::Pod::Coverage'   => '1.06',

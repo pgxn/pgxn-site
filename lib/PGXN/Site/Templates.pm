@@ -178,7 +178,11 @@ template home => sub {
             id is 'homepage';
             div {
                 class is 'hsearch floatLeft';
-                show search_form => { id => 'homesearch', in => 'doc' };
+                show search_form => {
+                    id       => 'homesearch',
+                    in        => 'doc',
+                    autofocus => 1,
+                };
 
                 div {
                     id is 'cloud';
@@ -248,6 +252,14 @@ template home => sub {
                         li { a { href is $spec->[0]; $spec->[1] } };
                     }
                 }; # /ul
+                h6 {
+                    class is 'floatRight';
+                    a {
+                        href is '#';
+                        title is T 'See all our great backers!';
+                        T 'All Backers'
+                    }
+                };
             }; # /div.hside floatLeft gradient
 
         }; # /div#homepage
@@ -936,10 +948,11 @@ template search_form => sub {
         fieldset {
             class is 'query';
             input {
-                type  is 'text';
-                class is 'width50';
-                name  is 'q';
-                value is $args->{query};
+                type      is 'text';
+                class     is 'width50';
+                name      is 'q';
+                autofocus is 'autofocus' if $args->{autofocus};
+                value     is $args->{query};
             };
         }; # /fieldset.query
         fieldset {
@@ -949,12 +962,8 @@ template search_form => sub {
                 id is 'searchin';
                 name is 'in';
                 my $in = $args->{in};
-                option {
-                    value is 'doc';
-                    selected is 'selected' if $in eq 'doc';
-                    'Documentation';
-                };
                 for my $spec (
+                    [ doc       => 'Documentation' ],
                     [ extension => 'Extensions'    ],
                     [ dist      => 'Distributions' ],
                     [ user      => 'Users'         ],

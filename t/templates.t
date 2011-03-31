@@ -19,8 +19,8 @@ use PGXN::Site::Templates;
 use Plack::Request;
 use HTTP::Message::PSGI;
 
-plan 'no_plan';
-#plan tests => 6;
+#plan 'no_plan';
+plan tests => 203;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -33,10 +33,182 @@ ok my $html = Template::Declare->show('home', $req, {}),
 
 is_well_formed_xml $html, 'The HTML should be well-formed';
 
-my $tx = test_wrapper($html, {
-});
-#diag $html;
+test_wrapper($html, {
+    title   => 'PGXN',
+    content => sub {
+        my $tx = shift;
+        $tx->ok('./div[@id="homepage"]', 'Test homepage div', sub {
+            $tx->is('count(./*)', 2, qq{Should have 2 elements below "homepage"});
+            $tx->ok('./div[1]', 'Test first div' => sub {
+                $tx->is('./@class', 'hsearch floatLeft', 'Should have class');
+                $tx->is('count(./*)', 2, qq{Should have 2 elements below .hsearch});
 
+                test_search_form($tx, 'homesearch', 'doc', '');
+
+                $tx->ok('./div[@id="cloud"]', 'Test cloud' => sub {
+                    # XXX Add cloud tests here.
+                });
+            });
+
+            $tx->ok('./div[2]', 'Test second div' => sub {
+                $tx->is(
+                    './@class',
+                    'hside floatLeft gradient',
+                    'Should have class',
+                );
+                $tx->is('count(./*)', 8, 'Should have 8 sub-elements');
+                $tx->is(
+                    './p[1]',
+                    $mt->maketext('pgxn_summary_paragraph'),
+                    'First graph should be intro',
+                );
+
+                my $i = 0;
+                for my $h3 (qw(Founders Patrons Benefactors)) {
+                    ++$i;
+                    $tx->is("./h3[$i]", $h3, qq{Header $i should be "$h3"});
+                }
+
+                $tx->ok('./div[1][@id="founders"]', 'Test founders div' => sub {
+                    $tx->is('count(./*)', 3, 'Should have 3 sub-elements');
+                    $tx->is('count(./a)', 3, 'All should be anchors');
+                    $tx->ok('./a[1]', 'Test first anchor' => sub {
+                        $tx->is(
+                            './@href',
+                            'http://www.myyearbook.com/',
+                            'href should be myyearbook.com',
+                        );
+                        $tx->is(
+                            './@title',
+                            'myYearbook',
+                            'Title should be myYearbook',
+                        );
+
+                        $tx->ok('./img', 'Test image sub-element' => sub {
+                            $tx->is('./@src', '/ui/img/myyearbook.png', 'src=myyearbook.png');
+                            $tx->is('./@alt', 'myYearbook.com', 'alt=myyearbook.com');
+                        });
+                    });
+
+                    $tx->ok('./a[2]', 'Test second anchor' => sub {
+                        $tx->is(
+                            './@href',
+                            'http://www.pgexperts.com/',
+                            'href should be pgexperts.com',
+                        );
+                        $tx->is(
+                            './@title',
+                            'PostgreSQL Experts, Inc.',
+                            'Title should be PGX',
+                        );
+
+                        $tx->ok('./img', 'Test image sub-element' => sub {
+                            $tx->is('./@src', '/ui/img/pgexperts.png', 'src=pgexperts.png');
+                            $tx->is('./@alt', 'PGX', 'alt=PGX');
+                        });
+                    });
+
+                    $tx->ok('./a[3]', 'Test third anchor' => sub {
+                        $tx->is(
+                            './@href',
+                            'http://www.dalibo.org/en/',
+                            'href should be dalibo.org',
+                        );
+                        $tx->is(
+                            './@title',
+                            'Dalibo',
+                            'Title should be Dalibo',
+                        );
+
+                        $tx->ok('./img', 'Test image sub-element' => sub {
+                            $tx->is('./@src', '/ui/img/dalibo.png', 'src=dalibo.png');
+                            $tx->is('./@alt', 'Dalibo', 'alt=Dalibo');
+                        });
+                    });
+
+                }); # /div#founders
+
+                $tx->ok('./div[2][@id="patrons"]', 'Test patrons div' => sub {
+                    $tx->is('count(./*)', 1, 'Should have 1 sub-element');
+                    $tx->ok('./h3', 'Test h3' => sub {
+                        $tx->is('count(./*)', 1, 'Should have 1 sub-element');
+                        $tx->ok('./a', 'Test anchor' => sub {
+                            $tx->is(
+                                './@href',
+                                'http://www.enovafinancial.com/',
+                                'href should be enovafinancial.com',
+                            );
+                            $tx->is(
+                                './@title',
+                                'Enova Financial',
+                                'Title should be Enova Financial',
+                            );
+
+                            $tx->ok('./img', 'Test image sub-element' => sub {
+                                $tx->is('./@src', '/ui/img/enova.png', 'src=enova.png');
+                                $tx->is('./@alt', 'e', 'alt=e');
+                            });
+                            $tx->like(
+                                './text()',
+                                qr{\A\s+Enova Financial\s+\z}ms,
+                                'Should have text',
+                            );
+                        });
+                    });
+                }); # /div#patrons
+
+                $tx->ok('./ul[1][@id="benefactors"]', 'Test benefactors ul' => sub {
+                    $tx->is('count(./*)', 4, 'Should have 4 sub-elements');
+                    my $i = 0;
+                    for my $spec (
+                        [ 'http://www.etsy.com/'          => 'Etsy'                      ],
+                        [ 'http://www.postgresql.us/'     => 'US PostgreSQL Association' ],
+                        [ 'http://www.commandprompt.com/' => 'Command Prompt, Inc.'      ],
+                        [ 'http://www.marchex.com/'       => 'Marchex'                   ],
+                    ) {
+                        ++$i;
+                        $tx->ok("./li[$i]", "Test li $i" => sub {
+                            $tx->ok('./a', 'Test anchor' => sub {
+                                $tx->is(
+                                    './@href',
+                                    $spec->[0],
+                                    "href should be $spec->[0]",
+                                );
+                                $tx->is(
+                                    './text()',
+                                    $spec->[1],
+                                    "Text should be $spec->[1]",
+                                );
+                            });
+                        });
+                    }
+                }); # /div#benefactors
+
+                $tx->ok('./h6', 'Test h6 header' => sub {
+                    $tx->is('./@class', 'floatRight', 'Should float right');
+                    $tx->is('count(./*)', 1, 'Should have 1 sub-element');
+                    $tx->ok('./a', 'Test anchor' => sub {
+                        $tx->is(
+                            './@href',
+                            '#',
+                            'href should point to backers page.',
+                        );
+                        $tx->is(
+                            './@title',
+                            'See all our great backers!',
+                            'Title should be correct',
+                        );
+
+                        $tx->is('./text()', 'All Backers ➡', 'Text should be "All Backers"');
+                    });
+
+
+                });
+
+            });
+        });
+    },
+});
 
 sub test_wrapper {
     my $tx = Test::XPath->new( xml => shift, is_html => 1 );
@@ -50,6 +222,11 @@ sub test_wrapper {
     # Check the head element.
     $tx->ok('/html/head', 'Test head', sub {
         $tx->is('count(./*)', 6, qq{Should have 6 elements below "head"});
+        $tx->is(
+            './title',
+            'PGXN: PostgreSQL Extension Network',
+            'Should have the page title',
+        );
         $tx->is(
             './meta[@name="keywords"]/@content',
             'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network',
@@ -87,7 +264,7 @@ sub test_wrapper {
     # Test the body.
     $tx->is('count(/html/body/*)', 2, 'Should have two elements below body');
 
-    # Check the "header" section.
+    # Check the header section.
     $tx->ok('/html/body/div[@id="all"]/div[@id="header"]', 'Test header', sub {
         $tx->ok('./div[@id="title"]', 'Test title', sub {
             $tx->is('./h1', 'PGXN', 'Should have h1');
@@ -111,9 +288,154 @@ sub test_wrapper {
                 $tx->is('./@class', 'right', '... Class should be "right"');
             });
         });
+    }); # /div#header
+
+    # Test the content section.
+    $tx->ok('/html/body/div[@id="all"]/div[@id="content"]', 'Test content', sub {
+        $tx->is('count(./*)', 2, qq{Should have 2 elements below #content});
+        $tx->is('count(./div)', 2, qq{Both should be divs});
+        $tx->ok('./div[@id="mainMenu"]', 'Test main menu' => sub {
+            if ($p->{crumb}) {
+                $tx->is('count(./*)', 2, 'Should have two subelements below #mainMenu');
+                $tx->is('count(./ul)', 2, qq{Both should be uls});
+                $tx->ok('./ul[1]', 'Test first ul' => sub {
+                    # XXX Add crumb tests.
+                });
+            } else {
+                $tx->is('count(./*)', 1, 'Should have one subelement below #mainMenu');
+                $tx->is('count(./ul)', 1, qq{It should be a ul});
+                $tx->ok('./ul[@class="floatRight"]', 'Test floatRight ul' => sub {
+                    my $i = 0;
+                    for my $spec (
+                        [ '#', 'About PGXN',                 'About'  ],
+                        [ '#', 'News',                       'News'   ],
+                        [ '#', 'Frequently Asked Questions', 'FAQ'    ],
+                    ) {
+                        $i++;
+                        $tx->ok("./li[$i]", "Test li $i", sub {
+                            $tx->is('count(./*)', 1, '... Should have one subelement');
+                            $tx->is('./a/@href', $spec->[0], "... Should point to $spec->[0]");
+                            $tx->is('./a/@title', $spec->[1], qq{... Should have title "$spec->[1]"});
+                            $tx->is('./a', $spec->[2], qq{... Should have text "$spec->[2]"});
+                        });
+                    }
+                })
+            }
+        }); # /div/#mainMenu
+
+        # Content of the page goes here.
+        $p->{content}->($tx);
+
+    }); # /div#content
+
+    # Test footer.
+    $tx->ok('/html/body/div[@id="footer"]', 'Test footer', sub {
+        $tx->is('count(./*)', 1, qq{Should have 1 element below #footer});
+        $tx->ok('./div[@id="width"]', 'Test width' => sub {
+            $tx->is('count(./*)', 2, 'Should have 2 elements below #width');
+            $tx->is('count(./span)', 2, 'Both should be spans');
+            $tx->ok('./span[1]', 'Test the first span' => sub {
+                $tx->is('count(./*)', 5, 'Should have 5 elements below #floatLeft');
+                $tx->is('./@class', 'floatLeft', 'Should be floatLeft');
+                $tx->like('./text()', qr{^code\b}, 'Text should contain "code"');
+                $tx->like('./text()', qr{\bdesign\b}, 'Text should contain "design"');
+                $tx->like('./text()', qr{\blogo\b}, 'Text should contain "logo"');
+                $tx->ok('./a[1]', 'Test first anchor', sub {
+                    $tx->is('./@href', 'http://www.justatheory.com/', 'Should link to justatheory.com');
+                    $tx->is('./@title', 'Go to Just a Theory', 'Should have link title');
+                    $tx->is('./text()', 'theory', 'Should have text "theory"');
+                });
+                $tx->is('./span[1][@class="grey"]', '|', 'Should have spacer span');
+                $tx->ok('./a[2]', 'Test second anchor', sub {
+                    $tx->is('./@href', 'http://fullahead.org/', 'Should link to fullahead.org');
+                    $tx->is('./@title', 'Go to Fullahead', 'Should have link title');
+                    $tx->is('./text()', 'Fullahead', 'Should have text "Fullahead"');
+                });
+                $tx->is('./span[2][@class="grey"]', '|', 'Should have spacer span');
+                $tx->ok('./a[3]', 'Test third anchor', sub {
+                    $tx->is('./@href', 'http://www.strongrrl.com/', 'Should link to strongrrl.com');
+                    $tx->is('./@title', 'Go to Strongrrl', 'Should have link title');
+                    $tx->is('./text()', 'Strongrrl', 'Should have text "Strongrrl"');
+                });
+            }); # /span.floatLeft
+
+            $tx->ok('./span[2]', 'Test the first span' => sub {
+                $tx->is('./@class', 'floatRight', 'Should be floatRight');
+                $tx->is('count(./*)', 1, 'Should have 1 element below #floatRight');
+                $tx->ok('./a', 'Test feedback anchor', sub {
+                    $tx->is('./@href', '#', 'Should link to #');
+                    $tx->is('./@title', 'Feedback', 'Should have link title');
+                    $tx->is('./text()', 'Feedback', 'Should have text "Feedback"');
+                });
+            }) # /span.floatRight
+
+        }); # /div#width
+
+    }); # /div#footer
+}
+
+sub test_search_form {
+    my ($tx, $id, $in, $q) = @_;
+    $tx->ok(qq{./form[\@id="$id"]}, "Test form#$id" => sub {
+        $tx->is('./@action', '/search', 'Action should be /search');
+        $tx->is('./@enctype', 'application/x-www-form-urlencoded', 'Should have enctype');
+        $tx->is('./@method', 'get', 'Should be method=get');
+
+        $tx->is('count(./*)', 2, 'Should have 2 elements below form');
+        $tx->is('count(./fieldset)', 2, 'Boty should be fieldsets');
+
+        $tx->ok('./fieldset[1]', 'Test first fieldset' => sub {
+            $tx->is('./@class', 'query', 'Class should be "query"');
+            $tx->is('count(./*)', 1, 'Should have 1 sub-element');
+            $tx->ok('./input[@type="text"]', 'Test query input' => sub {
+                $tx->is('./@class', 'width50', 'Class should be "width50"');
+                $tx->is('./@name', 'q', 'Name should be "q"');
+                $tx->is('./@value', $q, qq{Value should be "$q"});
+                $tx->is(
+                    './@autofocus',
+                    $id eq 'homesearch' ? 'autofocus' : undef,
+                    'Should have autofocus',
+                )
+            });
+        });
+
+        $tx->ok('./fieldset[2]', 'Test second fieldset' => sub {
+            $tx->is('./@class', 'submitin', 'Class should be "submitin"');
+            $tx->is('count(./*)', 3, 'Should have 3 sub-elements');
+
+            $tx->ok('./label', 'Test label' => sub {
+                $tx->is('./@id', 'inlabel', 'ID should be "inlabel"');
+                $tx->is('./@for', 'searchin', 'For should be "searchin"');
+                $tx->is('./text()', 'in', 'Text should be "in"');
+            });
+
+            $tx->ok('./select[@id="searchin"]', 'Test select#searchin' => sub {
+                $tx->is('./@name', 'in', 'Name should be "in"');
+                $tx->is('count(./*)', 5, 'Should have 5 sub-elements');
+                $tx->is('count(./option)', 5, 'All should be options');
+
+                my $i = 0;
+                for my $spec (
+                    [ doc       => 'Documentation' ],
+                    [ extension => 'Extensions'    ],
+                    [ dist      => 'Distributions' ],
+                    [ user      => 'Users'         ],
+                    [ tag       => 'Tags'          ]
+                ) {
+                    ++$i;
+                    $tx->ok("./option[$i]", "Test option $i" => sub {
+                        $tx->is('./@value', $spec->[0], qq{Value should be "$spec->[0]"});
+                        $tx->is('./@selected', 'selected', 'should be selected')
+                            if $spec eq $in;
+                        $tx->is('./text()', $spec->[1], qq{Should have text "$spec->[1]"});
+                    });
+                }
+            });
+
+            $tx->ok('./input[@type="submit"]', 'Test submit input' => sub {
+                $tx->is('./@class', 'button', 'Class should be "button"');
+                $tx->is('./@value', 'PGXN Search', qq{Value should be "PGXN Search"});
+            });
+        });
     });
-
-
-
-    return $tx;
 }
