@@ -508,6 +508,9 @@ ul.sideMenu {
   background: #555 url(../img/gradient.jpg) repeat-x bottom left; 
 }
 
+.error {
+    height: 500px;
+}
 
 /**************************************************************
    Distribution display

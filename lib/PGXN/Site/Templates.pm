@@ -897,44 +897,66 @@ template 'results/users' => sub {
     }
 };
 
-template notfound => sub {
+template feedback => sub {
     my ($self, $req, $args) = @_;
     wrapper {
-        h1 { T 'Not Found' };
+        h1 { T 'Feedback' };
         p {
             class is 'warning';
-            T q{Resource not found.};
+            q{Give us feedback};
         };
     } $req, {
-        title => _title_with T 'Resource Not Found',
+        title => _title_with T 'Feedback',
     };
+};
+
+my $err = sub {
+    my ($req, $args) = @_;
+    wrapper {
+        div {
+            class is 'width100 floatLeft';
+            div {
+                class is 'error gradient';
+                h1 { $args->{title} };
+                blockquote {
+                    class is $args->{class};
+                    p { $args->{message} };
+                };
+            };
+        };
+    } $req, {
+        title => _title_with T $args->{title},
+    };
+};
+
+template notfound => sub {
+    my ($self, $req, $args) = @_;
+    $err->($req => {
+        class   => 'exclamation',
+        title   => T('Not Found'),
+        message => T('Resource not found.'),
+    });
 };
 
 template badrequest => sub {
     my ($self, $req, $args) = @_;
-    wrapper {
-        h1 { T 'Bad Request' };
-        p {
-            class is 'error';
-            T 'Bad request: Missing or invalid "[_1]" query parameter.',
-              $args->{param};
-        };
-    } $req, {
-        title => _title_with T 'Bad Request',
-    };
+    $err->($req => {
+        class   => 'stop',
+        title   => T('Bad Request'),
+        message => T(
+            'Bad request: Missing or invalid "[_1]" query parameter.',
+            $args->{param}
+        ),
+    });
 };
 
 template servererror => sub {
     my ($self, $req, $args) = @_;
-    wrapper {
-        h1 { T 'Internal Server Error' };
-        p {
-            class is 'error';
-            T q{Internal server error.};
-        };
-    } $req, {
-        title => _title_with T 'Internal Server Error',
-    };
+    $err->($req => {
+        class   => 'stop',
+        title   => T('Internal Server Error'),
+        message => T('Internal server error.'),
+    });
 };
 
 template search_form => sub {
