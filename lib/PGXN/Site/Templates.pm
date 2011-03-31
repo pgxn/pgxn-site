@@ -5,6 +5,7 @@ use utf8;
 use parent 'Template::Declare';
 use PGXN::Site::Locale;
 use Template::Declare::Tags;
+use HTML::Entities;
 use Software::License::PostgreSQL;
 use Software::License::BSD;
 use Software::License::MIT;
@@ -655,10 +656,7 @@ template user => sub {
                     dt { T 'Email' };
                     dd {
                         class is 'email';
-                        outs_raw '<a href="'
-                            . _obscure('mailto:' . $user->email)
-                            . '">' . _obscure($user->email)
-                            . '</a>';
+                        outs_raw _link_for_email($user->email);
                     };
                     dt { T 'URL' };
                     dd {
@@ -898,6 +896,46 @@ template 'results/users' => sub {
     }
 };
 
+template feedback => sub {
+    my ($self, $req, $args) = @_;
+    my $title = T 'Feedback';
+    wrapper {
+        div {
+            class is 'width75 center';
+            div {
+                class is 'gradient';
+                h1 { $title };
+                p  {
+                    outs_raw T(
+                        'feedback_contact',
+                        _link_for_email($args->{feedback_to})
+                    );
+                };
+                p { T 'feedback_users' };
+                p { T 'feedback_forums' };
+                dl {
+                    dt {
+                        a {
+                            href is 'http://groups.google.com/group/pgxn-users';
+                            T 'PGXN Users';
+                        }
+                    };
+                    dd { T 'The PGXN Users group is a great place to go with questions on creating PGXN distributions' };
+                    dt {
+                        a {
+                            href is 'http://www.postgresql.org/community/lists/';
+                            T 'PostgreSQL Mailing Lists';
+                        }
+                    };
+                    dd { T q{The PostgreSQL mailing lists have something for everybody: novices, users, and hackers, they're the place to go for comprehensive discussion of everything PostgreSQL.} };
+                };
+            };
+        };
+    } $req, {
+        title => _title_with $title,
+    };
+};
+
 my $err = sub {
     my ($req, $args) = @_;
     wrapper {
@@ -1089,6 +1127,14 @@ sub _license($) {
     eval "require $class; 1" or die;
     return $class;
 }
+
+sub _link_for_email {
+    my $email = shift;
+    return '<a href="'
+        . _obscure(URI->new("mailto:$email"))
+        . '">' . _obscure($email)
+        . '</a>';
+};
 
 sub _obscure ($) {
 #

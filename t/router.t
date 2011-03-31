@@ -3,7 +3,7 @@
 use 5.12.0;
 use utf8;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' }
-use Test::More tests => 241;
+use Test::More tests => 247;
 #use Test::More 'no_plan';
 use Plack::Test;
 use HTTP::Request::Common;
@@ -17,7 +17,7 @@ BEGIN {
 
 local $@;
 eval { PGXN::Site::Router->app };
-is $@, "Missing required parameters api_url, errors_to and errors_from\n",
+is $@, "Missing required parameters api_url, errors_to, errors_from, and feedback_to\n",
     'Should get proper error for missing parameters';
 
 ok my $app = PGXN::Site::Router->app(
@@ -25,6 +25,7 @@ ok my $app = PGXN::Site::Router->app(
     private_api_url => 'file:t/api',
     errors_to       => 'alerts@pgxn.org',
     errors_from     => 'api@pgxn.org',
+    feedback_to     => 'feedback@pgxn.org',
 ), 'Instantiate the app';
 
 # Test home page.
@@ -102,7 +103,7 @@ test_psgi $app => sub {
     ok $res->is_error, 'Should return an error';
     is $res->code, 400, 'Should get 400 response';
     like decode_utf8($res->content),
-        qr{<p class="error">Bad request: Missing or invalid “q” query parameter\.</p>},
+        qr{<p>Bad request: Missing or invalid “q” query parameter\.</p>},
         'The body should have the invalid q param error';
 
     # Make sure an invalid "in" value resturns 400.
@@ -110,7 +111,7 @@ test_psgi $app => sub {
     ok $res->is_error, 'Should return an error';
     is $res->code, 400, 'Should get 400 response';
     like decode_utf8($res->content),
-        qr{<p class="error">Bad request: Missing or invalid “in” query parameter\.</p>},
+        qr{<p>Bad request: Missing or invalid “in” query parameter\.</p>},
         'The body should have the invalid in param error';
 
     # Make sure an invalid "o" and "l" values resturn 400.
@@ -118,14 +119,14 @@ test_psgi $app => sub {
     ok $res->is_error, 'Should return an error';
     is $res->code, 400, 'Should get 400 response';
     like decode_utf8($res->content),
-        qr{<p class="error">Bad request: Missing or invalid “o” query parameter\.</p>},
+        qr{<p>Bad request: Missing or invalid “o” query parameter\.</p>},
         'The body should have the invalid in param error';
 
     ok $res = $cb->(GET '/search?q=whu&l=foo'), 'Fetch /search with bad l=';
     ok $res->is_error, 'Should return an error';
     is $res->code, 400, 'Should get 400 response';
     like decode_utf8($res->content),
-        qr{<p class="error">Bad request: Missing or invalid “l” query parameter\.</p>},
+        qr{<p>Bad request: Missing or invalid “l” query parameter\.</p>},
         'The body should have the invalid in param error';
 };
 
@@ -274,6 +275,16 @@ test_psgi $app => sub {
     }
 };
 
+# Test /feeback.
+test_psgi $app => sub {
+    my $cb = shift;
+    for my $uri ('/feedback', '/feedback/') {
+        ok my $res = $cb->(GET $uri), "Fetch $uri";
+        is $res->code, 200, 'Should get 200 response';
+        like $res->content, qr{\Q<h1>Feedback</h1>}, 'The body should look correct';
+    }
+};
+
 # Test /error.
 my $err_app = sub {
     my $env = shift;
@@ -292,7 +303,7 @@ test_psgi $err_app => sub {
     ok $res->is_success, q{Should be success (because it's only served as a subrequest)};
     is $res->header('X-PGXN-API-Version'), PGXN::API->VERSION,
         'Should have API version in the header';
-    like $res->content, qr{\Q<p class="error">Internal server error.</p>},
+    like $res->content, qr{\Q<p>Internal server error.</p>},
         'body should contain error message';
 
     # Check the alert email.

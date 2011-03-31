@@ -69,6 +69,11 @@ sub app {
             };
         };
 
+        # /feedback
+        resource qr{^/feedback/?$} => sub {
+            GET { $controller->feedback(shift) };
+        };
+
         # /error (500 error responder).
         resource '/error' => sub {
             GET { $controller->server_error(@_) };

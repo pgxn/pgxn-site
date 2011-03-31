@@ -90,6 +90,13 @@ our %Lexicon = (
     '[_1]-[_2] of [_3] found' => '[_1]-[_2] of [_3] found',
     'Bad Request' => 'Bad Request',
     'Bad request: Missing or invalid "[_1]" query parameter.' => 'Bad request: Missing or invalid “[_1]” query parameter.',
+    'feedback_contact' => 'If you have any feedback about this site, its design, or how it presents information, then please send an Email to [_1].',
+    'feedback_users' => 'If you have a question about an issue with a particular extension, or the content of its documentation, please contact the maintainer of that extension.',
+    'feedback_forums' => 'If the feedback you want to give is not specifically about this site, then please try one of the following forums that best fits.',
+    'PGXN Users' => 'PGXN Users',
+    'The PGXN Users group is a great place to go with questions on creating PGXN distributions' => 'The PGXN Users group is a great place to go with questions on creating PGXN distributions',
+    'PostgreSQL Mailing Lists' => 'PostgreSQL Mailing Lists',
+    q{The PostgreSQL mailing lists have something for everybody: novices, users, and hackers, they're the place to go for comprehensive discussion of everything PostgreSQL.} => q{The PostgreSQL mailing lists have something for everybody: novices, users, and hackers, they’re the place to go for comprehensive discussion of everything PostgreSQL.},
 );
 
 sub accept {

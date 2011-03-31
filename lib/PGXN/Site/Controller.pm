@@ -38,14 +38,15 @@ my %code_for = (
 sub new {
     my ($class, %p) = @_;
 
-    unless ($p{api_url} && $p{errors_to} && $p{errors_from}) {
-        die "Missing required parameters api_url, errors_to and errors_from\n";
+    unless ($p{api_url} && $p{errors_to} && $p{errors_from} && $p{feedback_to}) {
+        die "Missing required parameters api_url, errors_to, errors_from, and feedback_to\n";
     }
 
     (my $api_url = $p{api_url}) =~ s{/$}{};
     bless {
         errors_to   => $p{errors_to},
         errors_from => $p{errors_from},
+        feedback_to => $p{feedback_to},
         api_url     => URI->new($api_url),
         api         => WWW::PGXN->new(
             url   =>  $p{private_api_url} || $api_url,
@@ -58,6 +59,7 @@ sub api         { shift->{api}         }
 sub api_url     { shift->{api_url}     }
 sub errors_to   { shift->{errors_to}   }
 sub errors_from { shift->{errors_from} }
+sub feedback_to { shift->{feedback_to}   }
 
 sub render {
     my ($self, $template, $p) = @_;
@@ -76,6 +78,13 @@ sub missing {
 sub home {
     my $self = shift;
     $self->render('/home', { env => shift });
+}
+
+sub feedback {
+    my $self = shift;
+    $self->render('/feedback', { env => shift, vars => {
+        feedback_to => $self->feedback_to
+    } });
 }
 
 sub distribution {
