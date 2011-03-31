@@ -719,11 +719,11 @@ template search => sub {
                             $res->{offset} + @hits,
                             $res->{count};
                     };
-                    show "results/$res->{index}" => @hits;
+                    show "results/$res->{in}" => @hits;
                     if (my $c = $res->{count}) {
                         my $uri = $req->uri;
                         my @params = (
-                            in => $res->{index},
+                            in => $res->{in},
                             q  => $res->{query},
                             l  => $res->{limit},
                         );
@@ -772,20 +772,19 @@ template search => sub {
                 class is 'notmenu';
                 show search_form => {
                     id    => 'resultsearch',
-                    query => $res->{query},
-                    in    => $res->{index},
+                    %{ $res },
                 };
             }
         },
     };
 };
 
-template 'results/extension' => sub {
+template 'results/extensions' => sub {
     $_[0] = 'extension';
     &_detailed_results;
 };
 
-template 'results/doc' => sub {
+template 'results/docs' => sub {
     $_[0] = 'title';
     &_detailed_results;
 };
@@ -835,7 +834,7 @@ sub _detailed_results {
     }
 };
 
-template 'results/dist' => sub {
+template 'results/dists' => sub {
     my $self = shift;
     for my $hit (@_) {
         div {
@@ -867,7 +866,7 @@ template 'results/dist' => sub {
     }
 };
 
-template 'results/tag' => sub {
+template 'results/tags' => sub {
     my $self = shift;
     for my $hit (@_) {
         div {
@@ -882,7 +881,7 @@ template 'results/tag' => sub {
     }
 };
 
-template 'results/user' => sub {
+template 'results/users' => sub {
     my $self = shift;
     for my $hit (@_) {
         div {
@@ -963,11 +962,11 @@ template search_form => sub {
                 name is 'in';
                 my $in = $args->{in};
                 for my $spec (
-                    [ doc       => 'Documentation' ],
-                    [ extension => 'Extensions'    ],
-                    [ dist      => 'Distributions' ],
-                    [ user      => 'Users'         ],
-                    [ tag       => 'Tags'          ]
+                    [ docs       => 'Documentation' ],
+                    [ extensions => 'Extensions'    ],
+                    [ dists      => 'Distributions' ],
+                    [ users      => 'Users'         ],
+                    [ tags       => 'Tags'          ]
                 ) {
                     option {
                         value is $spec->[0];

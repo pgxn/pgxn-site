@@ -148,7 +148,7 @@ sub search {
     my $params = $req->query_parameters;
     my $q = $params->{q};;
 
-    unless ($q && $params->{in} ~~ ['', undef, qw(doc dist extension user tag)]) {
+    unless ($q && $params->{in} ~~ ['', undef, qw(docs dists extensions users tags)]) {
         return $self->render('/badrequest', {
             env => $env,
             code => $code_for{badrequest},
@@ -168,7 +168,7 @@ sub search {
     $self->render('/search', { req => $req, vars => {
         api     => $self->api,
         results => $self->api->search(
-            index  => scalar $params->{in},
+            in     => scalar $params->{in},
             query  => decode_utf8($q),
             offset => scalar $params->{o},
             limit  => scalar $params->{l},

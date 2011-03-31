@@ -416,11 +416,11 @@ sub test_search_form {
 
                 my $i = 0;
                 for my $spec (
-                    [ doc       => 'Documentation' ],
-                    [ extension => 'Extensions'    ],
-                    [ dist      => 'Distributions' ],
-                    [ user      => 'Users'         ],
-                    [ tag       => 'Tags'          ]
+                    [ docs       => 'Documentation' ],
+                    [ extensions => 'Extensions'    ],
+                    [ dists      => 'Distributions' ],
+                    [ users      => 'Users'         ],
+                    [ tags       => 'Tags'          ],
                 ) {
                     ++$i;
                     $tx->ok("./option[$i]", "Test option $i" => sub {

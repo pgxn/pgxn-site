@@ -69,25 +69,25 @@ test_psgi $app => sub {
             limit  => 50,
             offset => 0,
             count  => 0,
-            index  => $p{index} || 'doc',
+            in     => $p{in} || 'doc',
             hits   => [],
         };
     });
 
     # Search for stuff.
-    for my $index ('', qw(doc dist extension user tag)) {
+    for my $in ('', qw(docs dists extensions users tags)) {
         for my $spec (
             [ 'q=föö' => {} ],
             [ 'q=föö&o=2' => { offset => 2} ],
             [ 'q=föö&o=2&l=3' => { offset => 2, limit => 3} ],
             [ 'q=föö&l=3' => { limit => 3} ],
         ) {
-            my $uri = "/search?$spec->[0]&in=$index";
+            my $uri = "/search?$spec->[0]&in=$in";
             ok my $res = $cb->(GET $uri), "Fetch $uri";
             ok $res->is_success, 'Request should be successful';
             is_deeply \%params, {
                 query => 'föö',
-                index => $index,
+                in    => $in,
                 limit => undef,
                 offset => undef,
                 %{ $spec->[1] },
