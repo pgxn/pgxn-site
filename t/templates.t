@@ -308,8 +308,8 @@ sub test_wrapper {
                     my $i = 0;
                     for my $spec (
                         [ '#', 'About PGXN',                 'About'  ],
-                        [ '#', 'News',                       'News'   ],
                         [ '#', 'Frequently Asked Questions', 'FAQ'    ],
+                        [ 'http://blog.pgxn.org/', 'Blog',   'Blog'   ],
                     ) {
                         $i++;
                         $tx->ok("./li[$i]", "Test li $i", sub {

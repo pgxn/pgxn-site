@@ -108,8 +108,8 @@ BEGIN { create_wrapper wrapper => sub {
                             for my $spec (
                                 [ '#', 'About PGXN',                 'About'  ],
                                 # [ '#', 'Recent Uploads',             'Recent' ],
-                                [ '#', 'News',                       'News'   ],
                                 [ '#', 'Frequently Asked Questions', 'FAQ'    ],
+                                [ 'http://blog.pgxn.org/', 'Blog',   'Blog'   ],
                             ) {
                                 li {
                                     a {
