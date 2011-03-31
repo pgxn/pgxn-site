@@ -73,7 +73,6 @@ sub app {
         resource '/error' => sub {
             GET { $controller->server_error(@_) };
         };
-
     };
 
     builder {

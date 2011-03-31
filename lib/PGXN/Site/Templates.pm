@@ -719,11 +719,11 @@ template search => sub {
                             $res->{offset} + @hits,
                             $res->{count};
                     };
-                    show "results/$res->{in}" => @hits;
+                    show "results/$args->{in}" => @hits;
                     if (my $c = $res->{count}) {
                         my $uri = $req->uri;
                         my @params = (
-                            in => $res->{in},
+                            in => $args->{in},
                             q  => $res->{query},
                             l  => $res->{limit},
                         );
@@ -771,7 +771,8 @@ template search => sub {
             li {
                 class is 'notmenu';
                 show search_form => {
-                    id    => 'resultsearch',
+                    in => $args->{in},
+                    id => 'resultsearch',
                     %{ $res },
                 };
             }
@@ -895,19 +896,6 @@ template 'results/users' => sub {
             p { outs_raw $hit->{name} };
         }
     }
-};
-
-template feedback => sub {
-    my ($self, $req, $args) = @_;
-    wrapper {
-        h1 { T 'Feedback' };
-        p {
-            class is 'warning';
-            q{Give us feedback};
-        };
-    } $req, {
-        title => _title_with T 'Feedback',
-    };
 };
 
 my $err = sub {

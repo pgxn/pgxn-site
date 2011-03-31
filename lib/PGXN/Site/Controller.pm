@@ -146,7 +146,7 @@ sub search {
     my ($self, $env) = @_;
     my $req = Plack::Request->new($env);
     my $params = $req->query_parameters;
-    my $q = $params->{q};;
+    my $q = $params->{q};
 
     unless ($q && $params->{in} ~~ ['', undef, qw(docs dists extensions users tags)]) {
         return $self->render('/badrequest', {
@@ -166,12 +166,13 @@ sub search {
     }
 
     $self->render('/search', { req => $req, vars => {
+        in      => $params->{in},
         api     => $self->api,
         results => $self->api->search(
-            in     => scalar $params->{in},
+            in     => $params->{in},
             query  => decode_utf8($q),
-            offset => scalar $params->{o},
-            limit  => scalar $params->{l},
+            offset => $params->{o},
+            limit  => $params->{l},
         ),
     }});
 }
