@@ -74,6 +74,11 @@ sub app {
             GET { $controller->feedback(shift) };
         };
 
+        # /about
+        resource qr{^/about/?$} => sub {
+            GET { $controller->about(shift) };
+        };
+
         # /error (500 error responder).
         resource '/error' => sub {
             GET { $controller->server_error(@_) };

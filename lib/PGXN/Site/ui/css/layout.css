@@ -277,6 +277,7 @@
   margin-left: auto;
   margin-right: auto;
   clear:both;
+  padding-bottom: 4em;
 }
 
 /**************************************************************
@@ -406,7 +407,6 @@ ul.sideMenu {
   float: left;
   width: 100%;
   clear: both;
-  
   margin-top: -3.5em;
   background: #000 url(../img/footer.jpg) repeat-x top left;
 }

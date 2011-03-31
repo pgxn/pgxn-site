@@ -87,6 +87,11 @@ sub feedback {
     } });
 }
 
+sub about {
+    my $self = shift;
+    $self->render('/about', { env => shift });
+}
+
 sub distribution {
     my ($self, $env, $name, $version) = @_;
     my $dist = $self->api->get_distribution($name => $version)

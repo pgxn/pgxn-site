@@ -97,6 +97,23 @@ our %Lexicon = (
     'The PGXN Users group is a great place to go with questions on creating PGXN distributions' => 'The PGXN Users group is a great place to go with questions on creating PGXN distributions',
     'PostgreSQL Mailing Lists' => 'PostgreSQL Mailing Lists',
     q{The PostgreSQL mailing lists have something for everybody: novices, users, and hackers, they're the place to go for comprehensive discussion of everything PostgreSQL.} => q{The PostgreSQL mailing lists have something for everybody: novices, users, and hackers, they’re the place to go for comprehensive discussion of everything PostgreSQL.},
+    'About PGXN' => 'About PGXN',
+    about_paragraph_1 => 'PGXN, the PostgreSQL Extension network, is a central distribution system for open-source PostgreSQL extension libraries. It consists of four basic parts:',
+    'PGXN Manager' => 'PGXN Manager',
+    pgxn_manager_bullet => 'An upload and distribution infrastructure for extension developers.',
+    'PGXN API' => 'PGXN API',
+    pgxn_api_bullet => 'A centralized index and API of distribution metadata.',
+    'PGXN Search' => 'PGXN Search',
+    pgxn_site_bullet => 'This site, for searching extensions and perusing their documentation.',
+    'PGXN Client' => 'PGXN Client',
+    pgxn_client_bullet => 'A command-line client for downloading, testing, and installing extensions (planned).',
+    'Why?' => 'Why?',
+    why_pgxn => q{One of the primary distinguishing features of <a href="http://www.postgresql.org/">PostgreSQL</a>—and perhaps the number one reason to use it instead of another DBMS—is its extensibility and the large number of database extensions already available: <a href="http://postgis.refractions.net/">PostGIS</a>, <a href="http://www.postgresql.org/docs/8.4/static/isn.html">ISN</a>, <a href="http://www.postgresql.org/docs/8.4/static/hstore.html">hstore</a>, <a href="http://pgtap.org/">pgTAP</a>, <a href="http://pgfoundry.org/projects/biopostgres/">BioPostgres</a>, <a href="http://www.joeconway.com/plr/">PL/R</a>, <a href="http://pgfoundry.org/projects/plproxy/">PL/Proxy</a>, <a href="http://code.google.com/p/golconde/">Golconde</a>, <a href="http://pgfoundry.org/projects/pgmemcache/">pgmemcache</a>, and more. Especially with the formal support for extensions <a href="http://developer.postgresql.org/pgdocs/postgres/extend-extensions.html" title="PostgreSQL 9.1.0 Documentation: “Packaging Related Objects into an Extension”">coming in 9.1.0</a>, PostgreSQL today is not merely a database, it’s an application development platform. However, many of these extensions are virtually unknown even among experienced users because they are hard to find.},
+    pgxn_solved => 'PGXN solves the “hard to find” issue by providing centralized listings and searchable documentation for PostgreSQL extensions. Here you can easily search through extensions, browse their documentation, and download and install those that fill your needs. The site is structured to maximize the ability to find appropriate extensions and their documentation through search engines. Our hope is that the high visibility of PostgreSQL’s extensibility and they array of available extensions will drive PostgreSQL adoption by new users and application developers, expanding our community and ensuring another 10 years of the PostgreSQL Project.',
+    q{Who's Responsible for This?} => q{Who's Responsible for This?},
+    who_responsible => '<a href="http://justatheory.com/" title="Just a Theory">I am</a>. I’m David Wheeler, inveterate Perl and PostgreSQL hacker. I love the <a href="http://www.postgresql.org/docs/current/static/extend.html">extensibility of PostgreSQL</a> and have long been a fan of <a href="http://www.cpan.org/">CPAN</a>, the Perl community’s distributed collection of Perl software and documentation. But PostgreSQL’s extensibility is not well-known, and it’s difficult to find the extensions that do exist. PGXN is my attempt to solve that problem.',
+    'Want to Help?' => 'Want to Help?',
+    on_github => 'The source code for all the parts of PGXN are on <a href="https://github.com/pgxn/">GitHub</a>. Please feel free to fork and send merge requests!',
 );
 
 sub accept {

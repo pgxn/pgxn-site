@@ -107,7 +107,7 @@ BEGIN { create_wrapper wrapper => sub {
                             class is 'floatRight';
                             # XXX Fill in these links.
                             for my $spec (
-                                [ '#', 'About PGXN',                 'About'  ],
+                                [ '/about/', 'About PGXN',           'About'  ],
                                 # [ '#', 'Recent Uploads',             'Recent' ],
                                 [ '#', 'Frequently Asked Questions', 'FAQ'    ],
                                 [ 'http://blog.pgxn.org/', 'Blog',   'Blog'   ],
@@ -901,7 +901,7 @@ template feedback => sub {
     my $title = T 'Feedback';
     wrapper {
         div {
-            class is 'width75 center';
+            id is 'page';
             div {
                 class is 'gradient';
                 h1 { $title };
@@ -929,6 +929,55 @@ template feedback => sub {
                     };
                     dd { T q{The PostgreSQL mailing lists have something for everybody: novices, users, and hackers, they're the place to go for comprehensive discussion of everything PostgreSQL.} };
                 };
+            };
+        };
+    } $req, {
+        title => _title_with $title,
+    };
+};
+
+template about => sub {
+    my ($self, $req, $args) = @_;
+    my $title = T 'About PGXN';
+    wrapper {
+        div {
+            id is 'page';
+            div {
+                class is 'gradient';
+                h1 { $title };
+                p { T 'about_paragraph_1' };
+                dl {
+                    dt {a {
+                        href is 'http://manager.pgxn.org/';
+                        T 'PGXN Manager'
+                    }};
+                    dd { T 'pgxn_manager_bullet' };
+                    dt {a {
+                        href is 'http://api.pgxn.org/';
+                        T 'PGXN API'
+                    }};
+                    dd { T 'pgxn_api_bullet' };
+                    dt {a {
+                        href is 'http://www.pgxn.org/';
+                        T 'PGXN Search'
+                    }};
+                    dd { T 'pgxn_site_bullet' };
+                    dt {a {
+                        href is 'http://github.com/theory/pgxn-client/';
+                        T 'PGXN Client'
+                    }};
+                    dd { T 'pgxn_client_bullet' };
+                };
+                h3 { T 'Why?' };
+                p { outs_raw T 'why_pgxn' };
+                p { T 'pgxn_solved' };
+
+                h3 { T q{Who's Responsible for This?} };
+
+                p { outs_raw T 'who_responsible' };
+
+                h3 { T 'Want to Help?' };
+                p { outs_raw T 'on_github' };
             };
         };
     } $req, {
