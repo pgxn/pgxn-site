@@ -363,7 +363,7 @@ sub test_wrapper {
                 $tx->is('./@class', 'floatRight', 'Should be floatRight');
                 $tx->is('count(./*)', 1, 'Should have 1 element below #floatRight');
                 $tx->ok('./a', 'Test feedback anchor', sub {
-                    $tx->is('./@href', '#', 'Should link to #');
+                    $tx->is('./@href', '/feedback/', 'Should link to /feedback/');
                     $tx->is('./@title', 'Feedback', 'Should have link title');
                     $tx->is('./text()', 'Feedback', 'Should have text "Feedback"');
                 });

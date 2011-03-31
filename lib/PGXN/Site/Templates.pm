@@ -160,7 +160,7 @@ BEGIN { create_wrapper wrapper => sub {
                     span {
                         class is 'floatRight';
                         a {
-                            href is '#'; # XXX
+                            href is '/feedback/';
                             title is T 'Feedback';
                             T 'Feedback';
                         };
