@@ -36,8 +36,11 @@ my $build = $class->new(
         'WWW::PGXN'                    => '0.10',
     },
     recommends => {
-        'Test::Pod'           => '1.41',
-        'Test::Pod::Coverage' => '1.06',
+        'HTTP::Request::Common' => '5.824',
+        'Test::Pod'             => '1.41',
+        'Test::Pod::Coverage'   => '1.06',
+        'Test::XML'             => '0.08',
+        'Test::XPath'           => '0.13',
     },
     meta_merge => {
         resources => {
