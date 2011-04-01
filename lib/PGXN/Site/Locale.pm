@@ -124,6 +124,29 @@ our %Lexicon = (
     patrons_intro => 'Our thanks to our “Patron” level contributors, whose icons and links are displayed on the PGXN home page.',
     benefactors_intro => 'Benefactors” will be listed on the PGXN home page.',
 
+    'Releasing on PGXN' => 'Releasing on PGXN',
+    q{What's allowed to be released on PGXN?} => 'What’s allowed to be released on PGXN?',
+    'WTF is an "extension"?' => 'WTF is an “extension”?',
+    q{What's not allowed to be released on PGXN?} => 'What’s not allowed to be released on PGXN?',
+    'Who can release on PGXN?' => 'Who can release on PGXN?',
+    'Who can register for PGXN?' => 'Who can register for PGXN?',
+    'So how do I apply?' => 'So how do I apply?',
+    'Okay, I have an account and want to release an extension. Is there a release approval process?' => 'Okay, I have an account and want to release an extension. Is there a release approval process?',
+    'Great, so how do I create an extension distribution and release it?' => 'Great, so how do I create an extension distribution and release it?',
+    'How is PGXN different from pgFoundry?' => 'How is PGXN different from pgFoundry?',
+    'How does PGXN make it easy to distinguish the garbage from the viable extensions?' => 'How does PGXN make it easy to distinguish the garbage from the viable extensions?',
+    'Is there a command-line client for installing extensions from PGXN?' => 'Is there a command-line client for installing extensions from PGXN?',
+    'How will the command-line client work?' => 'How will the command-line client work?',
+    'What about Windows?' => 'What about Windows?',
+    'What kind of security does PGXN have?' => 'What kind of security does PGXN have?',
+
+    'Contributing to PGXN' => 'Contributing to PGXN',
+    q{Under what license is PGXN's source code distributed?} => 'Under what license is PGXN’s source code distributed?',
+    'Can other people contribute to PGXN?' => 'Can other people contribute to PGXN?',
+    'Who owns and runs PGXN?' => 'Who owns and runs PGXN?',
+    'Where is the PGXN source code hosted?' => 'Where is the PGXN source code hosted?',
+    'What language is PGXN written in?' => 'What language is PGXN written in?',
+    'Is there an API?' => 'Is there an API?',
 );
 
 sub accept {

@@ -307,9 +307,9 @@ sub test_wrapper {
                 $tx->ok('./ul[@class="floatRight"]', 'Test floatRight ul' => sub {
                     my $i = 0;
                     for my $spec (
-                        [ '/about/', 'About PGXN',           'About'  ],
-                        [ '#', 'Frequently Asked Questions', 'FAQ'    ],
-                        [ 'http://blog.pgxn.org/', 'Blog',   'Blog'   ],
+                        [ '/about/', 'About PGXN',                 'About'  ],
+                        [ '/faq/',   'Frequently Asked Questions', 'FAQ'    ],
+                        [ 'http://blog.pgxn.org/', 'Blog',         'Blog'   ],
                     ) {
                         $i++;
                         $tx->ok("./li[$i]", "Test li $i", sub {

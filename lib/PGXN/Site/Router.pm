@@ -84,6 +84,11 @@ sub app {
             GET { $controller->backers(shift) };
         };
 
+        # /faq
+        resource qr{^/faq/?$} => sub {
+            GET { $controller->faq(shift) };
+        };
+
         # /error (500 error responder).
         resource '/error' => sub {
             GET { $controller->server_error(@_) };

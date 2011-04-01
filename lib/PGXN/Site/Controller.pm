@@ -97,6 +97,11 @@ sub backers {
     $self->render('/backers', { env => shift });
 }
 
+sub faq {
+    my $self = shift;
+    $self->render('/faq', { env => shift });
+}
+
 sub distribution {
     my ($self, $env, $name, $version) = @_;
     my $dist = $self->api->get_distribution($name => $version)
