@@ -93,6 +93,23 @@ sub app {
         resource '/error' => sub {
             GET { $controller->server_error(@_) };
         };
+
+        # Handle legacy URLs.
+        my %url_for = (
+            contact      => '/feedback/',
+            contributors => '/backers/',
+            mirroring    => '/mirroring/',
+            faq          => '/faq/',
+        );
+
+        resource qr{^/(cont(?:ributors|act)|mirroring|faq)[.]html$} => sub {
+            GET {
+                my ($env, $args) = @_;
+                my $res = Plack::Response->new;
+                $res->redirect($url_for{ $args->{splat}[0] }, 301);
+                $res->finalize;
+            };
+        };
     };
 
     builder {

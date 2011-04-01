@@ -3,7 +3,7 @@
 use 5.12.0;
 use utf8;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' }
-use Test::More tests => 265;
+use Test::More tests => 281;
 #use Test::More 'no_plan';
 use Plack::Test;
 use HTTP::Request::Common;
@@ -315,6 +315,25 @@ test_psgi $app => sub {
             'The body should look correct';
     }
 };
+
+# Test legacy URLs.
+test_psgi $app => sub {
+    my $cb = shift;
+    for my $spec (
+        [ contact      => '/feedback/'  ],
+        [ contributors => '/backers/'   ],
+        [ mirroring    => '/mirroring/' ],
+        [ faq          => '/faq/'       ],
+    ) {
+        my $uri = "/$spec->[0].html";
+        ok my $res = $cb->(GET $uri), "Fetch $uri";
+        ok !$res->is_success, 'Should not be a success';
+        is $res->code, 301, 'Should get 301 response';
+        is $res->headers->header('location'), $spec->[1],
+            "Should redirect to $spec->[1]";
+    }
+};
+
 
 # Test /error.
 my $err_app = sub {
