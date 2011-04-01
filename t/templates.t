@@ -20,7 +20,7 @@ use Plack::Request;
 use HTTP::Message::PSGI;
 
 #plan 'no_plan';
-plan tests => 208;
+plan tests => 213;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -307,9 +307,10 @@ sub test_wrapper {
                 $tx->ok('./ul[@class="floatRight"]', 'Test floatRight ul' => sub {
                     my $i = 0;
                     for my $spec (
-                        [ '/about/', 'About PGXN',                 'About'  ],
-                        [ '/faq/',   'Frequently Asked Questions', 'FAQ'    ],
-                        [ 'http://blog.pgxn.org/', 'Blog',         'Blog'   ],
+                        [ '/about/',  'About PGXN',                 'About'   ],
+                        [ '/faq/',    'Frequently Asked Questions', 'FAQ'     ],
+                        [ 'http://blog.pgxn.org/',    'Blog',       'Blog'    ],
+                        [ 'http://twitter.com/pgxn/', 'Twitter',    'Twitter' ],
                     ) {
                         $i++;
                         $tx->ok("./li[$i]", "Test li $i", sub {

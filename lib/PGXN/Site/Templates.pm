@@ -107,10 +107,11 @@ BEGIN { create_wrapper wrapper => sub {
                             class is 'floatRight';
                             # XXX Fill in these links.
                             for my $spec (
-                                [ '/about/',  'About PGXN',                 'About'  ],
-                                # [ '/recent/', 'Recent Uploads',             'Recent' ],
-                                [ '/faq/',    'Frequently Asked Questions', 'FAQ'    ],
-                                [ 'http://blog.pgxn.org/', 'Blog',          'Blog'   ],
+                                [ '/about/',  'About PGXN',                 'About'   ],
+                                # [ '/recent/', 'Recent Uploads',             'Recent'  ],
+                                [ '/faq/',    'Frequently Asked Questions', 'FAQ'     ],
+                                [ 'http://blog.pgxn.org/',    'Blog',       'Blog'    ],
+                                [ 'http://twitter.com/pgxn/', 'Twitter',    'Twitter' ],
                             ) {
                                 li {
                                     a {
