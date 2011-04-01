@@ -105,15 +105,18 @@ BEGIN { create_wrapper wrapper => sub {
                         }
                         ul {
                             class is 'floatRight';
+                            my $path = $req->uri->path;
                             # XXX Fill in these links.
                             for my $spec (
                                 [ '/about/',  'About PGXN',                 'About'   ],
                                 # [ '/recent/', 'Recent Uploads',             'Recent'  ],
                                 [ '/faq/',    'Frequently Asked Questions', 'FAQ'     ],
+                                [ 'http://manager.pgxn.org/',  'Release it on PGXN', 'Release It'   ],
                                 [ 'http://blog.pgxn.org/',    'Blog',       'Blog'    ],
                                 [ 'http://twitter.com/pgxn/', 'Twitter',    'Twitter' ],
                             ) {
                                 li {
+                                    class is 'here' if $path eq $spec->[0];
                                     a {
                                         href is $spec->[0];
                                         title is T $spec->[1];

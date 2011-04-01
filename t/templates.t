@@ -20,7 +20,7 @@ use Plack::Request;
 use HTTP::Message::PSGI;
 
 #plan 'no_plan';
-plan tests => 213;
+plan tests => 218;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -309,6 +309,7 @@ sub test_wrapper {
                     for my $spec (
                         [ '/about/',  'About PGXN',                 'About'   ],
                         [ '/faq/',    'Frequently Asked Questions', 'FAQ'     ],
+                        [ 'http://manager.pgxn.org/',  'Release it on PGXN', 'Release It'   ],
                         [ 'http://blog.pgxn.org/',    'Blog',       'Blog'    ],
                         [ 'http://twitter.com/pgxn/', 'Twitter',    'Twitter' ],
                     ) {
