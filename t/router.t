@@ -3,7 +3,7 @@
 use 5.12.0;
 use utf8;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' }
-use Test::More tests => 253;
+use Test::More tests => 259;
 #use Test::More 'no_plan';
 use Plack::Test;
 use HTTP::Request::Common;
@@ -292,6 +292,16 @@ test_psgi $app => sub {
         ok my $res = $cb->(GET $uri), "Fetch $uri";
         is $res->code, 200, 'Should get 200 response';
         like $res->content, qr{\Q<h1>About PGXN</h1>}, 'The body should look correct';
+    }
+};
+
+# Test /backers.
+test_psgi $app => sub {
+    my $cb = shift;
+    for my $uri ('/backers', '/backers/') {
+        ok my $res = $cb->(GET $uri), "Fetch $uri";
+        is $res->code, 200, 'Should get 200 response';
+        like $res->content, qr{\Q<h1>Backers</h1>}, 'The body should look correct';
     }
 };
 

@@ -160,6 +160,12 @@ BEGIN { create_wrapper wrapper => sub {
                     span {
                         class is 'floatRight';
                         a {
+                            href is '/backers/';
+                            title is T 'Backers';
+                            T 'Backers';
+                        };
+                        span { class is 'grey'; '|' };
+                        a {
                             href is '/feedback/';
                             title is T 'Feedback';
                             T 'Feedback';
@@ -197,66 +203,15 @@ template home => sub {
                 p { T 'pgxn_summary_paragraph' };
 
                 h3 { T 'Founders' };
-                div {
-                    id is 'founders';
-                    a {
-                        href is 'http://www.myyearbook.com/';
-                        title is 'myYearbook';
-                        img {
-                            src is '/ui/img/myyearbook.png';
-                            alt is 'myYearbook.com';
-                        };
-                    };
-                    a {
-                        href is 'http://www.pgexperts.com/';
-                        title is 'PostgreSQL Experts, Inc.';
-                        img {
-                            src is '/ui/img/pgexperts.png';
-                            alt is 'PGX';
-                        };
-                    };
-                    a {
-                        href is 'http://www.dalibo.org/en/';
-                        title is 'Dalibo';
-                        img {
-                            src is '/ui/img/dalibo.png';
-                            alt is 'Dalibo';
-                        };
-                    };
-                }; # /div#founders
-
+                show 'founders';
                 h3 { T 'Patrons' };
-                div {
-                    id is 'patrons';
-                    h3 {
-                        a {
-                            href is 'http://www.enovafinancial.com/';
-                            title is 'Enova Financial';
-                            img {
-                                src is '/ui/img/enova.png';
-                                alt is 'e';
-                            };
-                            outs ' Enova Financial';
-                        };
-                    };
-                }; # /div#patrons
-
+                show 'patrons';
                 h3 { T 'Benefactors' };
-                ul {
-                    id is 'benefactors';
-                    for my $spec (
-                        [ 'http://www.etsy.com/'          => 'Etsy'                      ],
-                        [ 'http://www.postgresql.us/'     => 'US PostgreSQL Association' ],
-                        [ 'http://www.commandprompt.com/' => 'Command Prompt, Inc.'      ],
-                        [ 'http://www.marchex.com/'       => 'Marchex'                   ],
-                    ) {
-                        li { a { href is $spec->[0]; $spec->[1] } };
-                    }
-                }; # /ul
+                show 'benefactors';
                 h6 {
                     class is 'floatRight';
                     a {
-                        href is '#';
+                        href is '/backers/';
                         title is T 'See all our great backers!';
                         T 'All Backers'
                     }
@@ -901,7 +856,7 @@ template feedback => sub {
     my $title = T 'Feedback';
     wrapper {
         div {
-            id is 'page';
+            id is 'info';
             div {
                 class is 'gradient';
                 h1 { $title };
@@ -941,7 +896,7 @@ template about => sub {
     my $title = T 'About PGXN';
     wrapper {
         div {
-            id is 'page';
+            id is 'info';
             div {
                 class is 'gradient';
                 h1 { $title };
@@ -978,6 +933,138 @@ template about => sub {
 
                 h3 { T 'Want to Help?' };
                 p { outs_raw T 'on_github' };
+            };
+        };
+    } $req, {
+        title => _title_with $title,
+    };
+};
+
+template backers => sub {
+    my ($self, $req, $args) = @_;
+    my $title = T 'Backers';
+    wrapper {
+        div {
+            id is 'info';
+            div {
+                class is 'gradient';
+                h1 { $title };
+                p { outs_raw T 'backers_intro' };
+
+                h3 { T 'Founders' };
+                p { T 'founders_intro' };
+                show 'founders';
+
+                h3 { T 'Patrons' };
+                p { T 'patrons_intro' };
+                show 'patrons';
+
+                h3 { T 'Benefactors' };
+                p { T 'benefactors_intro' };
+                show 'benefactors';
+
+                div {
+                    div {
+                        class is 'width50 floatLeft';
+                h3 { T 'Sponsors' };
+                ul {
+                    li { 'Richard Broersma' };
+                    li {a{
+                        href is 'http://tigerlead.com/';
+                        'TigerLead';
+                    }};
+                    li { 'Thom Brown' };
+                    li { 'Hitoshi Harada' };
+                    li {a{
+                        href is 'http://www.25th-floor.com/';
+                        '25th-floor - de Pretis & Helmberger KG';
+                    }};
+                };
+                    };
+
+                    div {
+                        class is 'width50 floatRight';
+                h3 { T 'Advocates' };
+                ul {
+                    li {a{
+                        href is 'http://www.hubbellgrp.com/';
+                        'Hubbell Group Inc.';
+                    }};
+                    li { 'John S. Gage' };
+                    li {a{
+                        href is 'http://www.2ndquadrant.us/';
+                        'Greg Smith';
+                    }};
+                    li {a{
+                        href is 'http://www.urbandb.com/';
+                        'UrbanDB.com';
+                    }};
+                    li {a{
+                        href is 'http://depesz.com/';
+                        'depesz';
+                    }};
+                    li {a{
+                        href is 'http://jim.nasby.net/';
+                        'Jim Nasby';
+                    }};
+                };
+                    };
+                };
+
+                div {
+                    style is 'clear:both; padding-top: 2em;';
+                    div {
+                        class is 'width50 floatLeft';
+
+                h3 { T 'Supporters' };
+                ul {
+                    li {a{
+                        href is 'http://www.dagolden.com/';
+                        'David Golden';
+                    }};
+                    li {a{
+                        href is 'http://thoughts.j-davis.com/';
+                        'Jeff Davis';
+                    }};
+                    li {a{
+                        href is 'http://www.estately.com/';
+                        'Estately';
+                    }};
+                    li {a{
+                        href is 'http://www.full-table-scan.com/';
+                        'Chris Spotts';
+                    }};
+                };
+                    };
+                    div {
+                        class is 'width50 floatRight';
+
+                h3 { T 'Boosters' };
+                ul {
+                    li {a{
+                        href is 'http://www.kineticode.com/';
+                        'Kineticode, Inc.';
+                    }};
+                    li {a{
+                        href is 'http://www.cxnet.cl/';
+                        'CxNet (Chile)';
+                    }};
+                    li {a{
+                        href is 'http://www.schemaverse.com/';
+                        'Schemaverse';
+                    }};
+                    li {a{
+                        href is 'http:/www.midstorm.org/~telles//';
+                        'Fábio Telles Rodriguez';
+                    }};
+                    li {a{
+                        href is 'http://pgdba.net/blog/';
+                        'Michael Nacos';
+                    }};
+                    li { 'August Zajonc' };
+                };
+                    };
+                };
             };
         };
     } $req, {
@@ -1141,6 +1228,67 @@ template release_table => sub {
             }
         } }; # /table
     }; # /div.gradient dists
+};
+
+template founders => sub {
+    div {
+        id is 'founders';
+        a {
+            href is 'http://www.myyearbook.com/';
+            title is 'myYearbook';
+            img {
+                src is '/ui/img/myyearbook.png';
+                alt is 'myYearbook.com';
+            };
+        };
+        a {
+            href is 'http://www.pgexperts.com/';
+            title is 'PostgreSQL Experts, Inc.';
+            img {
+                src is '/ui/img/pgexperts.png';
+                alt is 'PGX';
+            };
+        };
+        a {
+            href is 'http://www.dalibo.org/en/';
+            title is 'Dalibo';
+            img {
+                src is '/ui/img/dalibo.png';
+                alt is 'Dalibo';
+            };
+        };
+    };
+};
+
+template patrons => sub {
+    div {
+        id is 'patrons';
+        h3 {
+            a {
+                href is 'http://www.enovafinancial.com/';
+                title is 'Enova Financial';
+                img {
+                    src is '/ui/img/enova.png';
+                    alt is 'e';
+                            };
+                outs ' Enova Financial';
+            };
+        };
+    };
+};
+
+template benefactors => sub {
+    ul {
+        id is 'benefactors';
+        for my $spec (
+            [ 'http://www.etsy.com/'          => 'Etsy'                      ],
+            [ 'http://www.postgresql.us/'     => 'US PostgreSQL Association' ],
+            [ 'http://www.commandprompt.com/' => 'Command Prompt, Inc.'      ],
+            [ 'http://www.marchex.com/'       => 'Marchex'                   ],
+        ) {
+            li { a { href is $spec->[0]; $spec->[1] } };
+        }
+    };
 };
 
 my %class_for = (

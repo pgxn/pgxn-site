@@ -38,6 +38,11 @@ our %Lexicon = (
     Founders => 'Founders',
     Patrons => 'Patrons',
     Benefactors => 'Benefactors',
+    Sponsors => 'Sponsors',
+    Advocates => 'Advocates',
+    Supporters => 'Supporters',
+    Boosters => 'Boosters',
+    'Backers' => 'Backers',
     'All Backers' => 'All Backers ➡',
     'See all our great backers!' => 'See all our great backers!',
     'Not Found' => 'Not Found',
@@ -114,6 +119,11 @@ our %Lexicon = (
     who_responsible => '<a href="http://justatheory.com/" title="Just a Theory">I am</a>. I’m David Wheeler, inveterate Perl and PostgreSQL hacker. I love the <a href="http://www.postgresql.org/docs/current/static/extend.html">extensibility of PostgreSQL</a> and have long been a fan of <a href="http://www.cpan.org/">CPAN</a>, the Perl community’s distributed collection of Perl software and documentation. But PostgreSQL’s extensibility is not well-known, and it’s difficult to find the extensions that do exist. PGXN is my attempt to solve that problem.',
     'Want to Help?' => 'Want to Help?',
     on_github => 'The source code for all the parts of PGXN are on <a href="https://github.com/pgxn/">GitHub</a>. Please feel free to fork and send merge requests!',
+    backers_intro => 'All the financial backers who helped to get PGXN off the ground will be listed in perpetuity here on the “Backers” page of PGXN.org. All backers are invited to the PGXN Launch Party at <a href="http://www.pgcon.org/2011/">PGCon</a> in May, 2011.',
+    founders_intro => 'Many thanks to our amazing “Founder” level backers, whose logos and links are displayed prominently here and on the PGXN home page.',
+    patrons_intro => 'Our thanks to our “Patron” level contributors, whose icons and links are displayed on the PGXN home page.',
+    benefactors_intro => 'Benefactors” will be listed on the PGXN home page.',
+
 );
 
 sub accept {

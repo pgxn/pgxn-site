@@ -20,7 +20,7 @@ use Plack::Request;
 use HTTP::Message::PSGI;
 
 #plan 'no_plan';
-plan tests => 203;
+plan tests => 208;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -190,7 +190,7 @@ test_wrapper($html, {
                     $tx->ok('./a', 'Test anchor' => sub {
                         $tx->is(
                             './@href',
-                            '#',
+                            '/backers/',
                             'href should point to backers page.',
                         );
                         $tx->is(
@@ -361,8 +361,14 @@ sub test_wrapper {
 
             $tx->ok('./span[2]', 'Test the first span' => sub {
                 $tx->is('./@class', 'floatRight', 'Should be floatRight');
-                $tx->is('count(./*)', 1, 'Should have 1 element below #floatRight');
-                $tx->ok('./a', 'Test feedback anchor', sub {
+                $tx->is('count(./*)', 3, 'Should have 3 elements below #floatRight');
+                $tx->ok('./a[1]', 'Test backers anchor', sub {
+                    $tx->is('./@href', '/backers/', 'Should link to /backers/');
+                    $tx->is('./@title', 'Backers', 'Should have link title');
+                    $tx->is('./text()', 'Backers', 'Should have text "Backers"');
+                });
+                $tx->is('./span[1][@class="grey"]', '|', 'Should have spacer span');
+                $tx->ok('./a[2]', 'Test feedback anchor', sub {
                     $tx->is('./@href', '/feedback/', 'Should link to /feedback/');
                     $tx->is('./@title', 'Feedback', 'Should have link title');
                     $tx->is('./text()', 'Feedback', 'Should have text "Feedback"');

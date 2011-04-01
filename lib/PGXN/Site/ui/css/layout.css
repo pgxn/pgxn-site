@@ -386,7 +386,8 @@ ul.sideMenu {
  **************************************************************/
 
 #page,
-#homepage {
+#homepage,
+#info {
   float: left;
   width: 100%;
   clear: both;
@@ -396,6 +397,12 @@ ul.sideMenu {
 
 #homepage {
   width:915px;
+}
+
+#info > div {
+  width:670px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /**************************************************************
