@@ -31,6 +31,7 @@ our %Lexicon = (
     design => 'design',
     logo => 'logo',
     'Go to [_1]' => 'Go to [_1]',
+    Mirroring => 'Mirroring',
     Feedback => 'Feedback',
     Extensions => 'Extensions',
     Tags => 'Tags',
@@ -97,6 +98,7 @@ our %Lexicon = (
     '[_1]-[_2] of [_3] found' => '[_1]-[_2] of [_3] found',
     'Bad Request' => 'Bad Request',
     'Bad request: Missing or invalid "[_1]" query parameter.' => 'Bad request: Missing or invalid “[_1]” query parameter.',
+
     'feedback_contact' => 'If you have any feedback about this site, its design, or how it presents information, then please send an Email to [_1].',
     'feedback_users' => 'If you have a question about an issue with a particular extension, or the content of its documentation, please contact the maintainer of that extension.',
     'feedback_forums' => 'If the feedback you want to give is not specifically about this site, then please try one of the following forums that best fits.',
@@ -114,6 +116,7 @@ our %Lexicon = (
     pgxn_site_bullet => 'This site, for searching extensions and perusing their documentation.',
     'PGXN Client' => 'PGXN Client',
     pgxn_client_bullet => 'A command-line client for downloading, testing, and installing extensions (planned).',
+
     'Why?' => 'Why?',
     why_pgxn => q{One of the primary distinguishing features of <a href="http://www.postgresql.org/">PostgreSQL</a>—and perhaps the number one reason to use it instead of another DBMS—is its extensibility and the large number of database extensions already available: <a href="http://postgis.refractions.net/">PostGIS</a>, <a href="http://www.postgresql.org/docs/8.4/static/isn.html">ISN</a>, <a href="http://www.postgresql.org/docs/8.4/static/hstore.html">hstore</a>, <a href="http://pgtap.org/">pgTAP</a>, <a href="http://pgfoundry.org/projects/biopostgres/">BioPostgres</a>, <a href="http://www.joeconway.com/plr/">PL/R</a>, <a href="http://pgfoundry.org/projects/plproxy/">PL/Proxy</a>, <a href="http://code.google.com/p/golconde/">Golconde</a>, <a href="http://pgfoundry.org/projects/pgmemcache/">pgmemcache</a>, and more. Especially with the formal support for extensions <a href="http://developer.postgresql.org/pgdocs/postgres/extend-extensions.html" title="PostgreSQL 9.1.0 Documentation: “Packaging Related Objects into an Extension”">coming in 9.1.0</a>, PostgreSQL today is not merely a database, it’s an application development platform. However, many of these extensions are virtually unknown even among experienced users because they are hard to find.},
     pgxn_solved => 'PGXN solves the “hard to find” issue by providing centralized listings and searchable documentation for PostgreSQL extensions. Here you can easily search through extensions, browse their documentation, and download and install those that fill your needs. The site is structured to maximize the ability to find appropriate extensions and their documentation through search engines. Our hope is that the high visibility of PostgreSQL’s extensibility and they array of available extensions will drive PostgreSQL adoption by new users and application developers, expanding our community and ensuring another 10 years of the PostgreSQL Project.',
@@ -149,6 +152,8 @@ our %Lexicon = (
     'Where is the PGXN source code hosted?' => 'Where is the PGXN source code hosted?',
     'What language is PGXN written in?' => 'What language is PGXN written in?',
     'Is there an API?' => 'Is there an API?',
+
+    'Mirroring PGXN' => 'Mirroring PGXN',
 );
 
 sub accept {

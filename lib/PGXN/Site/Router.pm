@@ -89,6 +89,11 @@ sub app {
             GET { $controller->faq(shift) };
         };
 
+        # /mirroring
+        resource qr{^/mirroring/?$} => sub {
+            GET { $controller->mirroring(shift) };
+        };
+
         # /error (500 error responder).
         resource '/error' => sub {
             GET { $controller->server_error(@_) };

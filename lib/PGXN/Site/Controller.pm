@@ -97,6 +97,11 @@ sub backers {
     $self->render('/backers', { env => shift });
 }
 
+sub mirroring {
+    my $self = shift;
+    $self->render('/mirroring', { env => shift });
+}
+
 sub faq {
     my $self = shift;
     $self->render('/faq', { env => shift });
