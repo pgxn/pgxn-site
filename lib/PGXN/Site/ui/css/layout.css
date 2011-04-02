@@ -457,6 +457,14 @@ ul.sideMenu {
   width: 24.7%;
 }
 
+.width10 {
+  width: 9.7%;
+}
+
+.width90 {
+  width: 89%;
+}
+
 
 /**************************************************************
    Alignment classes
@@ -639,4 +647,9 @@ table .dist .name a {
 
 .readme #pgxntoc {
   display:none;
+}
+
+.backers h2 {
+  color: #F8D766;
+  padding-top:2em;
 }

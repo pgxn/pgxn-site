@@ -149,6 +149,43 @@ sub user {
     }});
 }
 
+sub users {
+    my ($self, $env) = @_;
+    my $req    = Plack::Request->new($env);
+    my $params = $req->query_parameters;
+    my $char   = lc ($params->{c} || '');
+
+    # Usernames must always start with an ASCII letter.
+    if ($char && $char !~ /^[a-z]$/) {
+        return $self->render('/badrequest', {
+            env => $env,
+            code => $code_for{badrequest},
+            vars => { param => 'c' },
+        });
+    }
+
+    for my $param (qw(o l)) {
+        my $val = $params->{$param};
+        return $self->render('/badrequest', {
+            env => $env,
+            code => $code_for{badrequest},
+            vars => { param => $param },
+        }) if $val && $val !~ /^\d+$/;
+    }
+
+    $self->render('/users', { req => $req, vars => {
+        in      => 'users',
+        char    => $char,
+        api     => $self->api,
+        results => $char ? $self->api->search(
+            in     => 'users',
+            query  => "user:$char*",
+            offset => $params->{o} || 0,
+            limit  => $params->{l} || 256,
+        ) : undef,
+    }});
+}
+
 sub tag {
     my ($self, $env, $tag) = @_;
     $tag = $self->api->get_tag($tag) or return $self->missing($env);

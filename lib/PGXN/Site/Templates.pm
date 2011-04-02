@@ -108,10 +108,10 @@ BEGIN { create_wrapper wrapper => sub {
                             my $path = $req->uri->path;
                             # XXX Fill in these links.
                             for my $spec (
+                                [ '/users/',  'PGXN Users',                 'Users'   ],
                                 [ '/about/',  'About PGXN',                 'About'   ],
                                 # [ '/recent/', 'Recent Uploads',             'Recent'  ],
                                 [ '/faq/',    'Frequently Asked Questions', 'FAQ'     ],
-                                [ 'http://manager.pgxn.org/',  'Release it on PGXN', 'Release It'   ],
                                 [ 'http://blog.pgxn.org/',    'Blog',       'Blog'    ],
                                 [ 'http://twitter.com/pgxn/', 'Twitter',    'Twitter' ],
                             ) {
@@ -163,6 +163,12 @@ BEGIN { create_wrapper wrapper => sub {
                     }; # /span.floatLeft
                     span {
                         class is 'floatRight';
+                        a {
+                            href is 'http://manager.pgxn.org/';
+                            title is T 'Release it on PGXN';
+                            T 'Release It';
+                        };
+                        span { class is 'grey'; '|' };
                         a {
                             href is '/mirroring/';
                             title is T 'Mirroring';
@@ -663,10 +669,52 @@ template tag => sub {
     };
 };
 
+template users => sub {
+    my ($self, $req, $args) = @_;
+    my $api   = $args->{api};
+    my $res   = $args->{results};
+    my $title = T 'Users';
+    my $char  = $args->{char} || '';
+
+    wrapper {
+        div {
+            class is 'width10 floatLeft leftColumn';
+            ul {
+                my $uri = $req->uri->path;
+                for my $c ('a'..'z') {
+                    li {
+                        $c eq $char ? $c : a {
+                            href is "$uri?c=$c";
+                            $c;
+                        };
+                    };
+                }
+            };
+        };
+        div {
+            class is 'width90 floatRight gradient';
+            h1 { $title };
+            if ($res) {
+                id is 'results';
+                if ($res->{hits} && @{ $res->{hits} }) {
+                    $args->{params} = [ c => $char ];
+                    show results => $req, $args;
+                } else {
+                    p { T 'No user nicknames found starting with "[_1]"', $char };
+                }
+            } else {
+                h3 { T '<- Select a letter' };
+            }
+        };
+    } $req, {
+        title => _title_with $title,
+    };
+};
+
 template search => sub {
     my ($self, $req, $args) = @_;
     my $api  = $args->{api};
-    my $res  = $args->{results};
+    my $res = $args->{results};
 
     wrapper {
         div {
@@ -674,55 +722,13 @@ template search => sub {
             div {
                 id is 'results';
                 class is 'gradient';
-
-                if (my @hits = @{ $res->{hits} || [] }) {
-                    h3 {
-                        T '[_1]-[_2] of [_3] found',
-                            $res->{offset} + 1,
-                            $res->{offset} + @hits,
-                            $res->{count};
-                    };
-                    show "results/$args->{in}" => @hits;
-                    if (my $c = $res->{count}) {
-                        my $uri = $req->uri;
-                        my @params = (
-                            in => $args->{in},
-                            q  => $res->{query},
-                            l  => $res->{limit},
-                        );
-                        div {
-                            class is 'searchnav';
-                            if ($res->{offset}) {
-                                p {
-                                    class is 'floatLeft';
-                                    a {
-                                        $uri->query_form(
-                                            @params,
-                                            o => $res->{offset} - $res->{limit}
-                                        );
-                                        href is $uri;
-                                        title is T 'Previous results';
-                                        T '← Prev';
-                                    };
-                                };
-                            }
-                            if ($c > $res->{offset} + $res->{limit}) {
-                                p {
-                                    class is 'floatRight';
-                                    style is 'clear:right';
-                                    a {
-                                        $uri->query_form(
-                                            @params,
-                                            o => $res->{offset} + $res->{limit}
-                                        );
-                                        href is $uri;
-                                        title is T 'Next results';
-                                        T 'Next →';
-                                    };
-                                };
-                            }
-                        };
-                    }
+                if ($res->{hits} && @{ $res->{hits} }) {
+                    $args->{params} = [
+                        in => $args->{in},
+                        q  => $res->{query},
+                        l  => $res->{limit},
+                    ];
+                    show results => $req, $args;
                 } else {
                     h3 { T 'Search matched no documents.' }
                 }
@@ -743,6 +749,55 @@ template search => sub {
     };
 };
 
+template results => sub {
+    my ($self, $req, $args) = @_;
+    my $res = $args->{results};
+    my $hits = $res->{hits};
+    h3 {
+        T '[_1]-[_2] of [_3] found',
+            $res->{offset} + 1,
+            $res->{offset} + @$hits,
+            $res->{count};
+    };
+    show "results/$args->{in}" => $hits;
+    if (my $c = $res->{count}) {
+        my $uri = $req->uri;
+        my @params = @{ $args->{params} };
+        div {
+            class is 'searchnav';
+            if ($res->{offset}) {
+                p {
+                    class is 'floatLeft';
+                    a {
+                        $uri->query_form(
+                            @params,
+                            o => $res->{offset} - $res->{limit}
+                        );
+                        href is $uri;
+                        title is T 'Previous results';
+                        T '← Prev';
+                    };
+                };
+            }
+            if ($c > $res->{offset} + $res->{limit}) {
+                p {
+                    class is 'floatRight';
+                    style is 'clear:right';
+                    a {
+                        $uri->query_form(
+                            @params,
+                            o => $res->{offset} + $res->{limit}
+                        );
+                        href is $uri;
+                        title is T 'Next results';
+                        T 'Next →';
+                    };
+                };
+            }
+        };
+    }
+};
+
 template 'results/extensions' => sub {
     $_[0] = 'extension';
     &_detailed_results;
@@ -756,7 +811,7 @@ template 'results/docs' => sub {
 # template 'results/detailed' => sub {
 sub _detailed_results {
     my $label = shift;
-    for my $hit (@_) {
+    for my $hit (@{ +shift }) {
         div {
             class is 'res';
             h2 {
@@ -800,7 +855,7 @@ sub _detailed_results {
 
 template 'results/dists' => sub {
     my $self = shift;
-    for my $hit (@_) {
+    for my $hit (@{ + shift}) {
         div {
             class is 'res';
             h2 {
@@ -832,7 +887,7 @@ template 'results/dists' => sub {
 
 template 'results/tags' => sub {
     my $self = shift;
-    for my $hit (@_) {
+    for my $hit (@{ + shift }) {
         div {
             class is 'res';
             h2 {
@@ -847,7 +902,7 @@ template 'results/tags' => sub {
 
 template 'results/users' => sub {
     my $self = shift;
-    for my $hit (@_) {
+    for my $hit (@{ +shift }) {
         div {
             class is 'res';
             h2 {
@@ -956,27 +1011,28 @@ template backers => sub {
     wrapper {
         div {
             id is 'info';
+            class is 'backers';
             div {
                 class is 'gradient';
                 h1 { $title };
                 p { outs_raw T 'backers_intro' };
 
-                h3 { T 'Founders' };
+                h2 { T 'Founders' };
                 p { T 'founders_intro' };
                 show 'founders';
 
-                h3 { T 'Patrons' };
+                h2 { T 'Patrons' };
                 p { T 'patrons_intro' };
                 show 'patrons';
 
-                h3 { T 'Benefactors' };
+                h2 { T 'Benefactors' };
                 p { T 'benefactors_intro' };
                 show 'benefactors';
 
                 div {
                     div {
                         class is 'width50 floatLeft';
-                        h3 { T 'Sponsors' };
+                        h2 { T 'Sponsors' };
                         ul {
                             li { 'Richard Broersma' };
                             li {a{
@@ -994,7 +1050,7 @@ template backers => sub {
 
                     div {
                         class is 'width50 floatRight';
-                        h3 { T 'Advocates' };
+                        h2 { T 'Advocates' };
                         ul {
                             li {a{
                                 href is 'http://www.hubbellgrp.com/';
@@ -1026,7 +1082,7 @@ template backers => sub {
                     div {
                         class is 'width50 floatLeft';
 
-                        h3 { T 'Supporters' };
+                        h2 { T 'Supporters' };
                         ul {
                             li {a{
                                 href is 'http://www.dagolden.com/';
@@ -1050,7 +1106,7 @@ template backers => sub {
                     div {
                         class is 'width50 floatRight';
 
-                        h3 { T 'Boosters' };
+                        h2 { T 'Boosters' };
                         ul {
                             li {a{
                                 href is 'http://www.kineticode.com/';
@@ -1466,6 +1522,7 @@ template benefactors => sub {
             [ 'http://www.postgresql.us/'     => 'US PostgreSQL Association' ],
             [ 'http://www.commandprompt.com/' => 'Command Prompt, Inc.'      ],
             [ 'http://www.marchex.com/'       => 'Marchex'                   ],
+            [ 'http://younicycle.com/'        => 'Younicycle, the SaaS Platform' ],
         ) {
             li { a { href is $spec->[0]; $spec->[1] } };
         }

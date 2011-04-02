@@ -98,6 +98,9 @@ our %Lexicon = (
     '[_1]-[_2] of [_3] found' => '[_1]-[_2] of [_3] found',
     'Bad Request' => 'Bad Request',
     'Bad request: Missing or invalid "[_1]" query parameter.' => 'Bad request: Missing or invalid “[_1]” query parameter.',
+    '<- Select a letter' => '⬅ Select a letter',
+    'Pick a letter at left' => 'Pick a letter at left',
+    'No user nicknames found starting with "[_1]"' => 'No user nicknames found starting with “[_1]”',
 
     'feedback_contact' => 'If you have any feedback about this site, its design, or how it presents information, then please send an Email to [_1].',
     'feedback_users' => 'If you have a question about an issue with a particular extension, or the content of its documentation, please contact the maintainer of that extension.',

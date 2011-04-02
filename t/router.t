@@ -3,7 +3,7 @@
 use 5.12.0;
 use utf8;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' }
-use Test::More tests => 287;
+use Test::More tests => 366;
 #use Test::More 'no_plan';
 use Plack::Test;
 use HTTP::Request::Common;
@@ -58,12 +58,11 @@ test_psgi $app => sub {
 test_psgi $app => sub {
     my $cb = shift;
 
-    # Set up some mock search results.
-    # Mock the search.
+    # Mock the WWW::PGXN interface to search.
     my $mocker = Test::MockModule->new('WWW::PGXN');
     my %params;
     $mocker->mock(search => sub {
-        my ($self, %p) = @_;;
+        my ($self, %p) = @_;
         %params = %p;
         return {
             query  => "ordered pair",
@@ -78,10 +77,10 @@ test_psgi $app => sub {
     # Search for stuff.
     for my $in ('', qw(docs dists extensions users tags)) {
         for my $spec (
-            [ 'q=föö' => {} ],
-            [ 'q=föö&o=2' => { offset => 2} ],
-            [ 'q=föö&o=2&l=3' => { offset => 2, limit => 3} ],
-            [ 'q=föö&l=3' => { limit => 3} ],
+            [ 'q=föö'         => {                         } ],
+            [ 'q=föö&o=2'     => { offset => 2             } ],
+            [ 'q=föö&o=2&l=3' => { offset => 2, limit => 3 } ],
+            [ 'q=föö&l=3'     => { limit  => 3             } ],
         ) {
             my $uri = "/search?$spec->[0]&in=$in";
             ok my $res = $cb->(GET $uri), "Fetch $uri";
@@ -92,7 +91,7 @@ test_psgi $app => sub {
                 limit => undef,
                 offset => undef,
                 %{ $spec->[1] },
-            }, 'Proper paarams shold be passed to WWW::PGXN';
+            }, 'Proper params shold be passed to WWW::PGXN';
             like $res->content, qr{<h3>Search matched no documents\.</h3>},
                 'Should look like search results';
         }
@@ -106,7 +105,7 @@ test_psgi $app => sub {
         qr{<p>Bad request: Missing or invalid “q” query parameter\.</p>},
         'The body should have the invalid q param error';
 
-    # Make sure an invalid "in" value resturns 400.
+    # Make sure an invalid "in" value returns 400.
     ok $res = $cb->(GET '/search?q=whu&in=foo'), 'Fetch /search with bad in=';
     ok $res->is_error, 'Should return an error';
     is $res->code, 400, 'Should get 400 response';
@@ -273,6 +272,83 @@ test_psgi $app => sub {
         like $res->content, qr/Resource not found\./,
             'The body should have the error';
     }
+};
+
+# Test /users.
+test_psgi $app => sub {
+    my $cb = shift;
+    # Mock the WWW::PGXN interface to search.
+    my $mocker = Test::MockModule->new('WWW::PGXN');
+    my %params;
+    $mocker->mock(search => sub {
+        my ($self, %p) = @_;
+        %params = %p;
+        return {
+            query  => "user:t:*",
+            limit  => 50,
+            offset => 0,
+            count  => 0,
+            in     => 'users',
+            hits   => [],
+        };
+    });
+
+    # Try with no param.
+    my $uri = '/users';
+    ok my $res = $cb->(GET $uri), "Fetch $uri";
+    is $res->code, 200, 'Should get 200 response';
+    like $res->content, qr{\Q<h1>Users</h1>}, 'The body should look correct';
+
+    # Try char params with both /users and /users/.
+    for my $char ('', qw(a b c)) {
+        for my $path ('/users', '/users/') {
+            my $uri = "/users?c=$char";
+            ok my $res = $cb->(GET $uri), "Fetch $uri";
+            is $res->code, 200, 'Should get 200 response';
+            like $res->content, qr{\Q<h1>Users</h1>}, 'The body should look correct';
+            is_deeply \%params, $char eq '' ? { } : {
+                query  => "user:$char*",
+                in     => 'users',
+                limit  => 256,
+                offset => 0,
+            }, "$uri params shold be passed to WWW::PGXN";
+
+            # Try with limit and offset.
+            $uri .= '&l=2&o=3';
+            ok $res = $cb->(GET $uri), "Fetch $uri";
+            is $res->code, 200, 'Should get 200 response';
+            like $res->content, qr{\Q<h1>Users</h1>}, 'The body should look correct';
+            is_deeply \%params, $char eq '' ? { } : {
+                query  => "user:$char*",
+                in     => 'users',
+                limit  => 2,
+                offset => 3,
+            }, "$uri params shold be passed to WWW::PGXN";
+        }
+    }
+
+    # Make sure invalid c returns 400.
+    ok $res = $cb->(GET '/users?c=foo'), 'Fetch /users with bad c=';
+    ok $res->is_error, 'Should return an error';
+    is $res->code, 400, 'Should get 400 response';
+    like decode_utf8($res->content),
+        qr{<p>Bad request: Missing or invalid “c” query parameter\.</p>},
+        'The body should have the invalid in param error';
+
+    # Make sure an invalid "o" and "l" values resturn 400.
+    ok $res = $cb->(GET '/users?c=a&o=foo'), 'Fetch /users with bad o=';
+    ok $res->is_error, 'Should return an error';
+    is $res->code, 400, 'Should get 400 response';
+    like decode_utf8($res->content),
+        qr{<p>Bad request: Missing or invalid “o” query parameter\.</p>},
+        'The body should have the invalid in param error';
+
+    ok $res = $cb->(GET '/users?c=a&l=foo'), 'Fetch /users with bad l=';
+    ok $res->is_error, 'Should return an error';
+    is $res->code, 400, 'Should get 400 response';
+    like decode_utf8($res->content),
+        qr{<p>Bad request: Missing or invalid “l” query parameter\.</p>},
+        'The body should have the invalid in param error';
 };
 
 # Test /feeback.
