@@ -120,6 +120,18 @@ sub app {
                 $res->finalize;
             };
         };
+
+        # Temporary For beta testing.
+        resource '/robots.txt' => sub {
+            GET {
+                return [
+                    200,
+                    ['Content-Type' => 'text/plain'],
+                    ["User-agent: *\nDisallow: /\n"]
+                ];
+            };
+        };
+
     };
 
     builder {
