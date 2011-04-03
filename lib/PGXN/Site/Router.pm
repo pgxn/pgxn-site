@@ -121,7 +121,7 @@ sub app {
             };
         };
 
-        # Temporary For beta testing.
+        # XXX Temporary For beta testing.
         resource '/robots.txt' => sub {
             GET {
                 return [
