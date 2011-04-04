@@ -22,6 +22,7 @@ my $build = $class->new(
     },
     requires => {
         'Encode'                       => '2.40',
+        'Gravatar::URL'                => '1.02',
         'I18N::LangTags::Detect'       => '1.04',
         'Locale::Maketext'             => '1.13',
         'List::Util'                   => '1.20',

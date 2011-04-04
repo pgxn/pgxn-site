@@ -11,6 +11,7 @@ use Software::License::BSD;
 use Software::License::MIT;
 use List::Util qw(first);
 use SemVer;
+use Gravatar::URL;
 #use namespace::autoclean; # Do not use; breaks sort {}
 
 my $l = PGXN::Site::Locale->get_handle('en');
@@ -617,6 +618,18 @@ template user => sub {
             div {
                 class is 'gradient meta vcard';
                 h1 { class is 'fn'; $user->name };
+                a {
+                    class is 'avatar';
+                    href is $user->uri;
+                    img {
+                        src is gravatar_url(
+                            rating  => 'pg',
+                            email   => $user->email,
+                            size    => 80,
+                            default => $req->base . 'ui/img/shirt.png',
+                        );
+                    };
+                };
                 dl {
                     dt { T 'Nickname' };
                     dd {a {

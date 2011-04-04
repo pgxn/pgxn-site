@@ -560,7 +560,7 @@ ul.sideMenu {
   right:82px;
 }
 
-.dist .meta .browse {
+.dist .meta .browse, .dist .meta .avatar {
   position: absolute;
   top:205px;
   right:40px;
