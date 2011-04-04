@@ -4,6 +4,7 @@ Revision history for Perl extension PGXN::Site
       - Fixed some URIs so that they no longer reveal private URLs from behind
         a proxy server. That is, all local URLs should be relative to the
         document root, and not contain the scheme or host name.
+      - Added Gravatar to user page.
 
 0.1.0   2011-04-03T20:24:35
       - Initial version.
