@@ -488,7 +488,7 @@ template distribution => sub {
                             if ($path) {
                                 delete $docs->{$path};
                                 a {
-                                    href is $req->uri . "$sep$path.html";
+                                    href is $req->uri->path . "$sep$path.html";
                                     span { class is 'fn';       $ext             };
                                     span { class is 'version';  $info->{version} };
                                 };
@@ -513,7 +513,7 @@ template distribution => sub {
                             dt {
                                 class is 'doc';
                                 a {
-                                    href is $req->uri . "$sep$path.html";
+                                    href is $req->uri->path . "$sep$path.html";
                                     span {
                                         class is 'fn';
                                         if ($info->{abstract}) {
@@ -761,7 +761,7 @@ template results => sub {
     };
     show "results/$args->{in}" => $hits;
     if (my $c = $res->{count}) {
-        my $uri = $req->uri;
+        my $uri = URI->new($req->uri->path);
         my @params = @{ $args->{params} };
         div {
             class is 'searchnav';
