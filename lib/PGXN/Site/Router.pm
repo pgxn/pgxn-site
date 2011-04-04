@@ -9,6 +9,7 @@ use Plack::App::File;
 
 sub app {
     my $class = shift;
+    my %p = @_;
     my $controller = PGXN::Site::Controller->new(@_);
     (my $ui = __FILE__) =~ s{Router[.]pm$}{ui};
     my $files      = Plack::App::File->new(root => $ui);
@@ -138,6 +139,7 @@ sub app {
         enable 'ErrorDocument', 500, '/error', subrequest => 1;
         enable 'HTTPExceptions';
         enable 'StackTrace', no_print_errors => 1;
+        enable 'ReverseProxy' if $p{reverse_proxy};
         mount '/'   => builder { sub { $router->dispatch(shift) } };
         mount '/ui' => $files;
     }
