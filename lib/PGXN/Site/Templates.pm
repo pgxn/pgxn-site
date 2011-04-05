@@ -945,50 +945,16 @@ template feedback => sub {
 
 template about => sub {
     my ($self, $req, $args) = @_;
-    my $title = T 'About PGXN';
     wrapper {
         div {
             id is 'info';
             div {
                 class is 'gradient';
-                h1 { $title };
-                p { T 'about_paragraph_1' };
-                dl {
-                    dt {a {
-                        href is 'http://manager.pgxn.org/';
-                        T 'PGXN Manager'
-                    }};
-                    dd { T 'pgxn_manager_bullet' };
-                    dt {a {
-                        href is 'http://api.pgxn.org/';
-                        T 'PGXN API'
-                    }};
-                    dd { T 'pgxn_api_bullet' };
-                    dt {a {
-                        href is 'http://www.pgxn.org/';
-                        T 'PGXN Search'
-                    }};
-                    dd { T 'pgxn_site_bullet' };
-                    dt {a {
-                        href is 'http://github.com/theory/pgxn-client/';
-                        T 'PGXN Client'
-                    }};
-                    dd { T 'pgxn_client_bullet' };
-                };
-                h3 { T 'Why?' };
-                p { outs_raw T 'why_pgxn' };
-                p { T 'pgxn_solved' };
-
-                h3 { T q{Who's Responsible for This?} };
-
-                p { outs_raw T 'who_responsible' };
-
-                h3 { T 'Want to Help?' };
-                p { outs_raw T 'on_github' };
+                outs_raw $l->from_file('about.html');
             };
         };
     } $req, {
-        title => _title_with $title,
+        title => _title_with T 'About PGXN',
     };
 };
 
