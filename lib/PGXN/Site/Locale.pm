@@ -192,12 +192,12 @@ sub DESTROY {
 }
 
 sub from_file {
-    my ($self, $path) = @_;
+    my ($self, $path) = (shift, shift);
     my $class = ref $self;
     my $file = $PATHS_FOR{$class}{$path} ||= _find_file($class, $path);
     open my $fh, '<:utf8', $file or die "Cannot open $file: $!\n";
-    local $/;
-    <$fh>;
+    my $value = do { local $/; $self->_compile(<$fh>); };
+    return ref $value eq 'CODE' ? $value->($self, @_) : ${ $value };
 }
 
 sub _find_file {
@@ -280,26 +280,28 @@ in their C<%Lexicon>s.
 =head3 C<from_file>
 
   my $text = $mt->from_file('foo/bar.html');
+  my $msg  = $mt->from_file('feedback.html', 'pgxn@example.com');
 
 Returns the contents of a localized file. The file argument should be
-specified with Unix semantics, regardless of operating system.
-
-Localized files are created by the translators. Whereas subclasses contain
-short strings that need translating, the files can contain complete documents.
-All files are formatted in HTML, though they are maintained using
-L<Text::MultiMarkdown> format.
-
-For example, the L<PGXN::Site::Locale::fr> class lives in
-F<PGXN/Site/Locale/fr.pm>. Localized files will live in
-F<PGXN/Site/Locale/fr/>. So for the example, the localized file will be
-F<PGXN/Site/Locale/fr/foo/bar.mmd>, and the HTML file (created before this
-module is distributed) will be F<PGXN/Site/Locale/fr/foo/bar.mmd>.
+specified with Unix semantics, regardless of operating system. Whereas
+subclasses contain short strings that need translating, the files can contain
+complete documents. As with C<maketext()>, the support the full range variable
+substitution, such as C<[_1]> and friends.
 
 If a file doesn't exist for the current language, C<from_file()> will fall
 back on the same file path for any of its parent classes. If none has the
 file, it will fall back on the English file.
 
-head1 Author
+Localized files are maintained in L<Text::MultiMarkdown> format by translators
+and converted to HTML at build time. The live in a subdirectory named for the
+last part of a subclass's package name. For example, the
+L<PGXN::Site::Locale::fr> class lives in F<PGXN/Site/Locale/fr.pm>. Localized
+files will live in F<PGXN/Site/Locale/fr/>. So for the argument
+C<feedback.html>, the localized file will be
+F<PGXN/Site/Locale/fr/foo/bar.mmd>, and the HTML file (created at build time)
+will be F<PGXN/Site/Locale/fr/foo/bar.html>.
+
+=head1 Author
 
 David E. Wheeler <david.wheeler@pgexperts.com>
 
