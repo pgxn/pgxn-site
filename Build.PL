@@ -6,6 +6,29 @@ my $class = Module::Build->subclass(
     class => 'PGXN::Build',
     code => q{
         sub valid_licenses { { postgresql => 'PostgreSQL' } }
+        sub process_mmd_files {
+            require Text::MultiMarkdown;
+            my $self  = shift;
+            my $m     = Text::MultiMarkdown->new;
+            my $files = $self->_find_file_by_type('mmd', 'lib');
+
+            while (my ($file, $to) = each %$files) {
+                $to =~ s{[.]mmd$}{.html};
+                unless ($self->up_to_date( $file, $to )) {
+                    $to = File::Spec->catfile($self->blib, $to);
+                    print "$file => $to\n";
+                    File::Path::mkpath(File::Basename::dirname($to), 0, oct(777));
+                    $self->log_verbose("Converting $file -> $to\n");
+                    open my $in,  '<:utf8', $file or die "Cannot open $file: $!\n";
+                    open my $out, '>:utf8', $to   or die "Cannot open $to: $!\n";
+                    local $/;
+                    print $out $m->markdown(<$in>);
+                    close $in;
+                    chmod 0444, $to;
+
+                }
+            }
+        }
     },
 );
 
@@ -19,6 +42,7 @@ my $build = $class->new(
         'Software::License'    => '0.102340',
         'Test::More'           => '0.70',
         'Test::MockModule'     => '0.05',
+        'Text::MultiMarkdown'  => '1.000033',
     },
     requires => {
         'Encode'                       => '2.40',
@@ -52,5 +76,5 @@ my $build = $class->new(
     },
 );
 
-$build->add_build_element($_) for qw(css gif png jpg js mmd html);
+$build->add_build_element($_) for qw(css gif png jpg js mmd);
 $build->create_build_script;
