@@ -99,7 +99,9 @@ sub backers {
 
 sub mirroring {
     my $self = shift;
-    $self->render('/mirroring', { env => shift });
+    $self->render('/mirroring', { env => shift, vars => {
+        feedback_to => $self->feedback_to
+    } });
 }
 
 sub faq {

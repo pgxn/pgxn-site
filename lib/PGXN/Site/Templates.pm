@@ -5,7 +5,6 @@ use utf8;
 use parent 'Template::Declare';
 use PGXN::Site::Locale;
 use Template::Declare::Tags;
-use HTML::Entities;
 use Software::License::PostgreSQL;
 use Software::License::BSD;
 use Software::License::MIT;
@@ -936,9 +935,7 @@ template feedback => sub {
             id is 'info';
             div {
                 class is 'gradient';
-                my $html = $l->from_file('feedback.html');
-                $html =~ s{\[_1\]}{_link_for_email($args->{feedback_to})}ge;
-                outs_raw $html;
+                outs_raw $l->from_file('feedback.html', _link_for_email($args->{feedback_to}));
             };
         };
     } $req, {
@@ -1151,9 +1148,7 @@ template mirroring => sub {
             id is 'info';
             div {
                 class is 'gradient';
-                my $html = $l->from_file('mirroring.html');
-                $html =~ s{mailto:pgxn\@pgexperts\.com}{mailto:pgxn\@pgexperts.com?subject=Mirror Registration&amp;body=   &quot;mirror.hostname&quot;: {%0a      &quot;url&quot;:          &quot;http://hostname.of.the.pgxn/mirroring/site/root&quot;,%0a      &quot;frequency&quot;:    &quot;daily/bidaily/.../weekly&quot;,%0a      &quot;location&quot;:     &quot;city, (area?, )country, continent (lon lat)&quot;,%0a      &quot;organization&quot;: &quot;full organization name&quot;,%0a      &quot;timezone&quot;:     &quot;Area/Location zoneinfo tz&quot;,%0a      &quot;contact&quot;:      &quot;email.address.to.contact\@for.this.mirror&quot;,%0a      &quot;bandwidth&quot;:    &quot;1Gbps, 100Mbps, DSL, etc.&quot;,%0a      &quot;src&quot;:          &quot;rsync://from.which.host/is/this/site/mirroring/from/&quot;,%0a      &quot;rsync&quot;:        &quot;rsync://hostname.of.the.mirror/path (if you provide it)&quot;,%0a      &quot;notes&quot;:        &quot;(optional field) access restrictions, for example?&quot;%0a   }%0a};
-                outs_raw $html;
+                outs_raw $l->from_file('mirroring.html', _obscure($args->{feedback_to}) . '?subject=Mirror Registration&amp;body=   &quot;mirror.hostname&quot;: {%0a      &quot;url&quot;:          &quot;http://hostname.of.the.pgxn/mirroring/site/root&quot;,%0a      &quot;frequency&quot;:    &quot;daily/bidaily/.../weekly&quot;,%0a      &quot;location&quot;:     &quot;city, (area?, )country, continent (lon lat)&quot;,%0a      &quot;organization&quot;: &quot;full organization name&quot;,%0a      &quot;timezone&quot;:     &quot;Area/Location zoneinfo tz&quot;,%0a      &quot;contact&quot;:      &quot;email.address.to.contact@for.this.mirror&quot;,%0a      &quot;bandwidth&quot;:    &quot;1Gbps, 100Mbps, DSL, etc.&quot;,%0a      &quot;src&quot;:          &quot;rsync://from.which.host/is/this/site/mirroring/from/&quot;,%0a      &quot;rsync&quot;:        &quot;rsync://hostname.of.the.mirror/path (if you provide it)&quot;,%0a      &quot;notes&quot;:        &quot;(optional field) access restrictions, for example?&quot;%0a   }%0a');
             };
         };
     } $req, {
