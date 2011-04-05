@@ -2,7 +2,7 @@
 
 use 5.12.0;
 use utf8;
-use Test::More tests => 29;
+use Test::More tests => 33;
 #use Test::More 'no_plan';
 my $CLASS;
 
@@ -73,3 +73,11 @@ is $lh->maketext('[qlist,_1]', ['foo']),
     '«foo»', 'single-item fr qlist() should work';
 is $lh->maketext('[qlist,_1]', ['foo', 'bar', 'baz']),
     '«foo», «bar», et «baz»', 'triple-item fr qlist() should work';
+
+# Try load_file.
+ok $lh = $CLASS->get_handle('en'), 'Get English handle again';
+like $lh->from_file('faq.mmd'), qr{Open-source PostgreSQL extension release packages},
+    'from_file should work';
+ok $lh = $CLASS->get_handle('fr'), 'Get French handle again';
+like $lh->from_file('faq.mmd'), qr{Open-source PostgreSQL extension release packages},
+    'from_file should work for french, too';

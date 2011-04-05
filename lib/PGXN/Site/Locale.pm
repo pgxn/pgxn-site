@@ -4,6 +4,8 @@ use 5.12.0;
 use utf8;
 use parent 'Locale::Maketext';
 use I18N::LangTags::Detect;
+use File::Spec;
+use Carp;
 
 # Allow unknown phrases to just pass-through.
 our %Lexicon = (
@@ -189,6 +191,33 @@ sub qlist {
     return "$ret $and $open$last$shut";
 }
 
+my %PATHS_FOR;
+
+sub DESTROY {
+    delete $PATHS_FOR{ ref shift };
+}
+
+sub from_file {
+    my ($self, $path) = @_;
+    my $class = ref $self;
+    my $file = $PATHS_FOR{$class}{$path} ||= _find_file($class, $path);
+    open my $fh, '<:utf8', $file or die "Cannot open $file: $!\n";
+    local $/;
+    <$fh>;
+}
+
+sub _find_file {
+    my $class = shift;
+    my @path = split m{/}, shift;
+    (my $dir = __FILE__) =~ s{[.]pm$}{};
+    no strict 'refs';
+    foreach my $super ($class, @{$class . '::ISA'}, __PACKAGE__ . '::en') {
+        my $file = File::Spec->catfile($dir, $super->language_tag, @path);
+        return $file if -e $file;
+    }
+    croak "No file found for path " . join('/', @path);
+}
+
 1;
 
 =head1 Name
@@ -253,6 +282,28 @@ C<listcomma> and C<listand> entries in their C<%Lexicon>s.
 Like C<list()> but quotes each item in the list. Locales can specify the
 quotation characters to be used via the C<openquote> and C<shutquote> entries
 in their C<%Lexicon>s.
+
+=head3 C<from_file>
+
+  my $text = $mt->from_file('foo/bar.html');
+
+Returns the contents of a localized file. The file argument should be
+specified with Unix semantics, regardless of operating system.
+
+Localized files are created by the translators. Whereas subclasses contain
+short strings that need translating, the files can contain complete documents.
+All files are formatted in HTML, though they are maintained using
+L<Text::MultiMarkdown> format.
+
+For example, the L<PGXN::Site::Locale::fr> class lives in
+F<PGXN/Site/Locale/fr.pm>. Localized files will live in
+F<PGXN/Site/Locale/fr/>. So for the example, the localized file will be
+F<PGXN/Site/Locale/fr/foo/bar.mmd>, and the HTML file (created before this
+module is distributed) will be F<PGXN/Site/Locale/fr/foo/bar.mmd>.
+
+If a file doesn't exist for the current language, C<from_file()> will fall
+back on the same file path for any of its parent classes. If none has the
+file, it will fall back on the English file.
 
 head1 Author
 

@@ -52,5 +52,5 @@ my $build = $class->new(
     },
 );
 
-$build->add_build_element($_) for qw(css gif png jpg js);
+$build->add_build_element($_) for qw(css gif png jpg js mmd html);
 $build->create_build_script;
