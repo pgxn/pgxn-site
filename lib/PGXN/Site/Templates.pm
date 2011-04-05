@@ -931,41 +931,18 @@ template 'results/users' => sub {
 
 template feedback => sub {
     my ($self, $req, $args) = @_;
-    my $title = T 'Feedback';
     wrapper {
         div {
             id is 'info';
             div {
                 class is 'gradient';
-                h1 { $title };
-                p  {
-                    outs_raw T(
-                        'feedback_contact',
-                        _link_for_email($args->{feedback_to})
-                    );
-                };
-                p { T 'feedback_users' };
-                p { T 'feedback_forums' };
-                dl {
-                    dt {
-                        a {
-                            href is 'http://groups.google.com/group/pgxn-users';
-                            T 'PGXN Users';
-                        }
-                    };
-                    dd { T 'The PGXN Users group is a great place to go with questions on creating PGXN distributions' };
-                    dt {
-                        a {
-                            href is 'http://www.postgresql.org/community/lists/';
-                            T 'PostgreSQL Mailing Lists';
-                        }
-                    };
-                    dd { T q{The PostgreSQL mailing lists have something for everybody: novices, users, and hackers, they're the place to go for comprehensive discussion of everything PostgreSQL.} };
-                };
+                my $html = $l->from_file('feedback.html');
+                $html =~ s{\[_1\]}{_link_for_email($args->{feedback_to})}ge;
+                outs_raw $html;
             };
         };
     } $req, {
-        title => _title_with $title,
+        title => _title_with T 'Feedback',
     };
 };
 
@@ -1169,7 +1146,6 @@ template faq => sub {
 
 template mirroring => sub {
     my ($self, $req, $args) = @_;
-    my $title = T 'Mirroring PGXN';
     wrapper {
         div {
             id is 'info';
@@ -1181,7 +1157,7 @@ template mirroring => sub {
             };
         };
     } $req, {
-        title => _title_with $title,
+        title => _title_with T 'Mirroring PGXN',
     };
 };
 
