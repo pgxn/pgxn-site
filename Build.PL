@@ -14,12 +14,12 @@ my $class = Module::Build->subclass(
 
             while (my ($file, $to) = each %$files) {
                 $to =~ s{[.]mmd$}{.html};
+                $to = File::Spec->catfile($self->blib, $to);
                 unless ($self->up_to_date( $file, $to )) {
-                    $to = File::Spec->catfile($self->blib, $to);
-                    print "$file => $to\n";
                     File::Path::mkpath(File::Basename::dirname($to), 0, oct(777));
                     $self->log_verbose("Converting $file -> $to\n");
                     open my $in,  '<:utf8', $file or die "Cannot open $file: $!\n";
+                    chmod 0666, $to;
                     open my $out, '>:utf8', $to   or die "Cannot open $to: $!\n";
                     local $/;
                     print $out $m->markdown(<$in>);
