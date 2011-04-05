@@ -1175,56 +1175,9 @@ template mirroring => sub {
             id is 'info';
             div {
                 class is 'gradient';
-                h1 { $title };
-                outs_raw q{
-          <p>Hosting a mirror is simple. All you need is:</p>
-
-          <ul>
-            <li>A reasonably fast internet connection</li>
-            <li>Space for storage—not much at this point</li>
-            <li>An <a href="http://rsync.samba.org/"><code>rsync</code></a> client</li>
-            <li>A web server</p>
-          </ul>
-
-          <p>The <code>rsync</code> address for the PGXN master mirror is
-          rsync://master.pgxn.org/pgxn.</p>
-
-          <p>Once you have the rsync client installed on your system and the
-          disk space mapped out, add an entry to your crontab like so:</p>
-
-          <pre style="white-space:normal">
-0 20 * * * /usr/bin/rsync -az --delete rsync://master.pgxn.org/pgxn /usr/local/pgxn
-</pre>
-
-          <p>On Windows, use AT like so:</p>
-
-          <pre style="white-space:normal">
-AT 20:00 /every:M,T,W,Th,F,S,Su &quot;C:\Program Files\Rsync\rsync -az <span style="white-space:nowrap">--delete</span> rsync://master.pgxn.org/pgxn C:\Projects\PGXN&quot;
-</pre>
-
-          <p>Please do not sync more than once every hour. And realistically
-            you only need to sync once or twice a day. Next, set up a web
-            server to serve the mirror. If your rsync is already in the
-            subdirectory of a web server root, you should be golden.
-            Otherwise, if you’re using Apache, you can set up a virtual host
-            like so (assuming that you’re <code>rsync</code>ing to
-            <code>/usr/local/pgxn</code>):</p>
-
-<pre>
-&lt;VirtualHost *:80&gt;
-  DocumentRoot /usr/local/pgxn
-  ServerName pgxn.example.org
-  CustomLog /var/log/httpd/access_log combined
-  &lt;Directory /usr/local/pgxn&gt;
-    AllowOverride All
-    Allow from all
-    Options +Indexes
-  &lt;/Directory&gt;
-&lt;/VirtualHost&gt;
-</pre>
-
-          <p>If you’d like to register your mirror, <a href="mailto:pgxn@pgexperts.com?subject=Mirror Registration&amp;body=   &quot;mirror.hostname&quot;: {%0a      &quot;url&quot;:          &quot;http://hostname.of.the.pgxn/mirroring/site/root&quot;,%0a      &quot;frequency&quot;:    &quot;daily/bidaily/.../weekly&quot;,%0a      &quot;location&quot;:     &quot;city, (area?, )country, continent (lon lat)&quot;,%0a      &quot;organization&quot;: &quot;full organization name&quot;,%0a      &quot;timezone&quot;:     &quot;Area/Location zoneinfo tz&quot;,%0a      &quot;contact&quot;:      &quot;email.address.to.contact@for.this.mirror&quot;,%0a      &quot;bandwidth&quot;:    &quot;1Gbps, 100Mbps, DSL, etc.&quot;,%0a      &quot;src&quot;:          &quot;rsync://from.which.host/is/this/site/mirroring/from/&quot;,%0a      &quot;rsync&quot;:        &quot;rsync://hostname.of.the.mirror/path (if you provide it)&quot;,%0a      &quot;notes&quot;:        &quot;(optional field) access restrictions, for example?&quot;%0a   }%0a">send us email</a> with all the details and we’ll get you registered.</p>
-};
+                my $html = $l->from_file('mirroring.html');
+                $html =~ s{mailto:pgxn\@pgexperts\.com}{mailto:pgxn\@pgexperts.com?subject=Mirror Registration&amp;body=   &quot;mirror.hostname&quot;: {%0a      &quot;url&quot;:          &quot;http://hostname.of.the.pgxn/mirroring/site/root&quot;,%0a      &quot;frequency&quot;:    &quot;daily/bidaily/.../weekly&quot;,%0a      &quot;location&quot;:     &quot;city, (area?, )country, continent (lon lat)&quot;,%0a      &quot;organization&quot;: &quot;full organization name&quot;,%0a      &quot;timezone&quot;:     &quot;Area/Location zoneinfo tz&quot;,%0a      &quot;contact&quot;:      &quot;email.address.to.contact\@for.this.mirror&quot;,%0a      &quot;bandwidth&quot;:    &quot;1Gbps, 100Mbps, DSL, etc.&quot;,%0a      &quot;src&quot;:          &quot;rsync://from.which.host/is/this/site/mirroring/from/&quot;,%0a      &quot;rsync&quot;:        &quot;rsync://hostname.of.the.mirror/path (if you provide it)&quot;,%0a      &quot;notes&quot;:        &quot;(optional field) access restrictions, for example?&quot;%0a   }%0a};
+                outs_raw $html;
             };
         };
     } $req, {
