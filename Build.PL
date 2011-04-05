@@ -9,7 +9,10 @@ my $class = Module::Build->subclass(
         sub process_mmd_files {
             require Text::MultiMarkdown;
             my $self  = shift;
-            my $m     = Text::MultiMarkdown->new;
+            my $m     = Text::MultiMarkdown->new(
+                img_ids     => 0,
+                heading_ids => 0,
+            );
             my $files = $self->_find_file_by_type('mmd', 'lib');
 
             while (my ($file, $to) = each %$files) {
