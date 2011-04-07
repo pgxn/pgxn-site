@@ -650,7 +650,7 @@ table .dist .name a {
   padding-top:2em;
 }
 
-#htmltagcloud {text-align: center;}
+#htmltagcloud {text-align: center;padding:0 20px;}
 #htmltagcloud span a { margin:4px; padding:4px; line-height:1.1em; }
 #htmltagcloud span a:hover{background-color:#444;}
 
