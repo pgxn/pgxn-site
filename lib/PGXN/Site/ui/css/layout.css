@@ -243,10 +243,6 @@
   background: #555 url(../img/gradient.jpg) repeat-x top left;
 }
 
-#cloud {
-  padding:10px 15px;
-}
-
 /**************************************************************
    #homesearch: The home page search form.
  **************************************************************/
@@ -653,3 +649,63 @@ table .dist .name a {
   color: #F8D766;
   padding-top:2em;
 }
+
+#htmltagcloud {text-align: center;}
+#htmltagcloud span a { margin:4px; padding:4px; line-height:1.1em; }
+#htmltagcloud span a:hover{background-color:#444;}
+
+.tagcloud0 {font-size: 6pt;}
+.tagcloud0 a {color:white;}
+.tagcloud1 {font-size: 7pt;}
+.tagcloud1 a {color:white;}
+.tagcloud2 {font-size: 8pt;}
+.tagcloud2 a {color:white;}
+.tagcloud3 {font-size: 9pt;}
+.tagcloud3 a {color:white;}
+.tagcloud4 {font-size: 10pt;}
+.tagcloud4 a {color:white;}
+
+.tagcloud5 {font-size: 11pt;}
+.tagcloud5 a {color:#9FF3FF;}
+.tagcloud6 {font-size: 12pt;}
+.tagcloud6 a {color:#9FF3FF;}
+.tagcloud7 {font-size: 13pt;}
+.tagcloud7 a {color:#9FF3FF;}
+.tagcloud8 {font-size: 14pt;}
+.tagcloud8 a {color:#9FF3FF;}
+
+.tagcloud9 {font-size: 15pt;}
+.tagcloud9 a {color:#F8D766;}
+.tagcloud10 {font-size: 16pt;}
+.tagcloud10 a {color:#F8D766;}
+.tagcloud11 {font-size: 17pt;}
+.tagcloud11 a {color:#F8D766;}
+.tagcloud12 {font-size: 18pt;}
+.tagcloud12 a {color:#F8D766;}
+
+.tagcloud13 {font-size: 19pt;}
+.tagcloud13 a {color:#F39F01;}
+.tagcloud14 {font-size: 20pt;}
+.tagcloud14 a {color:#F39F01;}
+.tagcloud15 {font-size: 21pt;}
+.tagcloud15 a {color:#F39F01;}
+.tagcloud16 {font-size: 22pt;}
+.tagcloud16 a {color:#F39F01;}
+
+.tagcloud17 {font-size: 23pt;}
+.tagcloud17 a {color:#F17400;}
+.tagcloud18 {font-size: 24pt;}
+.tagcloud18 a {color:#F17400;}
+.tagcloud19 {font-size: 25pt;}
+.tagcloud19 a {color:#F17400;}
+.tagcloud20 {font-size: 26pt;}
+.tagcloud20 a {color:#F17400;}
+
+.tagcloud21 {font-size: 27pt;}
+.tagcloud21 a {color:#FF4B33;}
+.tagcloud22 {font-size: 28pt;}
+.tagcloud22 a {color:#FF4B33;}
+.tagcloud23 {font-size: 29pt;}
+.tagcloud23 a {color:#FF4B33;}
+.tagcloud24 {font-size: 30pt;}
+.tagcloud24 a {color:#FF4B33;}

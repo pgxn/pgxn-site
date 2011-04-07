@@ -209,7 +209,7 @@ template home => sub {
 
                 div {
                     id is 'cloud';
-                    # XXX Put tag cloud here.
+                    outs_raw $args->{cloud}->html;
                 };
             }; # /div.hsearch floatLeft
 

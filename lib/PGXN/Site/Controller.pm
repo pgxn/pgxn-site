@@ -7,6 +7,7 @@ use Plack::Request;
 use Plack::Response;
 use PGXN::Site::Locale;
 use PGXN::Site::Templates;
+use HTML::TagCloud;
 use Encode;
 use WWW::PGXN;
 use namespace::autoclean;
@@ -76,8 +77,12 @@ sub missing {
 }
 
 sub home {
-    my $self = shift;
-    $self->render('/home', { env => shift });
+    my $self  = shift;
+    my $cloud = HTML::TagCloud->new;
+    my $tags  = $self->api->get_stats('tags');
+    $cloud->add($_->{tag}, "/tag/$_->{tag}/", $_->{dist_count})
+        for @{ $tags->{popular} };
+    $self->render('/home', { env => shift, vars => { cloud => $cloud } });
 }
 
 sub feedback {

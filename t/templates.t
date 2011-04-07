@@ -3,6 +3,7 @@
 use 5.12.0;
 use utf8;
 use Test::More;
+use HTML::TagCloud;
 
 BEGIN {
     for my $mod (qw(
@@ -28,7 +29,15 @@ ok my $req = Plack::Request->new(req_to_psgi(GET '/')),
     'Create a Plack request object';
 my $mt = PGXN::Site::Locale->accept($req->env->{HTTP_ACCEPT_LANGUAGE});
 
-ok my $html = Template::Declare->show('home', $req, {}),
+
+my $cloud = HTML::TagCloud->new;
+$cloud->add($_->{tag}, "/tag/$_->{tag}/", $_->{dist_count}) for (
+    { tag => 'foo', dist_count => 2, },
+    { tag => 'bar', dist_count => 4, },
+    { tag => 'hi',  dist_count => 7, },
+);
+
+ok my $html = Template::Declare->show('home', $req, { cloud => $cloud }),
     'Call the home template';
 
 is_well_formed_xml $html, 'The HTML should be well-formed';
