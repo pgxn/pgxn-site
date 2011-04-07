@@ -21,7 +21,7 @@ use Plack::Request;
 use HTTP::Message::PSGI;
 
 #plan 'no_plan';
-plan tests => 232;
+plan tests => 243;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -54,8 +54,22 @@ test_wrapper($html, {
 
                 test_search_form($tx, 'homesearch', 'doc', '');
 
-                $tx->ok('./div[@id="cloud"]', 'Test cloud' => sub {
+                $tx->ok('./div[@id="htmltagcloud"]', 'Test cloud' => sub {
                     # XXX Add cloud tests here.
+                    $tx->is('count(./*)', 3, qq{Should have 3 elements below cloud});
+                    $tx->is('count(./span)', 3, qq{And they should be spans});
+                    $tx->ok('./span[1]', 'Test first tag span' => sub {
+                        $tx->is('./@class', 'tagcloud1', '... Class is "tagcloud1"');
+                        $tx->is('./a[@href="/tag/bar/"]', 'bar', 'Should link to tag "bar"');
+                    });
+                    $tx->ok('./span[2]', 'Test second tag span' => sub {
+                        $tx->is('./@class', 'tagcloud0', '... Class is "tagcloud0"');
+                        $tx->is('./a[@href="/tag/foo/"]', 'foo', 'Should link to tag "foo"');
+                    });
+                    $tx->ok('./span[3]', 'Test third tag span' => sub {
+                        $tx->is('./@class', 'tagcloud3', '... Class is "tagcloud3"');
+                        $tx->is('./a[@href="/tag/hi/"]', 'hi', 'Should link to tag "hi"');
+                    });
                 });
             });
 

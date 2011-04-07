@@ -207,10 +207,7 @@ template home => sub {
                     autofocus => 1,
                 };
 
-                div {
-                    id is 'cloud';
-                    outs_raw $args->{cloud}->html;
-                };
+                outs_raw $args->{cloud}->html;
             }; # /div.hsearch floatLeft
 
             # 25 percent width column, aligned to the right.
