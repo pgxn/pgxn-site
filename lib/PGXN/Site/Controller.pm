@@ -102,6 +102,12 @@ sub backers {
     $self->render('/backers', { env => shift });
 }
 
+sub recent {
+    my $self  = shift;
+    my $dists = $self->api->get_stats('dists')->{recent};
+    $self->render('/recent', { env => shift, vars => { dists => $dists } });
+}
+
 sub mirroring {
     my $self = shift;
     $self->render('/mirroring', { env => shift, vars => {

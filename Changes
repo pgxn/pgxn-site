@@ -8,6 +8,7 @@ Revision history for Perl extension PGXN::Site
       - Added `reverse_proxy` option, so that the default gravatar URL will
         work properly for proxied servers.
       - Added tag cloud to the home page.
+      - Added page with list of recent releases.
 
 0.1.0   2011-04-03T20:24:35
       - Initial version.

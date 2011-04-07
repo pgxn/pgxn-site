@@ -80,9 +80,14 @@ sub app {
             GET { $controller->about(shift) };
         };
 
-        # /user/
+        # /users/
         resource qr{/users/?$} => sub {
             GET { $controller->users(shift) };
+        };
+
+        # /recent
+        resource qr{^/recent/?$} => sub {
+            GET { $controller->recent(shift) };
         };
 
         # /backers

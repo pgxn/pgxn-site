@@ -3,7 +3,7 @@
 use 5.12.0;
 use utf8;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' }
-use Test::More tests => 366;
+use Test::More tests => 372;
 #use Test::More 'no_plan';
 use Plack::Test;
 use HTTP::Request::Common;
@@ -351,7 +351,17 @@ test_psgi $app => sub {
         'The body should have the invalid in param error';
 };
 
-# Test /feeback.
+# Test /recent.
+test_psgi $app => sub {
+    my $cb = shift;
+    for my $uri ('/recent', '/recent/') {
+        ok my $res = $cb->(GET $uri), "Fetch $uri";
+        is $res->code, 200, 'Should get 200 response';
+        like $res->content, qr{\Q<h1>Recent Releases</h1>}, 'The body should look correct';
+    }
+};
+
+# Test /feedback.
 test_psgi $app => sub {
     my $cb = shift;
     for my $uri ('/feedback', '/feedback/') {

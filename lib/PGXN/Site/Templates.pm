@@ -108,12 +108,10 @@ BEGIN { create_wrapper wrapper => sub {
                             my $path = $req->uri->path;
                             # XXX Fill in these links.
                             for my $spec (
+                                [ '/recent/', 'Recent Releases',            'Recent'  ],
                                 [ '/users/',  'PGXN Users',                 'Users'   ],
                                 [ '/about/',  'About PGXN',                 'About'   ],
-                                # [ '/recent/', 'Recent Uploads',             'Recent'  ],
                                 [ '/faq/',    'Frequently Asked Questions', 'FAQ'     ],
-                                [ 'http://blog.pgxn.org/',    'Blog',       'Blog'    ],
-                                [ 'http://twitter.com/pgxn/', 'Twitter',    'Twitter' ],
                             ) {
                                 li {
                                     class is 'here' if $path eq $spec->[0];
@@ -163,6 +161,18 @@ BEGIN { create_wrapper wrapper => sub {
                     }; # /span.floatLeft
                     span {
                         class is 'floatRight';
+                        a {
+                            href is 'http://blog.pgxn.org/';
+                            title is T 'PGXN Blog';
+                            T 'Blog';
+                        };
+                        span { class is 'grey'; '|' };
+                        a {
+                            href is 'http://twitter.com/pgxn/';
+                            title is T 'Follow PGXN on Twitter';
+                            T 'Twitter';
+                        };
+                        span { class is 'grey'; '|' };
                         a {
                             href is 'http://manager.pgxn.org/';
                             title is T 'Release it on PGXN';
@@ -678,6 +688,30 @@ template tag => sub {
     };
 };
 
+template recent => sub {
+    my ($self, $req, $args) = @_;
+    my $dists = $args->{dists};
+    my $title = T 'Recent Releases';
+
+    wrapper {
+        div {
+            id is 'page';
+            div {
+                id is 'results';
+                class is 'gradient';
+                h1 { $title };
+                if ($dists && @{ $dists }) {
+                    show 'results/dists' => $dists;
+                } else {
+                    h3 { T 'No Releases Yet' }
+                }
+            }; # /div.gradient
+        }; # div#page
+    } $req, {
+        title => _title_with $title,
+    }
+};
+
 template users => sub {
     my ($self, $req, $args) = @_;
     my $api   = $args->{api};
@@ -873,7 +907,7 @@ template 'results/dists' => sub {
                     $hit->{dist}
                 };
             };
-            p { outs_raw $hit->{excerpt} };
+            p { $hit->{excerpt} ? outs_raw $hit->{excerpt} : $hit->{abstract} };
             ul {
                 li {
                     class is 'date';
@@ -885,8 +919,8 @@ template 'results/dists' => sub {
                     class is 'user';
                     a {
                         href is "/user/$hit->{user}/";
-                        title is T 'Uploaded by [_1]', $hit->{user_name};
-                        $hit->{user_name};
+                        title is T 'Uploaded by [_1]', $hit->{user_name} || $hit->{user};
+                        $hit->{user_name} || $hit->{user};
                     };
                 };
             };
