@@ -97,9 +97,9 @@ sub about {
     $self->render('/about', { env => shift });
 }
 
-sub backers {
+sub donors {
     my $self = shift;
-    $self->render('/backers', { env => shift });
+    $self->render('/donors', { env => shift });
 }
 
 sub recent {

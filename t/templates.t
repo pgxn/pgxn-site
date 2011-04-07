@@ -214,16 +214,16 @@ test_wrapper($html, {
                     $tx->ok('./a', 'Test anchor' => sub {
                         $tx->is(
                             './@href',
-                            '/backers/',
-                            'href should point to backers page.',
+                            '/donors/',
+                            'href should point to donors page.',
                         );
                         $tx->is(
                             './@title',
-                            'See all our great backers!',
+                            'See all our great donors!',
                             'Title should be correct',
                         );
 
-                        $tx->is('./text()', 'All Backers ➡', 'Text should be "All Backers"');
+                        $tx->is('./text()', 'All Donors ➡', 'Text should be "All Donors"');
                     });
 
 
@@ -413,10 +413,10 @@ sub test_wrapper {
                     $tx->is('./text()', 'Mirroring', 'Should have text "Mirroring"');
                 });
                 $tx->is('./span[4][@class="grey"]', '|', 'Should have spacer span');
-                $tx->ok('./a[5]', 'Test backers anchor', sub {
-                    $tx->is('./@href', '/backers/', 'Should link to /backers/');
-                    $tx->is('./@title', 'Backers', 'Should have link title');
-                    $tx->is('./text()', 'Backers', 'Should have text "Backers"');
+                $tx->ok('./a[5]', 'Test donors anchor', sub {
+                    $tx->is('./@href', '/donors/', 'Should link to /donors/');
+                    $tx->is('./@title', 'Donors', 'Should have link title');
+                    $tx->is('./text()', 'Donors', 'Should have text "Donors"');
                 });
                 $tx->is('./span[5][@class="grey"]', '|', 'Should have spacer span');
                 $tx->ok('./a[6]', 'Test feedback anchor', sub {

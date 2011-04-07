@@ -381,13 +381,13 @@ test_psgi $app => sub {
     }
 };
 
-# Test /backers.
+# Test /donors.
 test_psgi $app => sub {
     my $cb = shift;
-    for my $uri ('/backers', '/backers/') {
+    for my $uri ('/donors', '/donors/') {
         ok my $res = $cb->(GET $uri), "Fetch $uri";
         is $res->code, 200, 'Should get 200 response';
-        like $res->content, qr{\Q<h1>Backers</h1>}, 'The body should look correct';
+        like $res->content, qr{\Q<h1>Donors</h1>}, 'The body should look correct';
     }
 };
 
@@ -418,7 +418,7 @@ test_psgi $app => sub {
     my $cb = shift;
     for my $spec (
         [ contact      => '/feedback/'  ],
-        [ contributors => '/backers/'   ],
+        [ contributors => '/donors/'   ],
         [ mirroring    => '/mirroring/' ],
         [ faq          => '/faq/'       ],
     ) {

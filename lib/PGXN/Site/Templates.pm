@@ -186,9 +186,9 @@ BEGIN { create_wrapper wrapper => sub {
                         };
                         span { class is 'grey'; '|' };
                         a {
-                            href is '/backers/';
-                            title is T 'Backers';
-                            T 'Backers';
+                            href is '/donors/';
+                            title is T 'Donors';
+                            T 'Donors';
                         };
                         span { class is 'grey'; '|' };
                         a {
@@ -234,9 +234,9 @@ template home => sub {
                 h6 {
                     class is 'floatRight';
                     a {
-                        href is '/backers/';
-                        title is T 'See all our great backers!';
-                        T 'All Backers'
+                        href is '/donors/';
+                        title is T 'See all our great donors!';
+                        T 'All Donors'
                     }
                 };
             }; # /div.hside floatLeft gradient
@@ -989,17 +989,17 @@ template about => sub {
     };
 };
 
-template backers => sub {
+template donors => sub {
     my ($self, $req, $args) = @_;
-    my $title = T 'Backers';
+    my $title = T 'Donors';
     wrapper {
         div {
             id is 'info';
-            class is 'backers';
+            class is 'donors';
             div {
                 class is 'gradient';
                 h1 { $title };
-                p { outs_raw T 'backers_intro' };
+                p { outs_raw T 'donors_intro' };
 
                 h2 { T 'Founders' };
                 p { T 'founders_intro' };

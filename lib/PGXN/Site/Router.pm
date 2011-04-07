@@ -90,9 +90,9 @@ sub app {
             GET { $controller->recent(shift) };
         };
 
-        # /backers
-        resource qr{^/backers/?$} => sub {
-            GET { $controller->backers(shift) };
+        # /donors
+        resource qr{^/donors/?$} => sub {
+            GET { $controller->donors(shift) };
         };
 
         # /faq
@@ -113,7 +113,7 @@ sub app {
         # Handle legacy URLs.
         my %url_for = (
             contact      => '/feedback/',
-            contributors => '/backers/',
+            contributors => '/donors/',
             mirroring    => '/mirroring/',
             faq          => '/faq/',
         );
