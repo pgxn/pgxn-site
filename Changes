@@ -1,5 +1,7 @@
 Revision history for Perl extension PGXN::Site
 
+0.3.0
+
 0.2.0   2011-04-07T18:02:50
       - Fixed some URIs so that they no longer reveal private URLs from behind
         a proxy server. That is, all local URLs should be relative to the

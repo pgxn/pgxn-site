@@ -48,14 +48,14 @@
          "date": "2011-02-21T20:14:56Z",
          "dist": "explanation",
          "user": "theory",
-         "version": "0.2.0"
+         "version": "0.3.0"
       },
       {
          "abstract": "A semantic version data type",
          "date": "2011-02-05T19:31:38Z",
          "dist": "semver",
          "user": "theory",
-         "version": "0.2.0"
+         "version": "0.3.0"
       },
       {
          "abstract": "Unit testing for PostgreSQL",
