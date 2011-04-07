@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.3.0
+0.3.0  2011-04-07T18:19:55
       - Renamed "backers" to "donors".
 
 0.2.0   2011-04-07T18:02:50
