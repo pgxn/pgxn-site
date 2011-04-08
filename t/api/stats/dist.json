@@ -6,6 +6,7 @@
          "date": "2011-03-16T10:57:47Z",
          "dist": "tblsize_nolock",
          "user": "alexk",
+         "user_name": "Alexey Klyukin",
          "version": "1.0.0"
       },
       {
@@ -13,6 +14,7 @@
          "date": "2011-03-16T10:33:00Z",
          "dist": "sha",
          "user": "alexk",
+         "user_name": "Alexey Klyukin",
          "version": "1.0.0"
       },
       {
@@ -20,6 +22,7 @@
          "date": "2011-03-16T10:12:15Z",
          "dist": "session_hash_tools",
          "user": "alexk",
+         "user_name": "Alexey Klyukin",
          "version": "1.0.0"
       },
       {
@@ -27,6 +30,7 @@
          "date": "2011-03-16T09:56:08Z",
          "dist": "ssn",
          "user": "alexk",
+         "user_name": "Alexey Klyukin",
          "version": "1.0.0"
       },
       {
@@ -34,6 +38,7 @@
          "date": "2011-03-16T09:44:20Z",
          "dist": "check_updates",
          "user": "alexk",
+         "user_name": "Alexey Klyukin",
          "version": "1.0.0"
       },
       {
@@ -41,6 +46,7 @@
          "date": "2011-03-16T09:36:43Z",
          "dist": "countnulls",
          "user": "alexk",
+         "user_name": "Alexey Klyukin",
          "version": "1.0.0"
       },
       {
@@ -48,6 +54,7 @@
          "date": "2011-02-21T20:14:56Z",
          "dist": "explanation",
          "user": "theory",
+         "user_name": "David E. Wheeler",
          "version": "0.3.0"
       },
       {
@@ -55,6 +62,7 @@
          "date": "2011-02-05T19:31:38Z",
          "dist": "semver",
          "user": "theory",
+         "user_name": "David E. Wheeler",
          "version": "0.3.0"
       },
       {
@@ -62,6 +70,7 @@
          "date": "2011-02-02T03:25:17Z",
          "dist": "pgTAP",
          "user": "theory",
+         "user_name": "David E. Wheeler",
          "version": "0.25.0"
       },
       {
@@ -69,6 +78,7 @@
          "date": "2011-01-30T16:51:16Z",
          "dist": "pg_french_datatypes",
          "user": "daamien",
+         "user_name": "damien clochard",
          "version": "0.1.1"
       },
       {
@@ -76,6 +86,7 @@
          "date": "2010-11-01T00:17:46Z",
          "dist": "tinyint",
          "user": "umitanuki",
+         "user_name": "Hitoshi Harada",
          "version": "0.1.0"
       },
       {
@@ -83,6 +94,7 @@
          "date": "2010-10-29T22:44:42Z",
          "dist": "pair",
          "user": "theory",
+         "user_name": "David E. Wheeler",
          "version": "0.1.1"
       }
    ]

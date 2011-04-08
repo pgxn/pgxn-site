@@ -701,7 +701,7 @@ template recent => sub {
                 class is 'gradient';
                 h1 { $title };
                 if ($dists && @{ $dists }) {
-                    show 'results/dists' => $dists;
+                    show 'results/recent' => $dists;
                 } else {
                     h3 { T 'No Releases Yet' }
                 }
@@ -842,13 +842,11 @@ template results => sub {
 };
 
 template 'results/extensions' => sub {
-    $_[0] = 'extension';
-    &_detailed_results;
+    _detailed_results(extension => $_[1]);
 };
 
 template 'results/docs' => sub {
-    $_[0] = 'title';
-    &_detailed_results;
+    _detailed_results(title => $_[1]);
 };
 
 # template 'results/detailed' => sub {
@@ -887,7 +885,7 @@ sub _detailed_results {
                     class is 'user';
                     a {
                         href is "/user/$hit->{user}/";
-                        title is T 'Uploaded by [_1]', $hit->{user_name};
+                        title is T 'Released by [_1]', $hit->{user_name};
                         $hit->{user_name};
                     };
                 };
@@ -897,14 +895,23 @@ sub _detailed_results {
 };
 
 template 'results/dists' => sub {
-    my $self = shift;
-    for my $hit (@{ + shift}) {
+    _dist_results(['dist'], $_[1]);
+};
+
+template 'results/recent' => sub {
+    _dist_results([qw(dist version)], $_[1]);
+};
+
+sub _dist_results {
+    my ($fields, $res) = @_;
+    for my $hit (@{ $res }) {
         div {
             class is 'res';
             h2 {
                 a {
-                    href is "/dist/$hit->{dist}";
-                    $hit->{dist}
+                    my @vals = map { $hit->{$_} } @{ $fields };
+                    href is '/dist/' . join('/', @vals) . '/';
+                    join ' ', @vals
                 };
             };
             p { $hit->{excerpt} ? outs_raw $hit->{excerpt} : $hit->{abstract} };
@@ -919,14 +926,14 @@ template 'results/dists' => sub {
                     class is 'user';
                     a {
                         href is "/user/$hit->{user}/";
-                        title is T 'Uploaded by [_1]', $hit->{user_name} || $hit->{user};
-                        $hit->{user_name} || $hit->{user};
+                        title is T 'Released by [_1]', $hit->{user_name};
+                        $hit->{user_name};
                     };
                 };
             };
         }
     }
-};
+}
 
 template 'results/tags' => sub {
     my $self = shift;

@@ -79,8 +79,8 @@ sub missing {
 sub home {
     my $self  = shift;
     my $cloud = HTML::TagCloud->new;
-    my $tags  = $self->api->get_stats('tags');
-    $cloud->add($_->{tag}, "/tag/$_->{tag}/", $_->{dist_count})
+    my $tags  = $self->api->get_stats('tag');
+    $cloud->add($_->{tag}, "/tag/$_->{tag}/", $_->{dists})
         for @{ $tags->{popular} };
     $self->render('/home', { env => shift, vars => { cloud => $cloud } });
 }
@@ -104,7 +104,7 @@ sub donors {
 
 sub recent {
     my $self  = shift;
-    my $dists = $self->api->get_stats('dists')->{recent};
+    my $dists = $self->api->get_stats('dist')->{recent};
     $self->render('/recent', { env => shift, vars => { dists => $dists } });
 }
 
