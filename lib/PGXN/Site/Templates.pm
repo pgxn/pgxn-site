@@ -1121,6 +1121,10 @@ template donors => sub {
                                 'Fábio Telles Rodriguez';
                             }};
                             li {a{
+                                href is 'http://www.nextbio.com/b/search/author/Wenjian%20Yang';
+                                'Wenjian Yang';
+                            }};
+                            li {a{
                                 href is 'http://pgdba.net/blog/';
                                 'Michael Nacos';
                             }};
