@@ -216,8 +216,8 @@
 
 #patrons img {
     border:0;
-    width:24px;
-    height:24px;
+    width:32px;
+    height:32px;
     vertical-align:text-bottom;
 }
 
@@ -640,7 +640,7 @@ table .dist .name a {
 
 .donors h2 {
   color: #F8D766;
-  padding-top:2em;
+  padding-top:1em;
 }
 
 #htmltagcloud {text-align: center;padding:0 20px;}

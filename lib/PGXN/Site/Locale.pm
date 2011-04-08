@@ -112,10 +112,7 @@ our %Lexicon = (
     'Pick a letter at left' => 'Pick a letter at left',
     'No user nicknames found starting with "[_1]"' => 'No user nicknames found starting with “[_1]”',
 
-    donors_intro => 'All the financial donors who helped to get PGXN off the ground will be listed in perpetuity here on the “Donors” page of PGXN.org. All donors are invited to the PGXN Launch Party at <a href="http://www.pgcon.org/2011/">PGCon</a> in May, 2011.',
-    founders_intro => 'Many thanks to our amazing “Founder” level donors, whose logos and links are displayed prominently here and on the PGXN home page.',
-    patrons_intro => 'Our thanks to our “Patron” level contributors, whose icons and links are displayed on the PGXN home page.',
-    benefactors_intro => 'Benefactors” will be listed on the PGXN home page.',
+    donors_intro => 'All the great folks who funded the inital development of PGXN will be listed in perpetuity here on the “Donors” page of PGXN.org. All donors are invited to the PGXN Launch Party at <a href="http://www.pgcon.org/2011/">PGCon</a> in May, 2011.',
 );
 
 sub accept {

@@ -1014,15 +1014,12 @@ template donors => sub {
                 p { outs_raw T 'donors_intro' };
 
                 h2 { T 'Founders' };
-                p { T 'founders_intro' };
                 show 'founders';
 
                 h2 { T 'Patrons' };
-                p { T 'patrons_intro' };
                 show 'patrons';
 
                 h2 { T 'Benefactors' };
-                p { T 'benefactors_intro' };
                 show 'benefactors';
 
                 div {
@@ -1363,7 +1360,7 @@ template patrons => sub {
                 img {
                     src is '/ui/img/enova.png';
                     alt is 'e';
-                            };
+                };
                 outs ' Enova Financial';
             };
         };
