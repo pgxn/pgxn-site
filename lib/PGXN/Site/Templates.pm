@@ -993,7 +993,10 @@ template about => sub {
             id is 'info';
             div {
                 class is 'gradient';
-                outs_raw $l->from_file('about.html');
+                outs_raw $l->from_file(
+                    'about.html',
+                    @{ $args->{stats} }{qw(extensions dists releases users tags mirrors)}
+                );
             };
         };
     } $req, {

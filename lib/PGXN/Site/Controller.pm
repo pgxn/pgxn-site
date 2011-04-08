@@ -94,7 +94,9 @@ sub feedback {
 
 sub about {
     my $self = shift;
-    $self->render('/about', { env => shift });
+    $self->render('/about', { env => shift, vars => {
+        stats => $self->api->get_stats('summary'),
+    } });
 }
 
 sub donors {
