@@ -258,31 +258,34 @@ template distribution => sub {
             class is 'dist';
             div {
                 class is 'gradient meta';
-                h1 { $args->{dist_name} };
-                span {
-                    class is 'download';
-                    a {
-                        class is 'url';
-                        href is URI->new($args->{api_url} . $dist->download_path);
-                        title is T 'Download [_1] [_2]', $dist->name, $dist->version;
-                        img {
-                            src is '/ui/img/download.png';
-                            alt is T 'Download';
+                div {
+                    class is 'controls';
+                    span {
+                        class is 'download';
+                        a {
+                            class is 'url';
+                            href is URI->new($args->{api_url} . $dist->download_path);
+                            title is T 'Download [_1] [_2]', $dist->name, $dist->version;
+                            img {
+                                src is '/ui/img/download.png';
+                                alt is T 'Download';
+                            };
                         };
-                    };
-                }; # /span.download
-                span {
-                    class is 'browse';
-                    a {
-                        class is 'url';
-                        href is URI->new($args->{api_url} . $dist->source_path);
-                        title is T 'Browse [_1] [_2]', $dist->name, $dist->version;
-                        img {
+                    }; # /span.download
+                    span {
+                        class is 'browse';
+                        a {
+                            class is 'url';
+                            href is URI->new($args->{api_url} . $dist->source_path);
+                            title is T 'Browse [_1] [_2]', $dist->name, $dist->version;
+                            img {
                             src is '/ui/img/package.png';
                             alt is T 'Browse';
                         };
-                    };
-                }; # /span.download
+                        };
+                    }; # /span.download
+                }; # /div.controls
+                h1 { $args->{dist_name} };
                 dl {
                     dt { T 'This Release' };
                     dd {
@@ -623,7 +626,6 @@ template user => sub {
             class is 'dist';
             div {
                 class is 'gradient meta vcard';
-                h1 { class is 'fn'; $user->name };
                 a {
                     class is 'avatar';
                     href is $user->uri;
@@ -636,6 +638,7 @@ template user => sub {
                         );
                     };
                 };
+                h1 { class is 'fn'; $user->name };
                 dl {
                     dt { T 'Nickname' };
                     dd {a {
