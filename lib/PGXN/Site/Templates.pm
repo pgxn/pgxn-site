@@ -138,6 +138,8 @@ BEGIN { create_wrapper wrapper => sub {
                     id is 'width';
                     span {
                         class is 'floatLeft';
+                        outs __PACKAGE__->VERSION;
+                        span { class is 'grey'; '|' };
                         outs 'code';
                         a {
                             href is 'http://www.justatheory.com/';

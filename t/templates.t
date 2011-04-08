@@ -4,6 +4,7 @@ use 5.12.0;
 use utf8;
 use Test::More;
 use HTML::TagCloud;
+use PGXN::Site;
 
 BEGIN {
     for my $mod (qw(
@@ -21,7 +22,7 @@ use Plack::Request;
 use HTTP::Message::PSGI;
 
 #plan 'no_plan';
-plan tests => 248;
+plan tests => 249;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -360,9 +361,11 @@ sub test_wrapper {
             $tx->is('count(./*)', 2, 'Should have 2 elements below #width');
             $tx->is('count(./span)', 2, 'Both should be spans');
             $tx->ok('./span[1]', 'Test the first span' => sub {
-                $tx->is('count(./*)', 5, 'Should have 5 elements below #floatLeft');
+                $tx->is('count(./*)', 6, 'Should have 6elements below #floatLeft');
                 $tx->is('./@class', 'floatLeft', 'Should be floatLeft');
-                $tx->like('./text()', qr{^code\b}, 'Text should contain "code"');
+                my $v = PGXN::Site->VERSION;
+                $tx->like('./text()', qr{^\Q$v\E\b}, qq{Text should contain "$v"});
+                $tx->like('./text()', qr{\bcode\b}, 'Text should contain "code"');
                 $tx->like('./text()', qr{\bdesign\b}, 'Text should contain "design"');
                 $tx->like('./text()', qr{\blogo\b}, 'Text should contain "logo"');
                 $tx->ok('./a[1]', 'Test first anchor', sub {

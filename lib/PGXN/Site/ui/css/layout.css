@@ -622,7 +622,6 @@ table .dist .name a {
 
 .dist .meta .controls {
     float:right;
-    /* padding:15px; */
 }
 
 .dist .meta .download a, .dist .meta .browse a, .dist .meta a.avatar {
