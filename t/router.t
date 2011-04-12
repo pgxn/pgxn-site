@@ -3,8 +3,8 @@
 use 5.12.0;
 use utf8;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' }
-use Test::More tests => 384;
-#use Test::More 'no_plan';
+#use Test::More tests => 384;
+use Test::More 'no_plan';
 use Plack::Test;
 use HTTP::Request::Common;
 use Test::File::Contents;
@@ -423,6 +423,30 @@ test_psgi $app => sub {
     }
 };
 
+# Test /meta/spec.txt.
+test_psgi $app => sub {
+    my $cb = shift;
+    my $uri = '/meta/spec.txt';
+    ok my $res = $cb->(GET $uri), "Fetch $uri";
+    is $res->code, 200, 'Should get 200 response';
+    no utf8;
+    like $res->content,
+        qr{PGXN Meta Spec - The PGXN distribution metadatå specification$}m,
+        'The body should look correct';
+};
+
+# Test /meta/spec.html.
+test_psgi $app => sub {
+    my $cb = shift;
+    my $uri = '/meta/spec.html';
+    ok my $res = $cb->(GET $uri), "Fetch $uri";
+    is $res->code, 200, 'Should get 200 response';
+    no utf8;
+    like $res->content,
+        qr{<p>PGXN Meta Spec - The PGXN distribution metadatå specification</p>$}m,
+        'The body should look correct';
+};
+
 # Test legacy URLs.
 test_psgi $app => sub {
     my $cb = shift;
@@ -440,7 +464,6 @@ test_psgi $app => sub {
             "Should redirect to $spec->[1]";
     }
 };
-
 
 # Test /error.
 my $err_app = sub {

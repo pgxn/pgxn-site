@@ -117,6 +117,19 @@ sub mirroring {
     } });
 }
 
+sub spec {
+    my ($self, $env, $format) = @_;
+    return [
+        200,
+        ['Content-Type' => 'text/plain; charset=utf-8'],
+        [encode_utf8 $self->api->spec('txt')]
+    ] if $format eq 'txt';
+
+    $self->render('/spec', { env => $env, vars => {
+        body => $self->api->spec('html')
+    } });
+}
+
 sub faq {
     my $self = shift;
     $self->render('/faq', { env => shift });
@@ -412,6 +425,12 @@ Displays the HTML for the recent releases page.
   PGXN::Site::Controller->mirroring($env);
 
 Displays the HTML for the mirroring page.
+
+=head3 C<spec>
+
+  PGXN::Site::Controller->spec($env, $format);
+
+Displays the HTML or plain text for the PGXN Meta Spec.
 
 =head3 C<faq>
 

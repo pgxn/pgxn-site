@@ -106,6 +106,7 @@ our %Lexicon = (
     'Next →' => 'Next →',
     '[_1]-[_2] of [_3] found' => '[_1]-[_2] of [_3] found',
     'No Releases Yet' => 'No Releases Yet',
+    'PGXN Meta Spec' => 'PGXN Meta Spec',
     'Bad Request' => 'Bad Request',
     'Bad request: Missing or invalid "[_1]" query parameter.' => 'Bad request: Missing or invalid “[_1]” query parameter.',
     '<- Select a letter' => '⬅ Select a letter',

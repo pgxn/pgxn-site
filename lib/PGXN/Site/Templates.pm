@@ -617,6 +617,21 @@ template document => sub {
     };
 };
 
+template spec => sub {
+    my ($self, $req, $args) = @_;
+    my $title = T 'PGXN Meta Spec';
+
+    wrapper {
+        div {
+            id is 'page';
+            class is 'doc';
+            outs_raw $args->{body};
+        }; # /div#page
+    } $req, {
+        title => _title_with $title,
+    };
+};
+
 template user => sub {
     my ($self, $req, $args) = @_;
     my $user = $args->{user};

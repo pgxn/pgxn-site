@@ -10,6 +10,7 @@ Revision history for Perl extension PGXN::Site
       - Using the user's profile page for the Gravatar link URL if the user
         has specified no URL.
       - Added documentation for all controller action methods.
+      - Added Meta Spec pages (HTML and text).
 
 0.4.0   2011-04-11T23:41:16
       - Updated tag cloud and recent releases code to rely on the new files
