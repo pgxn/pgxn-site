@@ -630,7 +630,7 @@ template user => sub {
                 class is 'gradient meta vcard';
                 a {
                     class is 'avatar';
-                    href is $user->uri;
+                    href is $user->uri || $req->uri->path;
                     img {
                         src is gravatar_url(
                             rating  => 'pg',
