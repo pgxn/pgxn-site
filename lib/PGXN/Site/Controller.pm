@@ -344,7 +344,36 @@ serve pages.
 
 =head3 C<api>
 
+  my $api = $controller->api;
+
 Returns a L<WWW::PGXN> object used to access the PGXN API.
+
+=head3 C<api_url>
+
+  my $api_url = $controller->api_url;
+
+Returns the URL used to link to the API in the UI. If C<private_api_url> is
+not passed to C<new()>, this URL is also used for communicating with the API
+via the L<WWW::PGXN> object returned by C<api>.
+
+=head3 C<errors_to>
+
+  my $errors_to = $controller->errors_to;
+
+Returns the email address to which error messages will be sent.
+
+=head3 C<errors_from>
+
+  my $errors_from = $controller->errors_from;
+
+Returns the email address from which error messages will be sent to
+C<errors_to>.
+
+=head3 C<feedback_to>
+
+  my $feedback_to = $controller->feedback_to;
+
+Returns the email address listed in the UI for sending feedback.
 
 =head2 Actions
 
@@ -354,11 +383,83 @@ Returns a L<WWW::PGXN> object used to access the PGXN API.
 
 Displays the HTML for the home page.
 
+=head3 C<feedback>
+
+  PGXN::Site::Controller->feedback($env);
+
+Displays the HTML for the feedback page.
+
+=head3 C<about>
+
+  PGXN::Site::Controller->about($env);
+
+Displays the HTML for the about page.
+
+=head3 C<donors>
+
+  PGXN::Site::Controller->donors($env);
+
+Displays the HTML for the donors page.
+
+=head3 C<recent>
+
+  PGXN::Site::Controller->recent($env);
+
+Displays the HTML for the recent releases page.
+
+=head3 C<mirroring>
+
+  PGXN::Site::Controller->mirroring($env);
+
+Displays the HTML for the mirroring page.
+
+=head3 C<faq>
+
+  PGXN::Site::Controller->faq($env);
+
+Displays the HTML for the FAQ page.
+
 =head3 C<distribution>
 
   PGXN::Site::Controller->distribution($env);
 
 Displays the HTML for the distribution page.
+
+=head3 C<document>
+
+  PGXN::Site::Controller->document($env);
+
+Displays the HTML for the document page.
+
+=head3 C<user>
+
+  PGXN::Site::Controller->user($env);
+
+Displays the HTML for the user page.
+
+=head3 C<users>
+
+  PGXN::Site::Controller->users($env);
+
+Displays the HTML for the users search page.
+
+=head3 C<tag>
+
+  PGXN::Site::Controller->tag($env);
+
+Displays the HTML for the tag page.
+
+=head3 C<extension>
+
+  PGXN::Site::Controller->extension($env);
+
+Displays the HTML for the extension page.
+
+=head3 C<search>
+
+  PGXN::Site::Controller->search($env);
+
+Displays the HTML for the search page.
 
 =head3 C<server_error>
 
