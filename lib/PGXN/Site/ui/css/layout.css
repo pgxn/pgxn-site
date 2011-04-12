@@ -647,6 +647,8 @@ table .dist .name a {
 #htmltagcloud span a { margin:4px; padding:4px; line-height:1.1em; }
 #htmltagcloud span a:hover{background-color:#444;}
 
+/*
+
 .tagcloud0 {font-size: 6pt;}
 .tagcloud0 a {color:white;}
 .tagcloud1 {font-size: 7pt;}
@@ -702,3 +704,8 @@ table .dist .name a {
 .tagcloud23 a {color:#FF4B33;}
 .tagcloud24 {font-size: 30pt;}
 .tagcloud24 a {color:#FF4B33;}
+
+*/
+
+/* Delete this line and uncomment the above block when tags have different counts. */
+#htmltagcloud span a {color:#F8D766; font-size: 16pt; line-height:1.6em}
