@@ -1,4 +1,4 @@
-package PGXN::Site::Templates v0.4.0;
+package PGXN::Site::Templates v0.4.1;
 
 use 5.12.0;
 use utf8;
@@ -653,11 +653,13 @@ template user => sub {
                         class is 'email';
                         outs_raw _link_for_email($user->email);
                     };
-                    dt { T 'URL' };
-                    dd {
-                        class is 'url';
-                        a { href is $user->uri; $user->uri; };
-                    };
+                    if (my $uri = $user->uri) {
+                        dt { T 'URL' };
+                        dd {
+                            class is 'url';
+                            a { href is $uri; $uri; };
+                        };
+                    }
                     if (my $t = $user->twitter) {
                         dt { T 'Twitter' };
                         dd {
