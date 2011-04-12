@@ -236,6 +236,7 @@
 .hside {
   margin-left:20px;
   width:230px;
+  padding-bottom: 0;
 }
 
 .hsearch {
