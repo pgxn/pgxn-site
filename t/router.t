@@ -3,7 +3,7 @@
 use 5.12.0;
 use utf8;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' }
-use Test::More tests => 372;
+use Test::More tests => 384;
 #use Test::More 'no_plan';
 use Plack::Test;
 use HTTP::Request::Common;
@@ -104,6 +104,16 @@ test_psgi $app => sub {
     like decode_utf8($res->content),
         qr{<p>Bad request: Missing or invalid “q” query parameter\.</p>},
         'The body should have the invalid q param error';
+
+    for my $q ('', '*', '?') {
+        my $uri = "/search?q=$q";
+        ok my $res = $cb->(GET $uri), "Fetch $uri";
+        ok $res->is_error, "$uri should return an error";
+        is $res->code, 400, "$uri should get 400 response";
+        like decode_utf8($res->content),
+            qr{<p>Bad request: Missing or invalid “q” query parameter\.</p>},
+                "$uri body should have the invalid q param error";
+    }
 
     # Make sure an invalid "in" value returns 400.
     ok $res = $cb->(GET '/search?q=whu&in=foo'), 'Fetch /search with bad in=';

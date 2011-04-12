@@ -229,7 +229,15 @@ sub search {
     my $params = $req->query_parameters;
     my $q = $params->{q};
 
-    unless ($q && $params->{in} ~~ ['', undef, qw(docs dists extensions users tags)]) {
+    if ($q ~~ [undef, '', '*', '?']) {
+        return $self->render('/badrequest', {
+            env => $env,
+            code => $code_for{badrequest},
+            vars => { param => 'q' },
+        });
+    }
+
+    unless ($params->{in} ~~ ['', undef, qw(docs dists extensions users tags)]) {
         return $self->render('/badrequest', {
             env => $env,
             code => $code_for{badrequest},
