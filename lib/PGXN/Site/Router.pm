@@ -105,12 +105,14 @@ sub app {
             GET { $controller->mirroring(shift) };
         };
 
-        # /meta/spec.{format}
-        resource qr{^/meta/spec[.](txt|html)$} => sub {
-            GET {
-                my ($env, $args) = @_;
-                $controller->spec($env, @{ $args->{splat} } );
-            };
+        # /meta/spec.txt.
+        resource '/meta/spec.txt' => sub {
+            GET { $controller->spec(shift, 'txt') };
+        };
+
+        # /spec
+        resource qr{^/spec/?$} => sub {
+            GET { $controller->spec(shift, 'html') };
         };
 
         # /error (500 error responder).
