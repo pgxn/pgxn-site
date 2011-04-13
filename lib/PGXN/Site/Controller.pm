@@ -56,10 +56,10 @@ sub render {
     my ($self, $template, $p) = @_;
     my $req = $p->{req} ||= Plack::Request->new($p->{env});
     my $res = $req->new_response($p->{code} || 200);
-    $res->content_type($p->{type} || 'text/html; charset=UTF-8');
     my $body = encode_utf8 +Template::Declare->show($template, $p->{req}, $p->{vars});
     $res->body($body);
     $res->content_length(length $body);
+    $res->content_type($p->{type} || 'text/html; charset=UTF-8');
     $res->finalize;
 }
 
