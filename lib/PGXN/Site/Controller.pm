@@ -14,16 +14,6 @@ use namespace::autoclean;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
-# my %message_for = (
-#     success     => q{Success},
-#     forbidden   => q{Sorry, you do not have permission to access this resource.},
-#     notfound    => q{Resource not found.},
-#     notallowed  => q{The requted method is not allowed for the resource.},
-#     conflict    => q{There is a conflict in the current state of the resource.}, # Bleh
-#     gone        => q{The resource is no longer available.},
-#     servererror => q{Internal server error.}
-# );
-
 my %code_for = (
     success     => 200,
     seeother    => 303,
@@ -67,7 +57,9 @@ sub render {
     my $req = $p->{req} ||= Plack::Request->new($p->{env});
     my $res = $req->new_response($p->{code} || 200);
     $res->content_type($p->{type} || 'text/html; charset=UTF-8');
-    $res->body(encode_utf8 +Template::Declare->show($template, $p->{req}, $p->{vars}));
+    my $body = encode_utf8 +Template::Declare->show($template, $p->{req}, $p->{vars});
+    $res->body($body);
+    $res->content_length(length $body);
     $res->finalize;
 }
 
