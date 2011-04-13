@@ -3,8 +3,8 @@
 use 5.12.0;
 use utf8;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' }
-#use Test::More tests => 384;
-use Test::More 'no_plan';
+use Test::More tests => 390;
+#use Test::More 'no_plan';
 use Plack::Test;
 use HTTP::Request::Common;
 use Test::File::Contents;
