@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.5.1
+0.5.1   2011-04-13T18:12:57
       - Added the PGXN::Site version string as a query parameter to the CSS
         URLs. This should force them to be reloaded after the release of any
         new version by browsers that would otherwise cache them.
