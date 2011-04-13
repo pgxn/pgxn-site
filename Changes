@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.4.1
+0.5.0
       - An invalid search query, such as "*", "", or "?", now returns a 400
         response.
       - Removed `robots.txt` route. This baby's going live tomorrow!
