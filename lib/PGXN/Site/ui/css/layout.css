@@ -182,14 +182,8 @@
 }
 
 #pgxntoc ul.pgxntocroot {
-  margin: 0;
+  margin-left: 8px;
   padding: 0;
-  list-style-position: inside;
-  text-indent:-21px;
-}
-
-#pgxntoc ul.pgxntocroot li {
-  text-indent:-21px;
 }
 
 /* Override the margin from html.css. */
