@@ -22,7 +22,7 @@ use Plack::Request;
 use HTTP::Message::PSGI;
 
 #plan 'no_plan';
-plan tests => 249;
+plan tests => 255;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -263,26 +263,36 @@ sub test_wrapper {
             'Should have description meta element',
         );
 
+        my $i = 0;
+        my $v = PGXN::Site->VERSION;
         for my $spec (
             [ html   => 'screen, projection, tv' ],
             [ layout => 'screen, projection, tv' ],
             [ print  => 'print'                  ],
         ) {
-            $tx->is(
-                qq{./link[\@href="/ui/css/$spec->[0].css"]/\@rel},
-                'stylesheet',
-                "$spec->[0] should be stylesheet"
-            );
-            $tx->is(
-                qq{./link[\@href="/ui/css/$spec->[0].css"]/\@type},
-                'text/css',
-                "$spec->[0] should be text/css"
-            );
-            $tx->is(
-                qq{./link[\@href="/ui/css/$spec->[0].css"]/\@media},
-                $spec->[1],
-                "$spec->[0] should be for $spec->[1]"
-            );
+            ++$i;
+            $tx->ok("./link[$i]", "Test styesheet $i", sub {
+                $tx->is(
+                    './@href',
+                    "/ui/css/$spec->[0].css?$v",
+                    "CSS $i should linke to $spec->[0].css"
+                );
+                $tx->is(
+                    './@rel',
+                    'stylesheet',
+                    "$spec->[0] should be a stylesheet"
+                );
+                $tx->is(
+                    './@type',
+                    'text/css',
+                    "$spec->[0] should be text/css"
+                );
+                $tx->is(
+                    './@media',
+                    $spec->[1],
+                    "$spec->[0] should be for $spec->[1]"
+                );
+            });
         }
     }); # /head
 

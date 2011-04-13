@@ -56,7 +56,7 @@ BEGIN { create_wrapper wrapper => sub {
                 link {
                     rel   is 'stylesheet';
                     type  is 'text/css';
-                    href  is "/ui/css/$spec->[0].css";
+                    href  is "/ui/css/$spec->[0].css?" . __PACKAGE__->VERSION;
                     media is $spec->[1];
                 };
             }

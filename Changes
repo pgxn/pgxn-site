@@ -1,5 +1,10 @@
 Revision history for Perl extension PGXN::Site
 
+0.5.1
+      - Added the PGXN::Site version string as a query parameter to the CSS
+        URLs. This should force them to be reloaded after the release of any
+        new version by browsers that would otherwise cache them.
+
 0.5.0   2011-04-13T02:25:37
       - An invalid search query, such as "*", "", or "?", now returns a 400
         response.
