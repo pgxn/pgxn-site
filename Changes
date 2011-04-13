@@ -6,6 +6,7 @@ Revision history for Perl extension PGXN::Site
         new version by browsers that would otherwise cache them.
       - Fixed the display of the table of contents sidebar on the
         documentation page on Firefox. Per gripe from depesz.
+      - Moved the HTML rendering of the spec to /spec/.
 
 0.5.0   2011-04-13T02:25:37
       - An invalid search query, such as "*", "", or "?", now returns a 400
