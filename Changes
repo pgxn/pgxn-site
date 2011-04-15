@@ -3,6 +3,8 @@ Revision history for Perl extension PGXN::Site
 0.5.2
       - Requests should now all be returned with an appropriate
         `Content-Length` header.
+      - A search request with no query parameter now redirects back to the
+        home page or, if it's on the same site, the referring page.
 
 0.5.1   2011-04-13T18:12:57
       - Added the PGXN::Site version string as a query parameter to the CSS

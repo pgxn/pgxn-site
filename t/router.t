@@ -3,7 +3,7 @@
 use 5.12.0;
 use utf8;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' }
-use Test::More tests => 393;
+use Test::More tests => 409;
 #use Test::More 'no_plan';
 use Plack::Test;
 use HTTP::Request::Common;
@@ -98,14 +98,33 @@ test_psgi $app => sub {
     }
 
     # Make sure no q returns 400.
-    ok my $res = $cb->(GET '/search'), 'Fetch /search without q=';
-    ok $res->is_error, 'Should return an error';
-    is $res->code, 400, 'Should get 400 response';
-    like decode_utf8($res->content),
-        qr{<p>Bad request: Missing or invalid “q” query parameter\.</p>},
-        'The body should have the invalid q param error';
+    for my $q ('', '?q=') {
+        my $uri = "/search$q";
+        my $req = GET $uri;
+        ok my $res = $cb->($req), "Fetch $uri";
+        ok !$res->is_success, 'Should not be a success';
+        is $res->code, 303, 'Should get 303 response';
+        is $res->headers->header('location'), '/',
+            "Should redirect to /";
 
-    for my $q ('', '*', '?') {
+        # Set the referrer.
+        $req->referrer('http://localhost/search?q=hi');
+        ok $res = $cb->($req), "Fetch $uri with localhost referrer";
+        ok !$res->is_success, 'Should not be a success';
+        is $res->code, 303, 'Should get 303 response';
+        is $res->headers->header('location'), 'http://localhost/search?q=hi',
+            "Should redirect to localhost referrer";
+
+        # Set the referrer to another site.
+        $req->referrer('http://example.com/search?q=hi');
+        ok $res = $cb->($req), "Fetch $uri with external referrer";
+        ok !$res->is_success, 'Should not be a success';
+        is $res->code, 303, 'Should get 303 response';
+        is $res->headers->header('location'), '/',
+            "Should redirect to /";
+    }
+
+    for my $q ('*', '?') {
         my $uri = "/search?q=$q";
         ok my $res = $cb->(GET $uri), "Fetch $uri";
         ok $res->is_error, "$uri should return an error";
@@ -116,7 +135,7 @@ test_psgi $app => sub {
     }
 
     # Make sure an invalid "in" value returns 400.
-    ok $res = $cb->(GET '/search?q=whu&in=foo'), 'Fetch /search with bad in=';
+    ok my $res = $cb->(GET '/search?q=whu&in=foo'), 'Fetch /search with bad in=';
     ok $res->is_error, 'Should return an error';
     is $res->code, 400, 'Should get 400 response';
     like decode_utf8($res->content),

@@ -63,6 +63,13 @@ sub render {
     $res->finalize;
 }
 
+sub redirect {
+    my ($sel, $uri, $code) = @_;
+    my $res = Plack::Response->new;
+    $res->redirect($uri, $code || $code_for{seeother});
+    return $res->finalize;
+}
+
 sub missing {
     my ($self, $env) = @_;
     $self->render('/notfound', { env => $env, code => $code_for{notfound} });
@@ -223,9 +230,7 @@ sub extension {
     my $data = $ext->{$ext->{latest}};
     my $uri = "/dist/$data->{dist}/";
     $uri .= "$data->{doc}.html" if $data->{doc};
-    my $res = Plack::Response->new;
-    $res->redirect($uri, $code_for{seeother});
-    $res->finalize;
+    $self->redirect($uri, $code_for{seeother});
 }
 
 sub search {
@@ -235,6 +240,16 @@ sub search {
     my $q = $params->{q};
 
     if ($q ~~ [undef, '', '*', '?']) {
+        # Just redirect if there is no search term.
+        unless ($q) {
+            my $ref = '/';
+            if ($req->referer) {
+                my $uri = URI->new($req->referer);
+                $ref = $uri if $uri->can('host') && $uri->host
+                    && $uri->host eq $req->uri->host;
+            }
+            return $self->redirect($ref, $code_for{seeother});
+        }
         return $self->render('/badrequest', {
             env => $env,
             code => $code_for{badrequest},
