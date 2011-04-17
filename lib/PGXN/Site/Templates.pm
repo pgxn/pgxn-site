@@ -1,4 +1,4 @@
-package PGXN::Site::Templates v0.5.2;
+package PGXN::Site::Templates v0.6.0;
 
 use 5.12.0;
 use utf8;
