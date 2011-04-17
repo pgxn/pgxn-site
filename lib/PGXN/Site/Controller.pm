@@ -201,15 +201,10 @@ sub users {
     }
 
     $self->render('/users', { req => $req, vars => {
-        in      => 'users',
-        char    => $char,
-        api     => $self->api,
-        results => $char ? $self->api->search(
-            in     => 'users',
-            query  => "user:$char*",
-            offset => $params->{o} || 0,
-            limit  => $params->{l} || 256,
-        ) : undef,
+        in    => 'users',
+        char  => $char,
+        api   => $self->api,
+        users => $char ? $self->api->get_userlist($char) : undef,
     }});
 }
 

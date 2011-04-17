@@ -737,7 +737,7 @@ template recent => sub {
 template users => sub {
     my ($self, $req, $args) = @_;
     my $api   = $args->{api};
-    my $res   = $args->{results};
+    my $users = $args->{users};
     my $title = T 'Users';
     my $char  = $args->{char} || '';
 
@@ -759,11 +759,11 @@ template users => sub {
         div {
             class is 'width90 floatRight gradient';
             h1 { $title };
-            if ($res) {
+            if ($users) {
                 id is 'results';
-                if ($res->{hits} && @{ $res->{hits} }) {
+                if (@{ $users }) {
                     $args->{params} = [ c => $char ];
-                    show results => $req, $args;
+                    show 'results/users' => $users;
                 } else {
                     p { T 'No user nicknames found starting with "[_1]"', $char };
                 }

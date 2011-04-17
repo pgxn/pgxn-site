@@ -3,7 +3,7 @@
 use 5.12.0;
 use utf8;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' }
-use Test::More tests => 409;
+use Test::More tests => 377;
 #use Test::More 'no_plan';
 use Plack::Test;
 use HTTP::Request::Common;
@@ -306,21 +306,6 @@ test_psgi $app => sub {
 # Test /users.
 test_psgi $app => sub {
     my $cb = shift;
-    # Mock the WWW::PGXN interface to search.
-    my $mocker = Test::MockModule->new('WWW::PGXN');
-    my %params;
-    $mocker->mock(search => sub {
-        my ($self, %p) = @_;
-        %params = %p;
-        return {
-            query  => "user:t:*",
-            limit  => 50,
-            offset => 0,
-            count  => 0,
-            in     => 'users',
-            hits   => [],
-        };
-    });
 
     # Try with no param.
     my $uri = '/users';
@@ -329,30 +314,18 @@ test_psgi $app => sub {
     like $res->content, qr{\Q<h1>Users</h1>}, 'The body should look correct';
 
     # Try char params with both /users and /users/.
-    for my $char ('', qw(a b c)) {
+    for my $char ('', qw(a b t)) {
         for my $path ('/users', '/users/') {
             my $uri = "/users?c=$char";
             ok my $res = $cb->(GET $uri), "Fetch $uri";
             is $res->code, 200, 'Should get 200 response';
             like $res->content, qr{\Q<h1>Users</h1>}, 'The body should look correct';
-            is_deeply \%params, $char eq '' ? { } : {
-                query  => "user:$char*",
-                in     => 'users',
-                limit  => 256,
-                offset => 0,
-            }, "$uri params shold be passed to WWW::PGXN";
-
-            # Try with limit and offset.
-            $uri .= '&l=2&o=3';
-            ok $res = $cb->(GET $uri), "Fetch $uri";
-            is $res->code, 200, 'Should get 200 response';
-            like $res->content, qr{\Q<h1>Users</h1>}, 'The body should look correct';
-            is_deeply \%params, $char eq '' ? { } : {
-                query  => "user:$char*",
-                in     => 'users',
-                limit  => 2,
-                offset => 3,
-            }, "$uri params shold be passed to WWW::PGXN";
+            no utf8;
+            like $res->content,
+                  $char eq 't' ? qr{\Q<a href="/user/theory">theory</a>}
+                : $char eq ''  ? qr{\Q<h3>⬅ Select a letter</h3>}
+                               : qr{<p>\QNo user nicknames found starting with “$char”</p>},
+                'And the content should look correct';
         }
     }
 
