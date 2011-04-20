@@ -1,6 +1,8 @@
 Revision history for Perl extension PGXN::Site
 
 0.6.1
+      - Improved the styling of table headers, as seen in `/spec/` and
+        documentation HTML.
 
 0.6.0   2011-04-20T05:35:52
       - Requests should now all be returned with an appropriate

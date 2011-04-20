@@ -587,7 +587,7 @@ ul.sideMenu {
    color:white;
 }
 
-table td {
+table td, table th {
    padding: 5px;
 }
 table tr {
@@ -605,6 +605,9 @@ tr:nth-of-type(odd) {
 }
 tr:nth-of-type(even) {
   background: #555;
+}
+th {
+  background:#111;
 }
 table .dist .name, table .dist .bday {
   white-space:nowrap;
