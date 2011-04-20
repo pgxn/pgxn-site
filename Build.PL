@@ -50,6 +50,7 @@ my $build = $class->new(
     requires => {
         'Encode'                       => '2.40',
         'Gravatar::URL'                => '1.02',
+        'File::Basename'               => 0,
         'HTML::TagCloud'               => '0.34',
         'I18N::LangTags::Detect'       => '1.04',
         'Locale::Maketext'             => '1.13',
@@ -62,7 +63,7 @@ my $build = $class->new(
         'SemVer'                       => '0.2.0',
         'Template::Declare'            => '0.43',
         'Template::Declare::Tags'      => '0.43',
-        'WWW::PGXN'                    => '0.10',
+        'WWW::PGXN'                    => '0.12.0',
     },
     test_recommends => {
         'HTTP::Request::Common' => '5.824',

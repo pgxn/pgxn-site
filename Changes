@@ -6,6 +6,8 @@ Revision history for Perl extension PGXN::Site
       - A search request with no query parameter now redirects back to the
         home page or, if it's on the same site, the referring page.
       - Load users starting with a letter from the new "userlist" API.
+      - Updated for PGXN::API v0.12.0, notably changed method names for
+        fetching HTML documentation files in WWW::PGXN and doc path keys.
 
 0.5.1   2011-04-13T18:12:57
       - Added the PGXN::Site version string as a query parameter to the CSS

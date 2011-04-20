@@ -9,7 +9,7 @@
    "mirrors":   "/meta/mirrors.json",
    "source":    "/src/{dist}/{dist}-{version}/",
    "search":    "/search/{in}",
-   "doc":       "/dist/{dist}/{version}/{+doc}.html",
+   "htmldoc":   "/dist/{dist}/{version}/{+docpath}.html",
    "stats":     "/stats/{stats}.json",
    "spec":      "/meta/spec.{format}",
    "userlist":  "/users/{char}.json"

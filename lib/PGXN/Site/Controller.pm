@@ -151,14 +151,14 @@ sub document {
     my $dist = $self->api->get_distribution($name => $version)
         or return $self->missing($env);
     $path =~ s/[.]html$//;
-    my $doc = $dist->body_for_doc($path) or return $self->missing($env);
+    my $doc = $dist->body_for_html_doc($path) or return $self->missing($env);
 
     my ($dist_uri, $dist_name) = $version
         ? ("/dist/$name/$version/", "$name $version")
         : ("/dist/$name/", $name);
     $self->render('/document', { env => $env, vars => {
         dist      => $dist,
-        doc       => $path,
+        docpath   => $path,
         body      => $doc,
         dist_uri  => $dist_uri,
         dist_name => $dist_name,
@@ -224,7 +224,7 @@ sub extension {
     $ext = $self->api->get_extension($ext) or return $self->missing($env);
     my $data = $ext->{$ext->{latest}};
     my $uri = "/dist/$data->{dist}/";
-    $uri .= "$data->{doc}.html" if $data->{doc};
+    $uri .= "$data->{docpath}.html" if $data->{docpath};
     $self->redirect($uri, $code_for{seeother});
 }
 

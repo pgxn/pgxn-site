@@ -9,6 +9,7 @@ use Software::License::PostgreSQL;
 use Software::License::BSD;
 use Software::License::MIT;
 use List::Util qw(first);
+use File::Basename qw(basename);
 use SemVer;
 use Gravatar::URL;
 #use namespace::autoclean; # Do not use; breaks sort {}
@@ -106,7 +107,6 @@ BEGIN { create_wrapper wrapper => sub {
                         ul {
                             class is 'floatRight';
                             my $path = $req->uri->path;
-                            # XXX Fill in these links.
                             for my $spec (
                                 [ '/recent/', 'Recent Releases',            'Recent'  ],
                                 [ '/users/',  'PGXN Users',                 'Users'   ],
@@ -495,7 +495,7 @@ template distribution => sub {
                     my $provides = $dist->provides;
                     for my $ext (sort { $a cmp $b } keys %{ $provides }) {
                         my $info = $provides->{$ext};
-                        my $path = $info->{doc};
+                        my $path = $info->{docpath};
                         dt {
                             if ($path) {
                                 delete $docs->{$path};
@@ -531,8 +531,7 @@ template distribution => sub {
                                         if ($info->{abstract}) {
                                             outs $info->{title}
                                         } else {
-                                            (my $page = $path) =~ s{^docs?/}{};
-                                            outs $page;
+                                            outs basename $path;
                                         }
                                     };
                                 };
@@ -544,7 +543,7 @@ template distribution => sub {
             }
 
             if ($has_readme) {
-                my $body = $dist->body_for_doc('README');
+                my $body = $dist->body_for_html_doc('README');
                 utf8::decode $body;
                 div {
                     class is 'gradient exts readme';
@@ -577,11 +576,8 @@ template distribution => sub {
 template document => sub {
     my ($self, $req, $args) = @_;
     my $dist = $args->{dist};
-    my $info = $dist->docs->{$args->{doc}};
-    my $title = $info->{abstract} ? $info->{title} : do {
-        (my $page = $args->{path}) =~ s{^docs?/}{};
-        $page;
-    };
+    my $info = $dist->docs->{$args->{docpath}};
+    my $title = $info->{abstract} ? $info->{title} : basename $args->{docpath};
 
     wrapper {
         div {
@@ -878,9 +874,9 @@ sub _detailed_results {
         div {
             class is 'res';
             h2 {
-                if ($hit->{doc}) {
+                if ($hit->{docpath}) {
                     a {
-                        href is "/dist/$hit->{dist}/$hit->{doc}.html";
+                        href is "/dist/$hit->{dist}/$hit->{docpath}.html";
                         $hit->{$label}
                     };
                 } else {
