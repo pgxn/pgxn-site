@@ -64,6 +64,7 @@ our %Lexicon = (
     'Download' => 'Download',
     'Download [_1] [_2]' => 'Download [_1] [_2]',
     'Browse [_1] [_2]' => 'Browse [_1] [_2]',
+    'Alas, [_1] has yet to release a distribution.' => 'Alas, [_1] has yet to release a distribution.',
     'This Release' => 'This Release',
     'Date' => 'Date',
     'Latest Stable' => 'Latest Stable',

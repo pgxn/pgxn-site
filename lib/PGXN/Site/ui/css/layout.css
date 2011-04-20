@@ -537,7 +537,7 @@ ul.sideMenu {
   margin: 0;
 }
 
-.dists h3 {
+.dists h3, .dists p.alas {
   padding-left:0;
 }
 

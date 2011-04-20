@@ -1284,6 +1284,7 @@ template release_table => sub {
     div {
         class is 'gradient dists';
         h3 { T 'Distributions' };
+        if (%{ $rel }) {
         table { tbody {
             for my $dist (sort keys %{ $rel }) {
                 my $status = first { $rel->{$dist}{$_} } qw(stable testing unstable);
@@ -1337,6 +1338,14 @@ template release_table => sub {
                 }; # /tr.dist
             }
         } }; # /table
+    } else {
+        if (my $user = $args->{user}) {
+            p {
+                class is 'alas';
+                T 'Alas, [_1] has yet to release a distribution.', $user->nickname;
+            };
+        }
+    }
     }; # /div.gradient dists
 };
 
