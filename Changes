@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.5.2
+0.6.0   2011-04-20T05:35:52
       - Requests should now all be returned with an appropriate
         `Content-Length` header.
       - A search request with no query parameter now redirects back to the
