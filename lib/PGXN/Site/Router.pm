@@ -126,9 +126,10 @@ sub app {
             contributors => '/donors/',
             mirroring    => '/mirroring/',
             faq          => '/faq/',
+            'meta/spec'  => '/spec/',
         );
 
-        resource qr{^/(cont(?:ributors|act)|mirroring|faq)[.]html$} => sub {
+        resource qr{^/(cont(?:ributors|act)|mirroring|faq|meta/spec)[.]html$} => sub {
             GET {
                 my ($env, $args) = @_;
                 my $res = Plack::Response->new;

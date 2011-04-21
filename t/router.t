@@ -3,7 +3,7 @@
 use 5.12.0;
 use utf8;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' }
-use Test::More tests => 377;
+use Test::More tests => 381;
 #use Test::More 'no_plan';
 use Plack::Test;
 use HTTP::Request::Common;
@@ -445,9 +445,10 @@ test_psgi $app => sub {
     my $cb = shift;
     for my $spec (
         [ contact      => '/feedback/'  ],
-        [ contributors => '/donors/'   ],
+        [ contributors => '/donors/'    ],
         [ mirroring    => '/mirroring/' ],
         [ faq          => '/faq/'       ],
+        [ 'meta/spec'  => '/spec/'      ],
     ) {
         my $uri = "/$spec->[0].html";
         ok my $res = $cb->(GET $uri), "Fetch $uri";
