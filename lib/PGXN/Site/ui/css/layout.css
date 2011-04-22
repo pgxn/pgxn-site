@@ -549,6 +549,7 @@ ul.sideMenu {
    text-align:right;
    width: 8em;
    float:left;
+   clear:both; /* Needed for some versions of FireFox */
 }
 
 .dist .meta dt:after {
