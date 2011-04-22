@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.6.1
+0.6.1   2011-04-22T18:51:42
       - Improved the styling of table headers, as seen in `/spec/` and
         documentation HTML.
       - Added a note under the "Distributions" header for users who have yet
