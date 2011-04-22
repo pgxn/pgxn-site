@@ -1,4 +1,4 @@
-package PGXN::Site::Controller v0.6.1;
+package PGXN::Site::Controller v0.6.2;
 
 use 5.12.0;
 use utf8;
