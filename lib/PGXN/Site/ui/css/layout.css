@@ -618,6 +618,8 @@ table .dist .name a {
   background: url(../img/favicon.png) no-repeat 4px 3px;
 }
 
+table code {background-color:transparent;}
+
 .dist .meta .controls {
     float:right;
 }

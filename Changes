@@ -7,6 +7,7 @@ Revision history for Perl extension PGXN::Site
         to release a distribution.
       - Added redirect from `/meta/spec.html` to the new URL, `/spec/`.
       - Added links to the Google group to the About and FAQ pages.
+      - Made the background tranparent in `code` elements inside tables.
 
 0.6.0   2011-04-20T05:35:52
       - Requests should now all be returned with an appropriate
