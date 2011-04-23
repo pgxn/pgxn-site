@@ -383,7 +383,7 @@ template distribution => sub {
                                     my %other_strings = (
                                         map { $_ => 1 } qw(open_source restricted unrestricted)
                                     );
-                                    outs $other_strings{$l} ? $l : 'unknonwn';
+                                    outs $other_strings{$l} ? $l : 'unknown';
                                 }
                             }
                             for my $license (grep {
