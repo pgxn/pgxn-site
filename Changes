@@ -4,6 +4,8 @@ Revision history for Perl extension PGXN::Site
       - Fixed offsetting of the "Abstract" item below "Other Releases" in the
         distribution metadata section of the distribution file. Seen in
         Firefox on Ubuntu.
+      - All distribution and extension names and versions, as well as tags and
+        user nicknames, are now lowercased for use in URIs.
 
 0.6.1   2011-04-22T18:51:42
       - Improved the styling of table headers, as seen in `/spec/` and

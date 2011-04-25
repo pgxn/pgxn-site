@@ -281,7 +281,7 @@ test_psgi $app => sub {
             ok my $res = $cb->(GET $uri), "Fetch $uri";
             ok !$res->is_success, 'Should not be a success';
             is $res->code, 303, 'Should get 303 response';
-            my $loc = $ext eq 'pgtap' ? '/dist/pgTAP/'
+            my $loc = $ext eq 'pgtap' ? '/dist/pgtap/'
                 : '/dist/pair/doc/pair.html';
             is $res->headers->header('location'), $loc,
                 "Should redirect to $loc";

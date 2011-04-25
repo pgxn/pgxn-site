@@ -80,7 +80,7 @@ sub home {
     my $cloud = HTML::TagCloud->new;
     my $tags  = $self->api->get_stats('tag');
     $cloud->add($_->{tag}, "/tag/$_->{tag}/", $_->{dists})
-        for @{ $tags->{popular} };
+        for grep { $_->{tag} = lc $_->{tag} } @{ $tags->{popular} };
     $self->render('/home', { env => shift, vars => { cloud => $cloud } });
 }
 
@@ -154,8 +154,8 @@ sub document {
     my $doc = $dist->body_for_html_doc($path) or return $self->missing($env);
 
     my ($dist_uri, $dist_name) = $version
-        ? ("/dist/$name/$version/", "$name $version")
-        : ("/dist/$name/", $name);
+        ? (lc "/dist/$name/$version/", "$name $version")
+        : (lc "/dist/$name/", $name);
     $self->render('/document', { env => $env, vars => {
         dist      => $dist,
         docpath   => $path,
@@ -223,7 +223,7 @@ sub extension {
     my ($self, $env, $ext) = @_;
     $ext = $self->api->get_extension($ext) or return $self->missing($env);
     my $data = $ext->{$ext->{latest}};
-    my $uri = "/dist/$data->{dist}/";
+    my $uri = lc "/dist/$data->{dist}/";
     $uri .= "$data->{docpath}.html" if $data->{docpath};
     $self->redirect($uri, $code_for{seeother});
 }

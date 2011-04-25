@@ -321,7 +321,7 @@ template distribution => sub {
                                     my $datetime = $dist->date_for(lc $status);
                                     (my $date = $datetime) =~ s{T.+}{};
                                     a {
-                                        href is '/dist/' . $dist->name . "/$stat_version/";
+                                        href is '/dist/' . $dist->name . lc "/$stat_version/";
                                         outs $dist->name . " $stat_version — ";
                                         outs_raw qq{<time datetime="$datetime">$date</time>};
                                     }
@@ -337,7 +337,7 @@ template distribution => sub {
                                 for my $rel (@rels) {
                                     # Include release status in the option name?
                                     option {
-                                        value is '/dist/' . $dist->name . "/$rel->{version}/";
+                                        value is '/dist/' . lc $dist->name . lc "/$rel->{version}/";
                                         selected is 'selected' if $rel->{version} eq $version;
                                         (my $date = $rel->{date}) =~ s{T.+}{};
                                         $dist->name . " $rel->{version} — $date";
@@ -356,7 +356,7 @@ template distribution => sub {
                     dd {
                         span { class is 'vcard'; a {
                             class is 'url fn';
-                            href is '/user/' . $dist->user;
+                            href is '/user/' . lc $dist->user;
                             $dist->user;
                         }};
                     };
@@ -469,14 +469,14 @@ template distribution => sub {
                                 my $last = pop @tags;
                                 for my $tag (@tags) {
                                     li { a {
-                                        href is URI->new("/tag/$tag/");
+                                        href is URI->new(lc "/tag/$tag/");
                                         $tag;
                                     } };
                                 }
                                 li {
                                     class is 'last';
                                     a {
-                                        href is URI->new("/tag/$last/");
+                                        href is URI->new(lc "/tag/$last/");
                                         $last;
                                     };
                                 };
@@ -556,7 +556,7 @@ template distribution => sub {
         title => _title_with $args->{dist_name} . ': ' . $dist->abstract,
         crumb => sub {
             li { a {
-                href is '/user/' . $dist->user;
+                href is '/user/' . lc $dist->user;
                 title is $dist->user;
                 $dist->user;
             } };
@@ -589,7 +589,7 @@ template document => sub {
         title => _title_with $title . ($info->{abstract} ? ": $info->{abstract}" : ''),
         crumb => sub {
             li { a {
-                href is '/user/' . $dist->user;
+                href is '/user/' . lc $dist->user;
                 title is $dist->user;
                 $dist->user;
             } };
@@ -656,7 +656,7 @@ template user => sub {
                     dt { T 'Nickname' };
                     dd {a {
                         class is 'nickname';
-                        href is '/user/' . $user->nickname;
+                        href is '/user/' . lc $user->nickname;
                         $user->nickname;
                     } };
                     dt { T 'Email' };
@@ -876,7 +876,7 @@ sub _detailed_results {
             h2 {
                 if ($hit->{docpath}) {
                     a {
-                        href is "/dist/$hit->{dist}/$hit->{docpath}.html";
+                        href is '/dist/' . lc $hit->{dist} . "/$hit->{docpath}.html";
                         $hit->{$label}
                     };
                 } else {
@@ -888,7 +888,7 @@ sub _detailed_results {
                 li {
                     class is 'dist';
                     a {
-                        href is "/dist/$hit->{dist}/";
+                        href is lc "/dist/$hit->{dist}/";
                         title is T 'In the [_1] distribution', $hit->{dist};
                         "$hit->{dist} $hit->{version}";
                     };
@@ -902,7 +902,7 @@ sub _detailed_results {
                 li {
                     class is 'user';
                     a {
-                        href is "/user/$hit->{user}/";
+                        href is lc "/user/$hit->{user}/";
                         title is T 'Released by [_1]', $hit->{user_name};
                         $hit->{user_name};
                     };
@@ -928,7 +928,7 @@ sub _dist_results {
             h2 {
                 a {
                     my @vals = map { $hit->{$_} } @{ $fields };
-                    href is '/dist/' . join('/', @vals) . '/';
+                    href is '/dist/' . lc join('/', @vals) . '/';
                     join ' ', @vals
                 };
             };
@@ -943,7 +943,7 @@ sub _dist_results {
                 li {
                     class is 'user';
                     a {
-                        href is "/user/$hit->{user}/";
+                        href is lc "/user/$hit->{user}/";
                         title is T 'Released by [_1]', $hit->{user_name};
                         $hit->{user_name};
                     };
@@ -960,7 +960,7 @@ template 'results/tags' => sub {
             class is 'res';
             h2 {
                 a {
-                    href is "/tag/$hit->{tag}";
+                    href is lc "/tag/$hit->{tag}";
                     $hit->{tag}
                 };
             };
@@ -975,7 +975,7 @@ template 'results/users' => sub {
             class is 'res';
             h2 {
                 a {
-                    href is "/user/$hit->{user}";
+                    href is lc "/user/$hit->{user}";
                     $hit->{user};
                 };
             };
@@ -1295,7 +1295,7 @@ template release_table => sub {
                         class is 'name';
                         a {
                             class is 'url';
-                            href is "/dist/$dist/";
+                            href is lc "/dist/$dist/";
                             span { class is 'fn'; $dist };
                             span { class is 'version'; $info->{version} };
                             span { class is 'status'; "($status)" } if $status ne 'stable';
