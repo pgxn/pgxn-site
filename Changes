@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.6.2
+0.6.2   2011-04-25T16:35:28
       - Fixed offsetting of the "Abstract" item below "Other Releases" in the
         distribution metadata section of the distribution file. Seen in
         Firefox on Ubuntu.
