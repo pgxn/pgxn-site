@@ -142,7 +142,7 @@ sub distribution {
     $self->render('/distribution', { env => $env, vars => {
         dist      => $dist,
         api_url   => $self->api_url,
-        dist_name => $version ? "$name $version" : $name,
+        dist_name => $dist->{name} . ($version ? " $version" : ''),
     }});
 }
 
@@ -154,8 +154,8 @@ sub document {
     my $doc = $dist->body_for_html_doc($path) or return $self->missing($env);
 
     my ($dist_uri, $dist_name) = $version
-        ? (lc "/dist/$name/$version/", "$name $version")
-        : (lc "/dist/$name/", $name);
+        ? (lc "/dist/$name/$version/", "$dist->{name} $version")
+        : (lc "/dist/$name/", $dist->{name});
     $self->render('/document', { env => $env, vars => {
         dist      => $dist,
         docpath   => $path,
