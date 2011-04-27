@@ -1,5 +1,7 @@
 Revision history for Perl extension PGXN::Site
 
+0.6.4
+
 0.6.3   2011-04-27T18:52:18
       - The distribution page now shows the distribution name with the case
         preserved as found in the distribution metadata file.
