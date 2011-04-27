@@ -12,5 +12,5 @@
    "htmldoc":   "/dist/{dist}/{version}/{+docpath}.html",
    "stats":     "/stats/{stats}.json",
    "spec":      "/meta/spec.{format}",
-   "userlist":  "/users/{char}.json"
+   "userlist":  "/users/{letter}.json"
 }
