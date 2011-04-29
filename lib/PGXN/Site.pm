@@ -13,9 +13,16 @@ PGXN::Site - Maintain and serve a PGXN web site
 
   plackup pgxn_site.psgi api_url     http://api.pgxn.org/ \
                          errors_from oops@example.com \
-                         errors_to   alerts@example.com
+                         errors_to   alerts@example.com \
+                         feedback_to feedback@example.com
 
 =head1 Description
+
+L<PGXN|http://pgxn.org> is a L<CPAN|http://cpan.org>-inspired network for
+distributing extensions for the L<PostgreSQL RDBMS|http://www.postgresql.org>.
+All of the infrastructure tools, however, have been designed to be used to
+create networks for distributing any kind of release distributions and for
+providing a lightweight static file JSON REST API.
 
 This module provides a simple PGXN web site. All it needs is a
 L<PGXN::API>-powered API to get the data it needs. Such an API can be accessed
@@ -52,6 +59,11 @@ diagnostic information.
 =item C<errors_from>
 
 An email address from which alert emails should be sent.
+
+=item C<feedback_to>
+
+An email address to which feeback emails should be sent. This email address
+will be provided as a clickable link.
 
 =back
 
