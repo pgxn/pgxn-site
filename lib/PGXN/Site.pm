@@ -62,7 +62,7 @@ An email address from which alert emails should be sent.
 
 =item C<feedback_to>
 
-An email address to which feeback emails should be sent. This email address
+An email address to which feedback emails should be sent. This email address
 will be provided as a clickable link.
 
 =back
