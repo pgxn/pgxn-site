@@ -48,6 +48,7 @@ my $build = $class->new(
         'Text::MultiMarkdown'  => '1.000033',
     },
     requires => {
+        'Data::Dump'                   => '1.17',
         'Encode'                       => '2.40',
         'Gravatar::URL'                => '1.02',
         'File::Basename'               => 0,
