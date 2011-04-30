@@ -1,5 +1,7 @@
 Revision history for Perl extension PGXN::Site
 
+0.6.6
+
 0.6.5   2011-04-30T20:04:44
       - Added Data::Dump to list of requirements. Was inadvertently omitted.
 
