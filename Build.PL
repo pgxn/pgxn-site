@@ -43,6 +43,7 @@ my $build = $class->new(
     build_requires     => {
         'Module::Build'        => '0.30',
         'Software::License'    => '0.102340',
+        'Test::File::Contents' => '0.20',
         'Test::More'           => '0.70',
         'Test::MockModule'     => '0.05',
         'Text::MultiMarkdown'  => '1.000033',

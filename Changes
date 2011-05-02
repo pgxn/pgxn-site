@@ -4,6 +4,8 @@ Revision history for Perl extension PGXN::Site
       - Replaced the graident background image wih one that uses dithering.
         This'eliminates banding in the image, which the eagle-eyed Marti
         Raudsepp noticed and was kind enough to fix.
+      - Added Test::File::Contents to the build prerequisites. Its omission
+        was an oversight.
 
 0.6.5   2011-04-30T20:04:44
       - Added Data::Dump to list of requirements. Was inadvertently omitted.
