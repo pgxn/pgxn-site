@@ -2,7 +2,7 @@
 
 use 5.12.0;
 use utf8;
-use lib 'lib';
+use blib;
 use PGXN::Site::Router;
 use Plack::Runner;
 use Getopt::Long;
