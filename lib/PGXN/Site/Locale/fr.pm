@@ -1,4 +1,4 @@
-package PGXN::Site::Locale::fr v0.7.0;
+package PGXN::Site::Locale::fr v0.7.1;
 
 use 5.12.0;
 use utf8;
