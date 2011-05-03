@@ -11,10 +11,10 @@ PGXN::Site - Maintain and serve a PGXN web site
 
 =head1 Synopsis
 
-  plackup pgxn_site.psgi api_url     http://api.pgxn.org/ \
-                         errors_from oops@example.com \
-                         errors_to   alerts@example.com \
-                         feedback_to feedback@example.com
+  pgxn_site_server --api-url     http://api.pgxn.org/ \
+                   --errors-from oops@example.com \
+                   --errors-to   alerts@example.com \
+                   --feedback-to feedback@example.com
 
 =head1 Description
 
@@ -29,7 +29,7 @@ L<PGXN::API>-powered API to get the data it needs. Such an API can be accessed
 either remotely or via the local file system.
 
 To run your own PGXN web server, just install this module and run the included
-C<pgxn_site.psgi> L<Plack> server, passing it the following options:
+L<<pgxn_site_server> L<Plack> server, passing it the following options:
 
 =over
 

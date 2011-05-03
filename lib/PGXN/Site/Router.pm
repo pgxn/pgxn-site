@@ -176,7 +176,7 @@ the app.
 
   PGXN::Site->app;
 
-Returns the PGXN::Site Plack app. See F<bin/pgxn_site.pgsgi> for an example
+Returns the PGXN::Site Plack app. See L<pgxn_site_server> for an example
 usage. It's not much to look at. But Plack uses the returned code reference to
 power the application.
 

@@ -6,6 +6,8 @@ Revision history for Perl extension PGXN::Site
         Raudsepp noticed and was kind enough to fix.
       - Added Test::File::Contents to the build prerequisites. Its omission
         was an oversight.
+      - Replaced `pgxn_site.psgi` with `pgxn_site_server`. This program wraps
+        the functionality of `plackup` to do proper option processing.
 
 0.6.5   2011-04-30T20:04:44
       - Added Data::Dump to list of requirements. Was inadvertently omitted.
