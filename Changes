@@ -1,5 +1,7 @@
 Revision history for Perl extension PGXN::Site
 
+0.7.1
+
 0.7.0   2011-05-03T02:40:50
       - Replaced the gradient background image wih one that uses dithering.
         This'eliminates banding in the image, which the eagle-eyed Marti
