@@ -57,6 +57,7 @@ my $build = $class->new(
         'I18N::LangTags::Detect'       => '1.04',
         'Locale::Maketext'             => '1.13',
         'List::Util'                   => '1.20',
+        'namespace::autoclean'         => '0.11',
         'perl'                         => 5.012,
         'Plack'                        => '0.9956',
         'Plack::Builder'               => 0,
