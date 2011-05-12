@@ -1,5 +1,7 @@
 Revision history for Perl extension PGXN::Site
 
+0.7.2
+
 0.7.1   2011-05-12T18:11:02
       - Added `use blib` to `pgxn_site_server` so that the server will always
         find the HTML files generated from the MultiMarkdown source files.
