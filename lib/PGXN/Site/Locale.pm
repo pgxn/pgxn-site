@@ -1,11 +1,12 @@
-package PGXN::Site::Locale v0.7.1;
+package PGXN::Site::Locale;
 
-use 5.12.0;
+use 5.10.0;
 use utf8;
 use parent 'Locale::Maketext';
 use I18N::LangTags::Detect;
 use File::Spec;
 use Carp;
+our $VERSION = v0.7.1;
 
 # Allow unknown phrases to just pass-through.
 our %Lexicon = (

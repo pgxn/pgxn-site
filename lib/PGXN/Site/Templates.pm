@@ -1,6 +1,6 @@
-package PGXN::Site::Templates v0.7.1;
+package PGXN::Site::Templates;
 
-use 5.12.0;
+use 5.10.0;
 use utf8;
 use parent 'Template::Declare';
 use PGXN::Site::Locale;
@@ -13,6 +13,7 @@ use File::Basename qw(basename);
 use SemVer;
 use Gravatar::URL;
 #use namespace::autoclean; # Do not use; breaks sort {}
+our $VERSION = v0.7.1;
 
 my $l = PGXN::Site::Locale->get_handle('en');
 sub T { $l->maketext(@_) }
@@ -248,7 +249,7 @@ template home => sub {
 };
 
 sub _title_with($) {
-    shift . ' / ' . T 'PostgreSQL Extension Network';
+    $_[0] . ' / ' . T 'PostgreSQL Extension Network';
 }
 
 template distribution => sub {

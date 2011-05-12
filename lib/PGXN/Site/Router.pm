@@ -1,11 +1,12 @@
-package PGXN::Site::Router v0.7.1;
+package PGXN::Site::Router;
 
-use 5.12.0;
+use 5.10.0;
 use utf8;
 use PGXN::Site::Controller;
 use Router::Resource;
 use Plack::Builder;
 use Plack::App::File;
+our $VERSION = v0.7.1;
 
 sub app {
     my $class = shift;

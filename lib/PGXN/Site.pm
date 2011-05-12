@@ -1,7 +1,8 @@
-package PGXN::Site v0.7.1;
+package PGXN::Site;
 
-use 5.12.0;
+use 5.10.0;
 use utf8;
+our $VERSION = v0.7.1;
 
 1;
 

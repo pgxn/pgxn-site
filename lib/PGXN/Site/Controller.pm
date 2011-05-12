@@ -1,6 +1,6 @@
-package PGXN::Site::Controller v0.7.1;
+package PGXN::Site::Controller;
 
-use 5.12.0;
+use 5.10.0;
 use utf8;
 #use aliased 'PGXN::Site::Request';
 use Plack::Request;
@@ -11,6 +11,7 @@ use HTML::TagCloud;
 use Encode;
 use WWW::PGXN;
 use namespace::autoclean;
+our $VERSION = v0.7.1;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 

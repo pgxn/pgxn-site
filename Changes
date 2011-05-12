@@ -5,6 +5,7 @@ Revision history for Perl extension PGXN::Site
         find the HTML files generated from the MultiMarkdown source files.
       - Added namespace::autoclean to prerequisites. Its omission was
         inadvertent.
+      - Backported to support Perl 5.10.
 
 0.7.0   2011-05-03T02:40:50
       - Replaced the gradient background image wih one that uses dithering.
