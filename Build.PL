@@ -63,6 +63,7 @@ my $build = $class->new(
         'Plack::Builder'               => 0,
         'Plack::Request'               => '0.9956',
         'Plack::Response'              => '0.9956',
+        'Router::Resource'             => '0.11',
         'SemVer'                       => '0.2.0',
         'Template::Declare'            => '0.43',
         'Template::Declare::Tags'      => '0.43',
