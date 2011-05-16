@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.7.2
+0.7.2   2011-05-16T20:35:12
       - Added Router::Resource to list of requirements. Was inadvertently
         omitted.
       - Multiword tags in the tag cloud no longer wrap across lines.
