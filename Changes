@@ -3,6 +3,7 @@ Revision history for Perl extension PGXN::Site
 0.7.2
       - Added Router::Resource to list of requirements. Was inadvertently
         omitted.
+      - Multiword tags in the tag cloud no longer wrap across lines.
 
 0.7.1   2011-05-12T18:11:02
       - Added `use blib` to `pgxn_site_server` so that the server will always
