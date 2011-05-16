@@ -2,7 +2,7 @@ package PGXN::Site;
 
 use 5.10.0;
 use utf8;
-our $VERSION = v0.7.2;
+our $VERSION = v0.7.3;
 
 1;
 
