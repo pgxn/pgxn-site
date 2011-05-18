@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.7.4
+0.7.4   2011-05-18T17:54:32
       - The router tests are now skipped if PGXN::API::Searcher is not
         installed.
 
