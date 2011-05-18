@@ -3,17 +3,19 @@
 use 5.10.0;
 use utf8;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' }
-use Test::More tests => 381;
+use Test::More;
 #use Test::More 'no_plan';
+eval "use PGXN::API::Searcher";
+plan skip_all => "PGXN::API::Searcher required for router testing" if $@;
+plan tests => 381;
+
 use Plack::Test;
 use HTTP::Request::Common;
 use Test::File::Contents;
 use Test::MockModule;
 use Encode;
 
-BEGIN {
-    use_ok 'PGXN::Site::Router' or die;
-}
+use_ok 'PGXN::Site::Router' or die;
 
 local $@;
 eval { PGXN::Site::Router->app };
