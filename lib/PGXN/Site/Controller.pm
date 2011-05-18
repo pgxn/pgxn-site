@@ -11,7 +11,7 @@ use HTML::TagCloud;
 use Encode;
 use WWW::PGXN;
 use namespace::autoclean;
-our $VERSION = v0.7.3;
+our $VERSION = v0.7.4;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
