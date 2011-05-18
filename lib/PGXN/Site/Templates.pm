@@ -330,7 +330,7 @@ template distribution => sub {
                             }
                         }
                         # Create a select list of all other versions.
-                        dt { T 'Other Releases' };
+                        dt { class is 'other'; T 'Other Releases' };
                         dd {
                             select {
                                 onchange is 'window.location.href = this.options[this.selectedIndex].value';
