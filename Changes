@@ -2,6 +2,9 @@ Revision history for Perl extension PGXN::Site
 
 0.7.5
       - Updated links in the About page.
+      - Reversed the display of the browse and download icons for
+        distributions listed on the user page. This is so that they are in the
+        same order as on the distribution page. Per gripe from Marti Raudsepp.
 
 0.7.4   2011-05-18T17:54:32
       - The router tests are now skipped if PGXN::API::Searcher is not

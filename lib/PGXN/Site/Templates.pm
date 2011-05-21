@@ -1313,18 +1313,6 @@ template release_table => sub {
                         outs_raw qq{<time class="bday" datetime="$info->{date}">$date</time>};
                     };
                     cell {
-                        class is 'download';
-                        a {
-                            class is 'url';
-                            href is URI->new($args->{api_url} . $api->download_path_for($dist => $info->{version}));
-                            title is T 'Download [_1] [_2]', $dist, $info->{version};
-                            img {
-                                src is '/ui/img/download.png';
-                                alt is T 'Download';
-                            };
-                        };
-                    };
-                    cell {
                         class is 'browse';
                         a {
                             class is 'url';
@@ -1335,6 +1323,18 @@ template release_table => sub {
                                 alt is T 'Browse';
                             };
                         }
+                    };
+                    cell {
+                        class is 'download';
+                        a {
+                            class is 'url';
+                            href is URI->new($args->{api_url} . $api->download_path_for($dist => $info->{version}));
+                            title is T 'Download [_1] [_2]', $dist, $info->{version};
+                            img {
+                                src is '/ui/img/download.png';
+                                alt is T 'Download';
+                            };
+                        };
                     };
                 }; # /tr.dist
             }
