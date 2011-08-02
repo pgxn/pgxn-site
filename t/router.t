@@ -7,7 +7,7 @@ use Test::More;
 #use Test::More 'no_plan';
 eval "use PGXN::API::Searcher";
 plan skip_all => "PGXN::API::Searcher required for router testing" if $@;
-plan tests => 381;
+plan tests => 369;
 
 use Plack::Test;
 use HTTP::Request::Common;
@@ -77,7 +77,7 @@ test_psgi $app => sub {
     });
 
     # Search for stuff.
-    for my $in ('', qw(docs dists extensions users tags)) {
+    for my $in (qw(docs dists extensions users tags)) {
         for my $spec (
             [ 'q=föö'         => {                         } ],
             [ 'q=föö&o=2'     => { offset => 2             } ],
@@ -137,22 +137,24 @@ test_psgi $app => sub {
     }
 
     # Make sure an invalid "in" value returns 400.
-    ok my $res = $cb->(GET '/search?q=whu&in=foo'), 'Fetch /search with bad in=';
-    ok $res->is_error, 'Should return an error';
-    is $res->code, 400, 'Should get 400 response';
-    like decode_utf8($res->content),
-        qr{<p>Bad request: Missing or invalid “in” query parameter\.</p>},
-        'The body should have the invalid in param error';
+    for my $in ('foo', '') {
+        ok my $res = $cb->(GET "/search?q=whu&in=$in"), "Fetch /search with in=$in";
+        ok $res->is_error, 'Should return an error';
+        is $res->code, 400, 'Should get 400 response';
+        like decode_utf8($res->content),
+            qr{<p>Bad request: Missing or invalid “in” query parameter\.</p>},
+                'The body should have the invalid in param error';
+    }
 
     # Make sure an invalid "o" and "l" values resturn 400.
-    ok $res = $cb->(GET '/search?q=whu&o=foo'), 'Fetch /search with bad o=';
+    ok $res = $cb->(GET '/search?q=whu&o=foo&in=docs'), 'Fetch /search with bad o=';
     ok $res->is_error, 'Should return an error';
     is $res->code, 400, 'Should get 400 response';
     like decode_utf8($res->content),
         qr{<p>Bad request: Missing or invalid “o” query parameter\.</p>},
         'The body should have the invalid in param error';
 
-    ok $res = $cb->(GET '/search?q=whu&l=foo'), 'Fetch /search with bad l=';
+    ok $res = $cb->(GET '/search?q=whu&l=foo&in=docs'), 'Fetch /search with bad l=';
     ok $res->is_error, 'Should return an error';
     is $res->code, 400, 'Should get 400 response';
     like decode_utf8($res->content),

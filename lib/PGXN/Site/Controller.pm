@@ -253,7 +253,7 @@ sub search {
         });
     }
 
-    unless ($params->{in} ~~ ['', undef, qw(docs dists extensions users tags)]) {
+    unless ($params->{in} ~~ [qw(docs dists extensions users tags)]) {
         return $self->render('/badrequest', {
             env => $env,
             code => $code_for{badrequest},
