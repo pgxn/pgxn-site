@@ -7,8 +7,10 @@ Revision history for Perl extension PGXN::Site
         same order as on the distribution page. Per gripe from Marti Raudsepp.
       - Now showing an error page when the `in` parameter to `/search` is
         missing, rather than throwing an exception and returning 500.
-      - Added Email::MIME and Email::Sender::Simple to the list of
-        requirements. The were inadvertently omitted.
+      - Added Email::MIME, Email::Sender::Simple, and Software::License to the
+        list of requirements. The were inadvertently omitted.
+      - Added all core and Plack modules to the list of requirements, just to
+        be safe.
 
 0.7.4   2011-05-18T17:54:32
       - The router tests are now skipped if PGXN::API::Searcher is not
