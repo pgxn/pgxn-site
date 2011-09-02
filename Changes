@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.7.5
+0.8.0
       - Updated links in the About page.
       - Reversed the display of the browse and download icons for
         distributions listed on the user page. This is so that they are in the
