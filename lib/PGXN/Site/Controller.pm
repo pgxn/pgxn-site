@@ -78,7 +78,7 @@ sub missing {
 
 sub home {
     my $self  = shift;
-    my $cloud = HTML::TagCloud->new;
+    my $cloud = HTML::TagCloud->new(levels => 12);
     my $tags  = $self->api->get_stats('tag');
     $cloud->add($_->{tag}, "/tag/$_->{tag}/", $_->{dists})
         for grep { $_->{tag} = lc $_->{tag} } @{ $tags->{popular} };
