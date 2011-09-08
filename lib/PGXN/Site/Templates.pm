@@ -3,6 +3,7 @@ package PGXN::Site::Templates;
 use 5.10.0;
 use utf8;
 use parent 'Template::Declare';
+use PGXN::Site;
 use PGXN::Site::Locale;
 use Template::Declare::Tags;
 use Software::License::PostgreSQL;
@@ -58,7 +59,7 @@ BEGIN { create_wrapper wrapper => sub {
                 link {
                     rel   is 'stylesheet';
                     type  is 'text/css';
-                    href  is "/ui/css/$spec->[0].css?" . __PACKAGE__->VERSION;
+                    href  is "/ui/css/$spec->[0].css?" . PGXN::Site->version_string;
                     media is $spec->[1];
                 };
             }
@@ -139,7 +140,7 @@ BEGIN { create_wrapper wrapper => sub {
                     id is 'width';
                     span {
                         class is 'floatLeft';
-                        outs __PACKAGE__->VERSION;
+                        outs +PGXN::Site->version_string;
                         span { class is 'grey'; '|' };
                         outs 'code';
                         a {

@@ -30,7 +30,8 @@ _pod2usage(
 
 if ($version) {
     require File::Basename;
-    say File::Basename::basename($0), ' ', PGXN::Site->VERSION;
+    require PGXN::Site;
+    say File::Basename::basename($0), ' ', PGXN::Site->version_string;
     exit;
 }
 

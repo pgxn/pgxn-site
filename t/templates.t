@@ -264,7 +264,7 @@ sub test_wrapper {
         );
 
         my $i = 0;
-        my $v = PGXN::Site->VERSION;
+        my $v = PGXN::Site->version_string;
         for my $spec (
             [ html   => 'screen, projection, tv' ],
             [ layout => 'screen, projection, tv' ],
@@ -373,7 +373,7 @@ sub test_wrapper {
             $tx->ok('./span[1]', 'Test the first span' => sub {
                 $tx->is('count(./*)', 6, 'Should have 6elements below #floatLeft');
                 $tx->is('./@class', 'floatLeft', 'Should be floatLeft');
-                my $v = PGXN::Site->VERSION;
+                my $v = PGXN::Site->version_string;
                 $tx->like('./text()', qr{^\Q$v\E\b}, qq{Text should contain "$v"});
                 $tx->like('./text()', qr{\bcode\b}, 'Text should contain "code"');
                 $tx->like('./text()', qr{\bdesign\b}, 'Text should contain "design"');

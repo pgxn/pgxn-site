@@ -7,7 +7,7 @@ use Test::More;
 #use Test::More 'no_plan';
 eval "use PGXN::API::Searcher";
 plan skip_all => "PGXN::API::Searcher required for router testing" if $@;
-plan tests => 369;
+plan tests => 368;
 
 use Plack::Test;
 use HTTP::Request::Common;
@@ -479,8 +479,6 @@ test_psgi $err_app => sub {
     my $cb = shift;
     ok my $res = $cb->(GET '/error'), "GET /error";
     ok $res->is_success, q{Should be success (because it's only served as a subrequest)};
-    is $res->header('X-PGXN-API-Version'), PGXN::API->VERSION,
-        'Should have API version in the header';
     like $res->content, qr{\Q<p>Internal server error.</p>},
         'body should contain error message';
 
