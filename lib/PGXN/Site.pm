@@ -80,9 +80,9 @@ The PGXN::Site class itself consists of a single class method.
 
 =head3 C<version_string>
 
-  say 'PGXN::API ', PGXN::API->version_string;
+  say 'PGXN::Site ', PGXN::Site->version_string;
 
-Returns a string representation of the PGXN::API version.
+Returns a string representation of the PGXN::Site version.
 
 =head1 Author
 
