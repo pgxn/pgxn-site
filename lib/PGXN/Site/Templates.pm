@@ -1084,6 +1084,10 @@ template donors => sub {
                                 href is 'http://jim.nasby.net/';
                                 'Jim Nasby';
                             }};
+                            li {a{
+                                href is 'http://www.progressivepractice.com/';
+                                'Jon Erdman';
+                            }};
                         };
                     };
                 };
