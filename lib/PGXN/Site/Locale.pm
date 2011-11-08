@@ -42,6 +42,7 @@ our %Lexicon = (
     Mirroring => 'Mirroring',
     'Mirroring PGXN' => 'Mirroring PGXN',
     Feedback => 'Feedback',
+    Identity => 'Identity',
     Extensions => 'Extensions',
     Tags => 'Tags',
     Distributions => 'Distributions',

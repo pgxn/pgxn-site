@@ -92,6 +92,11 @@ sub feedback {
     } });
 }
 
+sub art {
+    my $self = shift;
+    $self->render('/art', { env => shift });
+}
+
 sub about {
     my $self = shift;
     $self->render('/about', { env => shift, vars => {
@@ -404,6 +409,12 @@ Displays the HTML for the home page.
   PGXN::Site::Controller->feedback($env);
 
 Displays the HTML for the feedback page.
+
+=head3 C<art>
+
+  PGXN::Site::Controller->art($env);
+
+Displays the HTML for the identity page.
 
 =head3 C<about>
 

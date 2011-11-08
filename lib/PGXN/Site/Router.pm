@@ -76,6 +76,11 @@ sub app {
             GET { $controller->feedback(shift) };
         };
 
+        # /art
+        resource qr{^/art/?$} => sub {
+            GET { $controller->art(shift) };
+        };
+
         # /about
         resource qr{^/about/?$} => sub {
             GET { $controller->about(shift) };

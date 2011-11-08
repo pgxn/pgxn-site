@@ -196,6 +196,12 @@ BEGIN { create_wrapper wrapper => sub {
                         };
                         span { class is 'grey'; '|' };
                         a {
+                            href is '/art/';
+                            title is T 'Identity';
+                            T 'Identity';
+                        };
+                        span { class is 'grey'; '|' };
+                        a {
                             href is '/feedback/';
                             title is T 'Feedback';
                             T 'Feedback';
@@ -1155,6 +1161,21 @@ template donors => sub {
         };
     } $req, {
         title => _title_with $title,
+    };
+};
+
+template art => sub {
+    my ($self, $req, $args) = @_;
+    wrapper {
+        div {
+            id is 'info';
+            div {
+                class is 'gradient';
+                outs_raw $l->from_file('art.html');
+            };
+        };
+    } $req, {
+        title => _title_with 'Identity',
     };
 };
 

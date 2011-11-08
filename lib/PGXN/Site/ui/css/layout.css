@@ -647,6 +647,8 @@ table code {background-color:transparent;}
   padding-top:1em;
 }
 
+.license img, .license img:hover {border:0 !important;}
+
 #htmltagcloud {text-align: center;padding:0 20px;}
 #htmltagcloud span {white-space:nowrap;}
 #htmltagcloud span a { margin:4px; padding:4px; line-height:1.1em; }
