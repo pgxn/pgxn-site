@@ -27,6 +27,7 @@
 
 # Avoid build files.
 ^PGXN-Site
+^Capfile
 ^www
 
 # Avoid spelling test.

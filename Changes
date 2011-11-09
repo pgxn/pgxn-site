@@ -16,6 +16,9 @@ Revision history for Perl extension PGXN::Site
       - Added Identity page a Creative Commons Attribution-ShareAlike 3.0
         Unported License, description of fonts, and links to original art
         work.
+      - Added `Capfile` for capistrano deployment.
+      - Added `eg/debian_init`, an example init script for Debian that runs
+        PGXN::Site on Starman.
 
 0.7.4   2011-05-18T17:54:32
       - The router tests are now skipped if PGXN::API::Searcher is not
