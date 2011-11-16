@@ -63,7 +63,11 @@ PGXN Client
 <span id="commandlineclient"></span>
 Is there a command-line client for installing extensions from PGXN?
 
-:   Not yet, but soon. Hopefully in June, assuming that a mini-hackathon at PGCon is fruitful. Watch the [GitHub repository](https://github.com/pgxn/pgxn-client) for progress.
+:   There is! Install it with this command:
+:   <pre>sudo easy_install pgxnclient</pre>
+:   Then you can install PGXN extensions with a simple command:
+:   <pre>pgxn install pair</pre>
+:   Run `pgxn help` to get a list of supported commands; or check out the introductory [blog](http://blog.pgxn.org/post/5026314153/writing-a-client-for-pgxn) [posts](http://blog.pgxn.org/post/5118152273/new-release-for-the-pgxn-client), the [complete documentation](http://pgxnclient.projects.postgresql.org/) or the [source code](https://github.com/dvarrazzo/pgxnclient).
                    
 <span id="howclientworks"></span>
 How will the command-line client work?
