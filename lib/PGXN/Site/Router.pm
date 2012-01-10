@@ -6,7 +6,7 @@ use PGXN::Site::Controller;
 use Router::Resource;
 use Plack::Builder;
 use Plack::App::File;
-our $VERSION = v0.10.0;
+our $VERSION = v0.10.1;
 
 sub app {
     my $class = shift;
