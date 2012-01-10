@@ -50,8 +50,8 @@ namespace :deploy do
       perl Build.PL || exit $?;
       ./Build installdeps || exit $?;
       ./Build || exit $?;
-      ln -fs #{shared_path}/log || exit $?;
-      ln -fs #{shared_path}/pids || exit $?;
+      ln -fsn #{shared_path}/log || exit $?;
+      ln -fsn #{shared_path}/pids || exit $?;
     CMD
   end
 
@@ -61,7 +61,7 @@ namespace :deploy do
   end
 
   task :symlink_production do
-    run "ln -fs #{ latest_release } #{ run_from }"
+    run "ln -fsn #{ latest_release } #{ run_from }"
   end
 
   task :migrate do
@@ -70,7 +70,7 @@ namespace :deploy do
 
   task :start do
 #    run 'sudo /etc/init.d/pgxn-site start'
-    run "cd #{ run_from } && blib/script/pgxn_site_server -s Starman -E prod --workers 5 --preload-app --max-requests 100 --listen 127.0.0.1:7498 --daemonize --pid pids/pgxn_site.pid --error-log log/pgxn_site.log --errors-to pgxn-admins@googlegroups.com --errors-from pgxn@pgexperts.com --feedback-to pgxn@pgexperts.com --api-url http://api.pgxn.org/ --private-api-url file:/var/virtuals/pgxn/api.#{ domain }/www/ --reverse-proxy", :hosts => "#{ pgxn_user }@#{ host }"
+    run "cd #{ run_from } && blib/script/pgxn_site_server -s Starman -E prod --workers 5 --preload-app --max-requests 100 --listen 127.0.0.1:7498 --daemonize --pid pids/pgxn_site.pid --error-log log/pgxn_site.log --errors-to pgxn-admins@googlegroups.com --errors-from pgxn@pgexperts.com --feedback-to pgxn@pgexperts.com --api-url http://api.pgxn.org/ --private-api-url file:#{ api_root }/ --reverse-proxy", :hosts => "#{ pgxn_user }@#{ host }"
   end
 
   task :restart do
