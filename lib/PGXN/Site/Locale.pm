@@ -6,7 +6,7 @@ use parent 'Locale::Maketext';
 use I18N::LangTags::Detect;
 use File::Spec;
 use Carp;
-our $VERSION = v0.8.0;
+our $VERSION = v0.10.0;
 
 # Allow unknown phrases to just pass-through.
 our %Lexicon = (
