@@ -178,6 +178,8 @@ sub _find_file {
 
 1;
 
+=encoding utf8
+
 =head1 Name
 
 PGXN::Site::Locale - Localization for PGXN::Site

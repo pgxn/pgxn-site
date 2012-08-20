@@ -2,7 +2,9 @@ Revision history for Perl extension PGXN::Site
 
 0.10.1
       - Added an Nginx configuration example to the mirroring page.
-      - Updated GitHub URLs to point to `/pgxn/` rather than `/theory/`.
+      - Updated GitHub URLs to point to `/pgxn/` rather than `/theory/`
+        (RT #79085).
+      - Set `=encoding` for Pod in PGXN::Site::Locale (RT #79086).
 
 0.10.0  2012-01-10T04:37:24Z
       - Updated links in the About page.
