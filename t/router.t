@@ -483,12 +483,12 @@ test_psgi $err_app => sub {
         'body should contain error message';
 
     # Check the alert email.
-    ok my $deliveries = Email::Sender::Simple->default_transport->deliveries,
+    ok my @deliveries = Email::Sender::Simple->default_transport->deliveries,
         'Should have email deliveries.';
-    is @{ $deliveries }, 1, 'Should have one message';
-    is @{ $deliveries->[0]{successes} }, 1, 'Should have been successfully delivered';
+    is @deliveries, 1, 'Should have one message';
+    is @{ $deliveries[0]{successes} }, 1, 'Should have been successfully delivered';
 
-    my $email = $deliveries->[0]{email};
+    my $email = $deliveries[0]{email};
     is $email->get_header('Subject'), 'PGXN Internal Server Error',
         'The subject should be set';
     is $email->get_header('From'), 'api@pgxn.org',
