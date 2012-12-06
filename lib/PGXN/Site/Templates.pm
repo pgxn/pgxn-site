@@ -1427,11 +1427,11 @@ template benefactors => sub {
     ul {
         id is 'benefactors';
         for my $spec (
-            [ 'http://www.etsy.com/'          => 'Etsy'                      ],
-            [ 'http://www.postgresql.us/'     => 'US PostgreSQL Association' ],
-            [ 'http://www.commandprompt.com/' => 'Command Prompt, Inc.'      ],
-            [ 'http://www.marchex.com/'       => 'Marchex'                   ],
-            [ 'http://younicycle.com/'        => 'Younicycle, the SaaS Platform' ],
+            [ 'http://www.etsy.com/'          => 'Etsy'                       ],
+            [ 'http://www.postgresql.us/'     => 'US PostgreSQL Association'  ],
+            [ 'http://www.commandprompt.com/' => 'Command Prompt, Inc.'       ],
+            [ 'http://www.marchex.com/'       => 'Marchex'                    ],
+            [ 'http://younicycle.com/'        => 'Younicycle, The Web System' ],
         ) {
             li { a { href is $spec->[0]; $spec->[1] } };
         }

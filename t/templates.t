@@ -185,11 +185,11 @@ test_wrapper($html, {
                     $tx->is('count(./*)', 5, 'Should have 5 sub-elements');
                     my $i = 0;
                     for my $spec (
-                        [ 'http://www.etsy.com/'          => 'Etsy'                      ],
-                        [ 'http://www.postgresql.us/'     => 'US PostgreSQL Association' ],
-                        [ 'http://www.commandprompt.com/' => 'Command Prompt, Inc.'      ],
-                        [ 'http://www.marchex.com/'       => 'Marchex'                   ],
-                        [ 'http://younicycle.com/'        => 'Younicycle, the SaaS Platform' ],
+                        [ 'http://www.etsy.com/'          => 'Etsy'                       ],
+                        [ 'http://www.postgresql.us/'     => 'US PostgreSQL Association'  ],
+                        [ 'http://www.commandprompt.com/' => 'Command Prompt, Inc.'       ],
+                        [ 'http://www.marchex.com/'       => 'Marchex'                    ],
+                        [ 'http://younicycle.com/'        => 'Younicycle, The Web System' ],
                     ) {
                         ++$i;
                         $tx->ok("./li[$i]", "Test li $i" => sub {
