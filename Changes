@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.10.1
+0.10.1  2012-12-12T07:31:22Z
       - Added an Nginx configuration example to the mirroring page.
       - Updated GitHub URLs to point to `/pgxn/` rather than `/theory/`
         (RT #79085).
