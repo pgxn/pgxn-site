@@ -1307,7 +1307,8 @@ template search_form => sub {
 
 template release_table => sub {
     my ($self, $req, $rel, $args) = @_;
-    my $api = $args->{api};
+    my $api  = $args->{api};
+    my $user = $args->{user};
     div {
         class is 'gradient dists';
         h3 { T 'Distributions' };
@@ -1322,7 +1323,7 @@ template release_table => sub {
                         class is 'name';
                         a {
                             class is 'url';
-                            href is lc "/dist/$dist/";
+                            href is lc "/dist/$dist" . ($user ? "/$info->{version}/" : '/');
                             span { class is 'fn'; $dist };
                             span { class is 'version'; $info->{version} };
                             span { class is 'status'; "($status)" } if $status ne 'stable';
@@ -1366,12 +1367,10 @@ template release_table => sub {
             }
         } }; # /table
     } else {
-        if (my $user = $args->{user}) {
-            p {
-                class is 'alas';
-                T 'Alas, [_1] has yet to release a distribution.', $user->nickname;
-            };
-        }
+        p {
+            class is 'alas';
+            T 'Alas, [_1] has yet to release a distribution.', $user->nickname;
+        } if $user;
     }
     }; # /div.gradient dists
 };
