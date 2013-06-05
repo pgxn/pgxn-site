@@ -10,6 +10,7 @@ use PGXN::Site::Templates;
 use HTML::TagCloud;
 use Encode;
 use WWW::PGXN;
+use List::Util qw(first);
 use namespace::autoclean;
 our $VERSION = v0.10.2;
 
@@ -240,7 +241,7 @@ sub search {
     my $params = $req->query_parameters;
     my $q = $params->{q};
 
-    if ($q ~~ [undef, '', '*', '?']) {
+    if (first { $q eq $_ } (undef, '', '*', '?')) {
         # Just redirect if there is no search term.
         unless ($q) {
             my $ref = '/';
@@ -258,7 +259,8 @@ sub search {
         });
     }
 
-    unless ($params->{in} ~~ [qw(docs dists extensions users tags)]) {
+    my $in = $params->{in};
+    unless (first { $in eq $_ } qw(docs dists extensions users tags)) {
         return $self->render('/badrequest', {
             env => $env,
             code => $code_for{badrequest},

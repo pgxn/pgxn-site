@@ -4,6 +4,8 @@ Revision history for Perl extension PGXN::Site
       - Distribution links in the user page now include the version, so that
         it links to the latest version of the distribution released by the
         user, rather than the latest released by any user.
+      - Replaced use of the smartmatch operator with List::Util::first so as
+        to eliminate deprecation warnings from Perl 5.18.
 
 0.10.1  2012-12-12T07:31:22Z
       - Added an Nginx configuration example to the mirroring page.
