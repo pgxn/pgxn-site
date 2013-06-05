@@ -317,7 +317,7 @@ template distribution => sub {
                         @rels =
                             map  { $_->[0] }
                             sort { $b->[1] <=> $a->[1] }
-                            map  { [ $_ => SemVer->new($_->{version}) ] } @rels, @others;
+                            map  { [ $_ => SemVer->declare($_->{version}) ] } @rels, @others;
                     }
                     if (@rels > 1) {
                         # Show latest version for other statuses.
