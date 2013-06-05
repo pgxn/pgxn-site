@@ -63,6 +63,7 @@ my $build = $class->new(
         'I18N::LangTags::Detect'       => '1.03',
         'Locale::Maketext'             => '1.16',
         'List::Util'                   => '1.20',
+        'List::MoreUtils'              => '0.28',
         'namespace::autoclean'         => '0.11',
         'perl'                         => 5.010,
         'Plack'                        => '0.9956',

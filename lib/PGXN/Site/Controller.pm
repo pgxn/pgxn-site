@@ -10,7 +10,7 @@ use PGXN::Site::Templates;
 use HTML::TagCloud;
 use Encode;
 use WWW::PGXN;
-use List::Util qw(first);
+use List::MoreUtils qw(any);
 use namespace::autoclean;
 our $VERSION = v0.10.2;
 
@@ -241,7 +241,7 @@ sub search {
     my $params = $req->query_parameters;
     my $q = $params->{q};
 
-    if (first { $q eq $_ } (undef, '', '*', '?')) {
+    if (!defined $q || any { $q eq $_ } '', '*', '?') {
         # Just redirect if there is no search term.
         unless ($q) {
             my $ref = '/';
@@ -260,7 +260,7 @@ sub search {
     }
 
     my $in = $params->{in};
-    unless (first { $in eq $_ } qw(docs dists extensions users tags)) {
+    unless (defined $in && any { $in eq $_ } qw(docs dists extensions users tags)) {
         return $self->render('/badrequest', {
             env => $env,
             code => $code_for{badrequest},
@@ -278,10 +278,10 @@ sub search {
     }
 
     $self->render('/search', { req => $req, vars => {
-        in      => $params->{in},
+        in      => $in,
         api     => $self->api,
         results => $self->api->search(
-            in     => $params->{in},
+            in     => $in,
             query  => decode_utf8($q),
             offset => $params->{o},
             limit  => $params->{l},
