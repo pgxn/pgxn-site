@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.10.2
+0.10.2  2013-06-19T06:35:03Z
       - Distribution links in the user page now include the version, so that
         it links to the latest version of the distribution released by the
         user, rather than the latest released by any user.
