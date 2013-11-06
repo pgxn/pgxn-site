@@ -7,7 +7,7 @@ use Test::More;
 #use Test::More 'no_plan';
 eval "use PGXN::API::Searcher";
 plan skip_all => "PGXN::API::Searcher required for router testing" if $@;
-plan tests => 368;
+plan tests => 369;
 
 use Plack::Test;
 use HTTP::Request::Common;
@@ -464,13 +464,16 @@ test_psgi $app => sub {
 };
 
 # Test /error.
+my $err_output;
 my $err_app = sub {
     my $env = shift;
+    open my $errfh, '>', \$err_output;
     $env->{'psgix.errordocument.PATH_INFO'} = '/what';
     $env->{'psgix.errordocument.SCRIPT_NAME'} = '';
     $env->{'psgix.errordocument.SCRIPT_NAME'} = '';
     $env->{'psgix.errordocument.HTTP_HOST'} = 'localhost';
     $env->{'plack.stacktrace.text'} = 'This is the trace';
+    $env->{'psgi.errors'} = $errfh;
     $app->($env);
 };
 
@@ -481,6 +484,11 @@ test_psgi $err_app => sub {
     ok $res->is_success, q{Should be success (because it's only served as a subrequest)};
     like $res->content, qr{\Q<p>Internal server error.</p>},
         'body should contain error message';
+    is $err_output, 'An error occurred during a request to http://localhost/what:
+
+This is the trace
+', 'The trace should have been send to the PSGI error handle';
+
 
     # Check the alert email.
     ok my @deliveries = Email::Sender::Simple->default_transport->deliveries,

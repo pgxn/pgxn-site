@@ -306,6 +306,12 @@ sub server_error {
         require Email::MIME;
         require Email::Sender::Simple;
         require Data::Dump;
+        if (my $errfh = $env->{'psgi.errors'}) {
+            print {$errfh} "An error occurred during a request to $uri:\n\n"
+                . ($env->{'plack.stacktrace.text'} || 'No Trace. :-(')
+                . "\n";
+        }
+
         my $email = Email::MIME->create(
             header     => [
                 From    => $self->errors_from,
