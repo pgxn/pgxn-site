@@ -2,7 +2,7 @@ package PGXN::Site;
 
 use 5.10.0;
 use utf8;
-our $VERSION = v0.10.3;
+our $VERSION = v0.10.4;
 
 sub version_string {
     sprintf 'v%vd', $VERSION;
