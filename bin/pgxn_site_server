@@ -67,17 +67,17 @@ pgxn_site_server - The PGXN API server
 
 =head1 Usage
 
-  pgxn_api_server --api-url http://api.pgxn.org/ \
-                  --errors-to   alerts@example.com \
-                  --errors-from oops@example.com \
-                  --feedback-to feedback@example.com \
+  pgxn_site_server --api-url http://api.pgxn.org/ \
+                   --errors-to   alerts@example.com \
+                   --errors-from oops@example.com \
+                   --feedback-to feedback@example.com
 
 =head1 Description
 
-This is the PGXN API PSGI server. It automatically figures out the environment
-it is run in, and runs your application in that environment. C<FastCGI>,
-C<CGI>, C<AnyEvent> and others can all be detected. See L<Plack::Loader> for
-the authoritative list.
+This is the PGXN main site PSGI server. It automatically figures out the
+environment it is run in, and runs your application in that environment.
+C<FastCGI>, C<CGI>, C<AnyEvent> and others can all be detected. See
+L<Plack::Loader> for the authoritative list.
 
 =head1 Options
 
