@@ -22,7 +22,7 @@ use Plack::Request;
 use HTTP::Message::PSGI;
 
 #plan 'no_plan';
-plan tests => 260;
+plan tests => 220;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -38,7 +38,13 @@ $cloud->add($_->{tag}, "/tag/$_->{tag}/", $_->{dist_count}) for (
     { tag => 'hi',  dist_count => 7, },
 );
 
-ok my $html = Template::Declare->show('home', $req, { cloud => $cloud }),
+my $dists = [
+    { dist => 'Foo', version => '1.2.1', abstract => 'Pg Foo' },
+    { dist => 'Bar', version => '0.5.5', abstract => 'Pg Bar' },
+    { dist => 'Baz', version => '0.4.0', abstract => 'Pg Baz' },
+];
+
+ok my $html = Template::Declare->show('home', $req, { cloud => $cloud, dists => $dists }),
     'Call the home template';
 
 is_well_formed_xml $html, 'The HTML should be well-formed';
@@ -80,134 +86,39 @@ test_wrapper($html, {
                     'hside floatLeft gradient',
                     'Should have class',
                 );
-                $tx->is('count(./*)', 8, 'Should have 8 sub-elements');
+                $tx->is('count(./*)', 4, 'Should have 4 sub-elements');
                 $tx->is(
                     './p[1]',
                     $mt->maketext('pgxn_summary_paragraph'),
                     'First graph should be intro',
                 );
 
-                my $i = 0;
-                for my $h3 (qw(Founders Patrons Benefactors)) {
-                    ++$i;
-                    $tx->is("./h3[$i]", $h3, qq{Header $i should be "$h3"});
-                }
-
-                $tx->ok('./div[1][@id="founders"]', 'Test founders div' => sub {
-                    $tx->is('count(./*)', 3, 'Should have 3 sub-elements');
-                    $tx->is('count(./a)', 3, 'All should be anchors');
-                    $tx->ok('./a[1]', 'Test first anchor' => sub {
-                        $tx->is(
-                            './@href',
-                            'http://www.myyearbook.com/',
-                            'href should be myyearbook.com',
-                        );
-                        $tx->is(
-                            './@title',
-                            'myYearbook',
-                            'Title should be myYearbook',
-                        );
-
-                        $tx->ok('./img', 'Test image sub-element' => sub {
-                            $tx->is('./@src', '/ui/img/myyearbook.png', 'src=myyearbook.png');
-                            $tx->is('./@alt', 'myYearbook.com', 'alt=myyearbook.com');
-                        });
-                    });
-
-                    $tx->ok('./a[2]', 'Test second anchor' => sub {
-                        $tx->is(
-                            './@href',
-                            'http://www.pgexperts.com/',
-                            'href should be pgexperts.com',
-                        );
-                        $tx->is(
-                            './@title',
-                            'PostgreSQL Experts, Inc.',
-                            'Title should be PGX',
-                        );
-
-                        $tx->ok('./img', 'Test image sub-element' => sub {
-                            $tx->is('./@src', '/ui/img/pgexperts.png', 'src=pgexperts.png');
-                            $tx->is('./@alt', 'PGX', 'alt=PGX');
-                        });
-                    });
-
-                    $tx->ok('./a[3]', 'Test third anchor' => sub {
-                        $tx->is(
-                            './@href',
-                            'http://www.dalibo.org/en/',
-                            'href should be dalibo.org',
-                        );
-                        $tx->is(
-                            './@title',
-                            'Dalibo',
-                            'Title should be Dalibo',
-                        );
-
-                        $tx->ok('./img', 'Test image sub-element' => sub {
-                            $tx->is('./@src', '/ui/img/dalibo.png', 'src=dalibo.png');
-                            $tx->is('./@alt', 'Dalibo', 'alt=Dalibo');
-                        });
-                    });
-
-                }); # /div#founders
-
-                $tx->ok('./div[2][@id="patrons"]', 'Test patrons div' => sub {
-                    $tx->is('count(./*)', 1, 'Should have 1 sub-element');
-                    $tx->ok('./h3', 'Test h3' => sub {
-                        $tx->is('count(./*)', 1, 'Should have 1 sub-element');
-                        $tx->ok('./a', 'Test anchor' => sub {
-                            $tx->is(
-                                './@href',
-                                'http://www.enovafinancial.com/',
-                                'href should be enovafinancial.com',
-                            );
-                            $tx->is(
-                                './@title',
-                                'Enova Financial',
-                                'Title should be Enova Financial',
-                            );
-
-                            $tx->ok('./img', 'Test image sub-element' => sub {
-                                $tx->is('./@src', '/ui/img/enova.png', 'src=enova.png');
-                                $tx->is('./@alt', 'e', 'alt=e');
-                            });
-                            $tx->like(
-                                './text()',
-                                qr{\A\s+Enova Financial\s+\z}ms,
-                                'Should have text',
-                            );
-                        });
-                    });
-                }); # /div#patrons
-
-                $tx->ok('./ul[1][@id="benefactors"]', 'Test benefactors ul' => sub {
-                    $tx->is('count(./*)', 5, 'Should have 5 sub-elements');
+                $tx->is('./h3', 'Recent Releases', qq{Header should be "Recent Releeases"});
+                $tx->ok('./dl', 'Test release dl' => sub {
                     my $i = 0;
-                    for my $spec (
-                        [ 'http://www.etsy.com/'          => 'Etsy'                       ],
-                        [ 'http://www.postgresql.us/'     => 'US PostgreSQL Association'  ],
-                        [ 'http://www.commandprompt.com/' => 'Command Prompt, Inc.'       ],
-                        [ 'http://www.marchex.com/'       => 'Marchex'                    ],
-                        [ 'http://younicycle.com/'        => 'Younicycle, The Web System' ],
-                    ) {
-                        ++$i;
-                        $tx->ok("./li[$i]", "Test li $i" => sub {
-                            $tx->ok('./a', 'Test anchor' => sub {
+                    for my $dist (@{ $dists }) {
+                        $i++;
+                        $tx->ok("./dt[$i]", "Test dt $i" => sub {
+                            $tx->ok('./a', "Test dt $i anchor" => sub {
                                 $tx->is(
                                     './@href',
-                                    $spec->[0],
-                                    "href should be $spec->[0]",
+                                    lc "/dist/$dist->{dist}/$dist->{version}/",
+                                    "href should be /dist/$dist->{dist}/$dist->{version}/",
                                 );
                                 $tx->is(
                                     './text()',
-                                    $spec->[1],
-                                    "Text should be $spec->[1]",
+                                    "$dist->{dist} $dist->{version}",
+                                    "text should be $dist->{dist} $dist->{version}",
                                 );
                             });
                         });
+                        $tx->is(
+                            "./dd[$i]",
+                            $dist->{abstract},
+                            "dd $i should be correct"
+                        );
                     }
-                }); # /div#benefactors
+                });
 
                 $tx->ok('./h6', 'Test h6 header' => sub {
                     $tx->is('./@class', 'floatRight', 'Should float right');
@@ -215,16 +126,16 @@ test_wrapper($html, {
                     $tx->ok('./a', 'Test anchor' => sub {
                         $tx->is(
                             './@href',
-                            '/donors/',
-                            'href should point to donors page.',
+                            '/recent/',
+                            'href should point to recent page.',
                         );
                         $tx->is(
                             './@title',
-                            'See all our great donors!',
+                            'See a longer list of recent releases.',
                             'Title should be correct',
                         );
 
-                        $tx->is('./text()', 'All Donors ➡', 'Text should be "All Donors"');
+                        $tx->is('./text()', 'More Releases →', 'Text should be "All Donors"');
                     });
 
 

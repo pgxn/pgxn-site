@@ -83,7 +83,15 @@ sub home {
     my $tags  = $self->api->get_stats('tag');
     $cloud->add($_->{tag}, "/tag/$_->{tag}/", $_->{dists})
         for grep { $_->{tag} = lc $_->{tag} } @{ $tags->{popular} };
-    $self->render('/home', { env => shift, vars => { cloud => $cloud } });
+    my $dists = $self->api->get_stats('dist')->{recent};
+    splice @{ $dists }, 5;
+    $self->render('/home', {
+        env => shift,
+        vars => {
+            cloud => $cloud,
+            dists => $dists,
+        },
+    });
 }
 
 sub feedback {

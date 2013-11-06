@@ -234,21 +234,31 @@ template home => sub {
             div {
                 class is 'hside floatLeft gradient';
                 p { T 'pgxn_summary_paragraph' };
-
-                h3 { T 'Founders' };
-                show 'founders';
-                h3 { T 'Patrons' };
-                show 'patrons';
-                h3 { T 'Benefactors' };
-                show 'benefactors';
-                h6 {
-                    class is 'floatRight';
-                    a {
-                        href is '/donors/';
-                        title is T 'See all our great donors!';
-                        T 'All Donors'
-                    }
-                };
+                h3 { T 'Recent Releases' };
+                my $dists = $args->{dists};
+                if ($dists && @{ $dists }) {
+                    dl {
+                        id is 'recent';
+                        for my $dist (@{ $dists }) {
+                            dt { a {
+                                my @vals = map { $dist->{$_} } qw(dist version);
+                                href is '/dist/' . lc join('/', @vals) . '/';
+                                join ' ', @vals
+                            } };
+                            dd { $dist->{abstract} };
+                        };
+                    };
+                    h6 {
+                        class is 'floatRight';
+                        a {
+                            href is '/recent/';
+                            title is T 'See a longer list of recent releases.';
+                            T 'More Releases';
+                        }
+                    };
+                } else {
+                    p { T 'No Releases Yet' }
+                }
             }; # /div.hside floatLeft gradient
 
         }; # /div#homepage
