@@ -13,7 +13,7 @@ sub app {
     my %p = @_;
     my $controller = PGXN::Site::Controller->new(@_);
     (my $ui = __FILE__) =~ s{Router[.]pm$}{ui};
-    my $files      = Plack::App::File->new(root => $ui);
+    my $files      = Plack::App::File->new(root => $ui)->to_app;
     my $router     = router {
         missing { $controller->missing(@_) };
 
