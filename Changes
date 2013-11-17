@@ -1,6 +1,7 @@
 Revision history for Perl extension PGXN::Site
 
 0.10.4
+      - Switched to shorter name for license links.
 
 0.10.3  2013-11-06T07:22:46Z
       - Updated Dalibo logo.

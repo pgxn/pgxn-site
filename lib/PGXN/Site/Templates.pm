@@ -395,7 +395,7 @@ template distribution => sub {
                                     a {
                                         rel is 'license';
                                         href is $license->url;
-                                        $license->name;
+                                        _license_name($license);
                                     };
                                 } else {
                                     my %other_strings = (
@@ -1479,6 +1479,15 @@ sub _license($) {
     $class = "Software::License::$class";
     eval "require $class; 1" or die;
     return $class;
+}
+
+# XXX https://rt.cpan.org/Ticket/Display.html?id=67706
+sub _license_name($) {
+    my $class = ref $_[0] || $_[0];
+    my ($name) = $class =~ /([^:]+)$/; # Grab the package name.
+    $name =~ s/(\d)_(\d)/$1.$2/g;      # Use dots in versions.
+    $name =~ s/_/ /g;                  # Use spaces everywhere else.
+    return $name;
 }
 
 sub _link_for_email {
