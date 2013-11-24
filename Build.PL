@@ -88,8 +88,8 @@ my $build = $class->new(
     meta_merge => {
         resources => {
             homepage   => 'http://www.pgxn.org/',
-            bugtracker => 'http://github.com/pgxn/pgxn/issues/',
-            repository => 'http://github.com/pgxn/pgxn/tree/',
+            bugtracker => 'https://github.com/pgxn/pgxn-site/issues/',
+            repository => 'https://github.com/pgxn/pgxn-site/',
         },
     },
 );
