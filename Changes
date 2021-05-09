@@ -2,7 +2,8 @@ Revision history for Perl extension PGXN::Site
 
 0.10.4
       - Switched to shorter name for license links.
-      - Removed the border around linked images.
+      - Removed the border around linked images, removed the colors for list
+        items, and softened the color for definition terms.
       - Removed the `Capfile` and `eg` directory from the source (and distribution).
         Examples for managing PGXN can now be found in the pgxn/pgxn-ops
         repository on GitHub.

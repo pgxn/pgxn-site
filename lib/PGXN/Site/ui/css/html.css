@@ -110,10 +110,6 @@ ol, ul {
   padding: 0 0 0 30px;
 }
 
-ol {
-  color: #FC0;
-}
-
 ol span {
   color: #EEE;
 }
@@ -154,7 +150,7 @@ acronym {
 
 dt {
   font-weight: bold;
-  color: #FFB323;
+  color: #F8D766;
 }
 
 dd {
