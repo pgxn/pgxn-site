@@ -139,6 +139,10 @@ pre {
   line-height: 120%;
 }
 
+pre code {
+  padding: 0;
+}
+
 .leftColumn code, #pgxntoc code {
   margin-left: 0;
 }
