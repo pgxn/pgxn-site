@@ -16,6 +16,7 @@ jobs:
           perl-version: ${{ matrix.perl }}
           distribution: strawberry # this option only used on Windows
       - run: perl -V
-      - run: cpanm --installdeps --with-recommends --notest -v . Text::MultiMarkdown
-      - run: ./Build test
-
+      - run: |-
+          perl Build.PL
+          PERL_MM_USE_DEFAULT=1 ./Build installdeps --cpan_client 'cpanm -qn'
+          ./Build test
