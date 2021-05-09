@@ -16,15 +16,15 @@ PGXN::Site - Maintain and serve a PGXN web site
 
 =head1 Synopsis
 
-  pgxn_site_server --api-url     http://api.pgxn.org/ \
+  pgxn_site_server --api-url     https://api.pgxn.org/ \
                    --errors-from oops@example.com \
                    --errors-to   alerts@example.com \
                    --feedback-to feedback@example.com
 
 =head1 Description
 
-L<PGXN|http://pgxn.org> is a L<CPAN|http://cpan.org>-inspired network for
-distributing extensions for the L<PostgreSQL RDBMS|http://www.postgresql.org>.
+L<PGXN|https://pgxn.org> is a L<CPAN|https://cpan.org>-inspired network for
+distributing extensions for the L<PostgreSQL RDBMS|https://www.postgresql.org>.
 All of the infrastructure tools, however, have been designed to be used to
 create networks for distributing any kind of release distributions and for
 providing a lightweight static file JSON REST API.
@@ -93,7 +93,7 @@ David E. Wheeler <david.wheeler@pgexperts.com>
 Copyright (c) 2010-2013 David E. Wheeler.
 
 This module is free software; you can redistribute it and/or modify it under
-the L<PostgreSQL License|http://www.opensource.org/licenses/postgresql>.
+the L<PostgreSQL License|https://www.opensource.org/licenses/postgresql>.
 
 Permission to use, copy, modify, and distribute this software and its
 documentation for any purpose, without fee, and without a written agreement is

@@ -353,7 +353,7 @@ PGXN::Site::Controller - The PGXN::Site request controller
   use PGXN::Site::Controller;
   use Router::Resource;
 
-  my $controller = PGXN::Site::Controller->new(url => 'http://api.pgxn.org');
+  my $controller = PGXN::Site::Controller->new(url => 'https://api.pgxn.org');
   my $router = router {
       resource '/' => sub {
           GET { $controller->home(@_) };
@@ -561,7 +561,7 @@ David E. Wheeler <david.wheeler@pgexperts.com>
 Copyright (c) 2010-2013 David E. Wheeler.
 
 This module is free software; you can redistribute it and/or modify it under
-the L<PostgreSQL License|http://www.opensource.org/licenses/postgresql>.
+the L<PostgreSQL License|https://www.opensource.org/licenses/postgresql>.
 
 Permission to use, copy, modify, and distribute this software and its
 documentation for any purpose, without fee, and without a written agreement is

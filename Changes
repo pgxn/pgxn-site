@@ -6,6 +6,8 @@ Revision history for Perl extension PGXN::Site
       - Removed the `Capfile` and `eg` directory from the source (and distribution).
         Examples for managing PGXN can now be found in the pgxn/pgxn-ops
         repository on GitHub.
+      - Updated URLs to HTTPS wherever possible and fixed some broken links.
+      - Reformatted the Multimarkdown texts to be user-friendly as plain text.
 
 0.10.3  2013-11-06T07:22:46Z
       - Updated Dalibo logo.

@@ -290,43 +290,43 @@ sub test_wrapper {
                 $tx->like('./text()', qr{\bdesign\b}, 'Text should contain "design"');
                 $tx->like('./text()', qr{\blogo\b}, 'Text should contain "logo"');
                 $tx->ok('./a[1]', 'Test first anchor', sub {
-                    $tx->is('./@href', 'http://www.justatheory.com/', 'Should link to justatheory.com');
+                    $tx->is('./@href', 'https://www.justatheory.com/', 'Should link to justatheory.com');
                     $tx->is('./@title', 'Go to Just a Theory', 'Should have link title');
                     $tx->is('./text()', 'theory', 'Should have text "theory"');
                 });
                 $tx->is('./span[1][@class="grey"]', '|', 'Should have spacer span');
                 $tx->ok('./a[2]', 'Test second anchor', sub {
-                    $tx->is('./@href', 'http://fullahead.org/', 'Should link to fullahead.org');
+                    $tx->is('./@href', 'https://fullahead.org/', 'Should link to fullahead.org');
                     $tx->is('./@title', 'Go to Fullahead', 'Should have link title');
                     $tx->is('./text()', 'Fullahead', 'Should have text "Fullahead"');
                 });
                 $tx->is('./span[2][@class="grey"]', '|', 'Should have spacer span');
                 $tx->ok('./a[3]', 'Test third anchor', sub {
-                    $tx->is('./@href', 'http://www.strongrrl.com/', 'Should link to strongrrl.com');
+                    $tx->is('./@href', 'https://www.strongrrl.com/', 'Should link to strongrrl.com');
                     $tx->is('./@title', 'Go to Strongrrl', 'Should have link title');
                     $tx->is('./text()', 'Strongrrl', 'Should have text "Strongrrl"');
                 });
             }); # /span.floatLeft
 
-                        # [ 'http://blog.pgxn.org/',    'Blog',       'Blog'    ],
-                        # [ 'http://twitter.com/pgxn/', 'Twitter',    'Twitter' ],
+                        # [ 'https://blog.pgxn.org/',    'Blog',       'Blog'    ],
+                        # [ 'https://twitter.com/pgxn/', 'Twitter',    'Twitter' ],
             $tx->ok('./span[2]', 'Test the first span' => sub {
                 $tx->is('./@class', 'floatRight', 'Should be floatRight');
                 $tx->is('count(./*)', 13, 'Should have 11 elements below #floatRight');
                 $tx->ok('./a[1]', 'Test blog anchor', sub {
-                    $tx->is('./@href', 'http://blog.pgxn.org/', 'Should link to blog');
+                    $tx->is('./@href', 'https://blog.pgxn.org/', 'Should link to blog');
                     $tx->is('./@title', 'PGXN Blog', 'Should have link title');
                     $tx->is('./text()', 'Blog', 'Should have text "Blog"');
                 });
                 $tx->is('./span[1][@class="grey"]', '|', 'Should have spacer span');
                 $tx->ok('./a[2]', 'Test Twitter anchor', sub {
-                    $tx->is('./@href', 'http://twitter.com/pgxn/', 'Should link to /mirroring/');
+                    $tx->is('./@href', 'https://twitter.com/pgxn/', 'Should link to /mirroring/');
                     $tx->is('./@title', 'Follow PGXN on Twitter', 'Should have link title');
                     $tx->is('./text()', 'Twitter', 'Should have text "Twitter"');
                 });
                 $tx->is('./span[2][@class="grey"]', '|', 'Should have spacer span');
                 $tx->ok('./a[3]', 'Test PGXN Manager anchor', sub {
-                    $tx->is('./@href', 'http://manager.pgxn.org/', 'Should link to manager');
+                    $tx->is('./@href', 'https://manager.pgxn.org/', 'Should link to manager');
                     $tx->is('./@title', 'Release it on PGXN', 'Should have link title');
                     $tx->is('./text()', 'Release It', 'Should have text "Release It"');
                 });

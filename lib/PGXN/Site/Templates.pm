@@ -25,7 +25,7 @@ BEGIN { create_wrapper wrapper => sub {
     outs_raw '<!DOCTYPE html>';
     html {
         attr {
-            xmlns      => 'http://www.w3.org/1999/xhtml',
+            xmlns      => 'https://www.w3.org/1999/xhtml',
             'xml:lang' => 'en',
             lang       => 'en',
         };
@@ -33,7 +33,7 @@ BEGIN { create_wrapper wrapper => sub {
             '<!--',
             '____________________________________________________________',
             '|                                                            |',
-            '|    DESIGN + Pat Heard { http://fullahead.org }             |',
+            '|    DESIGN + Pat Heard { https://fullahead.org }            |',
             '|      DATE + 2006.03.19                                     |',
             '| COPYRIGHT + Free use if this notice is left in place       |',
             '|____________________________________________________________|',
@@ -144,21 +144,21 @@ BEGIN { create_wrapper wrapper => sub {
                         span { class is 'grey'; '|' };
                         outs 'code';
                         a {
-                            href is 'http://www.justatheory.com/';
+                            href is 'https://www.justatheory.com/';
                             title is T 'Go to [_1]', 'Just a Theory';
                             'theory';
                         };
                         span { class is 'grey'; '|' };
                         outs ' design';
                         a {
-                            href is 'http://fullahead.org/';
+                            href is 'https://fullahead.org/';
                             title is T 'Go to [_1]', 'Fullahead';
                             'Fullahead';
                         };
                         span { class is 'grey'; '|' };
                         outs ' logo';
                         a {
-                            href is 'http://www.strongrrl.com/';
+                            href is 'https://www.strongrrl.com/';
                             title is T 'Go to [_1]', 'Strongrrl';
                             'Strongrrl';
                         };
@@ -166,19 +166,19 @@ BEGIN { create_wrapper wrapper => sub {
                     span {
                         class is 'floatRight';
                         a {
-                            href is 'http://blog.pgxn.org/';
+                            href is 'https://blog.pgxn.org/';
                             title is T 'PGXN Blog';
                             T 'Blog';
                         };
                         span { class is 'grey'; '|' };
                         a {
-                            href is 'http://twitter.com/pgxn/';
+                            href is 'https://twitter.com/pgxn/';
                             title is T 'Follow PGXN on Twitter';
                             T 'Twitter';
                         };
                         span { class is 'grey'; '|' };
                         a {
-                            href is 'http://manager.pgxn.org/';
+                            href is 'https://manager.pgxn.org/';
                             title is T 'Release it on PGXN';
                             T 'Release It';
                         };
@@ -693,7 +693,7 @@ template user => sub {
                         dt { T 'Twitter' };
                         dd {
                             class is 'twitter';
-                            a { href is "http://twitter.com/$t"; $t };
+                            a { href is "https://twitter.com/$t"; $t };
                         };
                     }
                 };
@@ -1063,13 +1063,13 @@ template donors => sub {
                         ul {
                             li { 'Richard Broersma' };
                             li {a{
-                                href is 'http://tigerlead.com/';
+                                href is 'https://tigerlead.com/';
                                 'TigerLead';
                             }};
                             li { 'Thom Brown' };
                             li { 'Hitoshi Harada' };
                             li {a{
-                                href is 'http://www.25th-floor.com/';
+                                href is 'https://www.25th-floor.com/';
                                 '25th-floor - de Pretis & Helmberger KG';
                             }};
                         };
@@ -1080,28 +1080,28 @@ template donors => sub {
                         h2 { T 'Advocates' };
                         ul {
                             li {a{
-                                href is 'http://www.hubbellgrp.com/';
+                                href is 'https://www.hubbellgrp.com/';
                                 'Hubbell Group Inc.';
                             }};
                             li { 'John S. Gage' };
                             li {a{
-                                href is 'http://www.2ndquadrant.us/';
+                                href is 'https://www.2ndquadrant.us/';
                                 'Greg Smith';
                             }};
                             li {a{
-                                href is 'http://www.urbandb.com/';
+                                href is 'https://www.urbandb.com/';
                                 'UrbanDB.com';
                             }};
                             li {a{
-                                href is 'http://depesz.com/';
+                                href is 'https://depesz.com/';
                                 'depesz';
                             }};
                             li {a{
-                                href is 'http://jim.nasby.net/';
+                                href is 'https://jim.nasby.net/';
                                 'Jim Nasby';
                             }};
                             li {a{
-                                href is 'http://www.progressivepractice.com/';
+                                href is 'https://www.progressivepractice.com/';
                                 'Jon Erdman';
                             }};
                         };
@@ -1116,19 +1116,19 @@ template donors => sub {
                         h2 { T 'Supporters' };
                         ul {
                             li {a{
-                                href is 'http://www.dagolden.com/';
+                                href is 'https://www.dagolden.com/';
                                 'David Golden';
                             }};
                             li {a{
-                                href is 'http://thoughts.j-davis.com/';
+                                href is 'https://thoughts.j-davis.com/';
                                 'Jeff Davis';
                             }};
                             li {a{
-                                href is 'http://www.estately.com/';
+                                href is 'https://www.estately.com/';
                                 'Estately';
                             }};
                             li {a{
-                                href is 'http://www.full-table-scan.com/';
+                                href is 'https://www.full-table-scan.com/';
                                 'Chris Spotts';
                             }};
                         };
@@ -1140,15 +1140,15 @@ template donors => sub {
                         h2 { T 'Boosters' };
                         ul {
                             li {a{
-                                href is 'http://www.kineticode.com/';
+                                href is 'https://www.kineticode.com/';
                                 'Kineticode, Inc.';
                             }};
                             li {a{
-                                href is 'http://www.cxnet.cl/';
+                                href is 'https://www.cxnet.cl/';
                                 'CxNet (Chile)';
                             }};
                             li {a{
-                                href is 'http://www.schemaverse.com/';
+                                href is 'https://www.schemaverse.com/';
                                 'Schemaverse';
                             }};
                             li {a{
@@ -1156,11 +1156,11 @@ template donors => sub {
                                 'Fábio Telles Rodriguez';
                             }};
                             li {a{
-                                href is 'http://www.nextbio.com/b/search/author/Wenjian%20Yang';
+                                href is 'https://www.nextbio.com/b/search/author/Wenjian%20Yang';
                                 'Wenjian Yang';
                             }};
                             li {a{
-                                href is 'http://pgdba.net/blog/';
+                                href is 'https://pgdba.net/blog/';
                                 'Michael Nacos';
                             }};
                             li { 'August Zajonc' };
@@ -1211,7 +1211,7 @@ template mirroring => sub {
             id is 'info';
             div {
                 class is 'gradient';
-                outs_raw $l->from_file('mirroring.html', _obscure($args->{feedback_to}) . '?subject=Mirror Registration&amp;body=   &quot;mirror.hostname&quot;: {%0a      &quot;url&quot;:          &quot;http://hostname.of.the.pgxn/mirroring/site/root&quot;,%0a      &quot;frequency&quot;:    &quot;daily/bidaily/.../weekly&quot;,%0a      &quot;location&quot;:     &quot;city, (area?, )country, continent (lon lat)&quot;,%0a      &quot;organization&quot;: &quot;full organization name&quot;,%0a      &quot;timezone&quot;:     &quot;Area/Location zoneinfo tz&quot;,%0a      &quot;contact&quot;:      &quot;email.address.to.contact@for.this.mirror&quot;,%0a      &quot;bandwidth&quot;:    &quot;1Gbps, 100Mbps, DSL, etc.&quot;,%0a      &quot;src&quot;:          &quot;rsync://from.which.host/is/this/site/mirroring/from/&quot;,%0a      &quot;rsync&quot;:        &quot;rsync://hostname.of.the.mirror/path (if you provide it)&quot;,%0a      &quot;notes&quot;:        &quot;(optional field) access restrictions, for example?&quot;%0a   }%0a');
+                outs_raw $l->from_file('mirroring.html', _obscure($args->{feedback_to}) . '?subject=Mirror Registration&amp;body=   &quot;mirror.hostname&quot;: {%0a      &quot;url&quot;:          &quot;https://hostname.of.the.pgxn/mirroring/site/root&quot;,%0a      &quot;frequency&quot;:    &quot;daily/bidaily/.../weekly&quot;,%0a      &quot;location&quot;:     &quot;city, (area?, )country, continent (lon lat)&quot;,%0a      &quot;organization&quot;: &quot;full organization name&quot;,%0a      &quot;timezone&quot;:     &quot;Area/Location zoneinfo tz&quot;,%0a      &quot;contact&quot;:      &quot;email.address.to.contact@for.this.mirror&quot;,%0a      &quot;bandwidth&quot;:    &quot;1Gbps, 100Mbps, DSL, etc.&quot;,%0a      &quot;src&quot;:          &quot;rsync://from.which.host/is/this/site/mirroring/from/&quot;,%0a      &quot;rsync&quot;:        &quot;rsync://hostname.of.the.mirror/path (if you provide it)&quot;,%0a      &quot;notes&quot;:        &quot;(optional field) access restrictions, for example?&quot;%0a   }%0a');
             };
         };
     } $req, {
@@ -1389,7 +1389,7 @@ template founders => sub {
     div {
         id is 'founders';
         a {
-            href is 'http://www.myyearbook.com/';
+            href is 'https://www.meetme.com/';
             title is 'myYearbook';
             img {
                 src is '/ui/img/myyearbook.png';
@@ -1397,7 +1397,7 @@ template founders => sub {
             };
         };
         a {
-            href is 'http://www.pgexperts.com/';
+            href is 'https://www.pgexperts.com/';
             title is 'PostgreSQL Experts, Inc.';
             img {
                 src is '/ui/img/pgexperts.png';
@@ -1405,7 +1405,7 @@ template founders => sub {
             };
         };
         a {
-            href is 'http://www.dalibo.org/en/';
+            href is 'https://www.dalibo.org/en/';
             title is 'Dalibo';
             img {
                 src is '/ui/img/dalibo.png';
@@ -1420,7 +1420,7 @@ template patrons => sub {
         id is 'patrons';
         h3 {
             a {
-                href is 'http://www.enovafinancial.com/';
+                href is 'https://www.enovafinancial.com/';
                 title is 'Enova Financial';
                 img {
                     src is '/ui/img/enova.png';
@@ -1436,11 +1436,11 @@ template benefactors => sub {
     ul {
         id is 'benefactors';
         for my $spec (
-            [ 'http://www.etsy.com/'          => 'Etsy'                       ],
-            [ 'http://www.postgresql.us/'     => 'US PostgreSQL Association'  ],
-            [ 'http://www.commandprompt.com/' => 'Command Prompt, Inc.'       ],
-            [ 'http://www.marchex.com/'       => 'Marchex'                    ],
-            [ 'http://younicycle.com/'        => 'Younicycle, The Web System' ],
+            [ 'https://www.etsy.com/'          => 'Etsy'                       ],
+            [ 'https://www.postgresql.us/'     => 'US PostgreSQL Association'  ],
+            [ 'https://www.commandprompt.com/' => 'Command Prompt, Inc.'       ],
+            [ 'https://www.marchex.com/'       => 'Marchex'                    ],
+            [ 'https://younicycle.com/'        => 'Younicycle, The Web System' ],
         ) {
             li { a { href is $spec->[0]; $spec->[1] } };
         }
@@ -1511,7 +1511,7 @@ sub _obscure ($) {
 #       &#64;&#101;x&#x61;&#109;&#x70;&#108;&#x65;&#x2E;&#99;&#111;&#109;</a>
 #
 #   Based on a filter by Matthew Wickline, posted to the BBEdit-Talk
-#   mailing list: <http://tinyurl.com/yu7ue>
+#   mailing list: <https://tinyurl.com/yu7ue>
 #
     my $addr = shift;
 
@@ -1603,7 +1603,7 @@ David E. Wheeler <david.wheeler@pgexperts.com>
 Copyright (c) 2010-2013 David E. Wheeler.
 
 This module is free software; you can redistribute it and/or modify it under
-the L<PostgreSQL License|http://www.opensource.org/licenses/postgresql>.
+the L<PostgreSQL License|https://www.opensource.org/licenses/postgresql>.
 
 Permission to use, copy, modify, and distribute this software and its
 documentation for any purpose, without fee, and without a written agreement is
