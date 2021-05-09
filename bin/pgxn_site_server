@@ -1,8 +1,8 @@
-#!/usr/local/bin/perl -w
+#!/usr/bin/perl -w
 
 use 5.10.0;
 use utf8;
-use blib;
+use lib 'lib';
 use PGXN::Site::Router;
 use Plack::Runner;
 use Getopt::Long;
