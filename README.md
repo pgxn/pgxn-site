@@ -1,6 +1,9 @@
 PGXN::Site
 ==========
 
+[![CPAN version](https://badge.fury.io/pl/PGXN-Site.svg)](https://badge.fury.io/pl/PGXN-Site)
+[![Build Status](https://github.com/pgxn/pgxn-site/workflows/CI/badge.svg)](https://github.com/pgxn/pgxn-site/actions)
+
 [PGXN](https://www.pgxn.org/), the PostgreSQL Extension network, is a central
 distribution system for open-source PostgreSQL extension libraries. It consists
 of four basic parts:
