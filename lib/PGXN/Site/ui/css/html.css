@@ -106,16 +106,12 @@ b {
 }
 
 ol, ul {
-  margin: 10px 0 0 13px;
+  margin: 10px 0 0 0;
   padding: 0 0 0 30px;
 }
 
 ol span {
   color: #EEE;
-}
-
-ul {
-  list-style-image: url(../img/bullet.gif);
 }
 
 del {
@@ -127,7 +123,7 @@ code {
   background: #444;
   line-height: 130%;
   font-size:90%;
-  padding:2px;
+  padding:4px;
 }
 
 pre {
@@ -159,11 +155,12 @@ dt {
 
 dd {
   margin-left: 0;
-  padding-left: 45px; 
+  padding-left: 15px;
 }
 
-
-
+dd pre {
+  margin: 10px 0;
+}
 
 /**************************************************************
    Form Elements
