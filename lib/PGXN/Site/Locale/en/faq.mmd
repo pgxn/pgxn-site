@@ -45,17 +45,17 @@ So how do I apply?
     quickly approved.
                    
 <span id="releaseapproval"></span>
-Okay, I have an account and want to release an extension. Is there a release approval process?
+Okay, I have an account and want to release an extension. Is there a release
+approval process?
 
 :   Short answer: No, because PGXN needs to [KISS]. Longer answer: No. Again
-    following the [CPAN example], PGXN “ is and will stay an open and free
-    forum, where the authors decide what they upload. Any further selection
-    belongs to different fora.” This is because “the first goal of PGXN is to
-    make it easy to submit code and redistribute it. Ease of use and quality
-    control are not the central problems ~[it~] tries to solve.” (Original
-    quotation lost to time and internet entropy.) Frankly, moderation of
-    releases is a significant reason that other communities have failed to
-    duplicate the success of CPAN.
+    following the [CPAN example], PGXN “is and will stay an open and free forum,
+    where the authors decide what they upload. Any further selection belongs to
+    different fora.” This is because “the first goal of PGXN is to make it easy
+    to submit code and redistribute it. Ease of use and quality control are not
+    the central problems ~[it~] tries to solve.” (Original quotation lost to
+    time and internet entropy.) Frankly, moderation of releases is a significant
+    reason that other communities have failed to duplicate the success of CPAN.
                    
 <span id="howto"></span>
 Great, so how do I create an extension distribution and release it?
@@ -64,12 +64,14 @@ Great, so how do I create an extension distribution and release it?
     distribution. Have a look at the [How To] for all the details.
 
 <span id="maillist">
-Is there some place I can go to ask questions and get help from like-minded PGXN contributors?
+Is there some place I can go to ask questions and get help from like-minded PGXN
+contributors?
 
 :   Yes, there is a [Google Group] for this very purpose. Join us!
 
 <span id="goodbadugly"></span>
-How does PGXN make it easy to distinguish the garbage from the viable extensions?
+How does PGXN make it easy to distinguish the garbage from the viable
+extensions?
 
 :   The first step is the PGXN search engine, accessible via the [home page],
     which will allow you to find extensions relevant to you and to read their
@@ -94,27 +96,27 @@ Is there a command-line client for installing extensions from PGXN?
     code].
                    
 <span id="howclientworks"></span>
-How will the command-line client work?
+How does the command-line client work?
 
-:   It will use the JSON-based API available on every PGXN mirror to find,
-    download, build, and install extensions. It will rely on [PGXS] to do the
-    heavy lifting.
+:   It uses JSON-based API available on every PGXN mirror to find, download,
+    build, and install extensions. It relies on [PGXS] to do the heavy lifting
+    to build extensions.
                    
 <span id="clientwindows"></span>
 What about Windows?
 
-:   The PGXN client will always follow the lead of the PostgreSQL core on
-    installing extensions. If support for installing extensions on Windows
-    improves such that a compiler is no longer required, the PGXN client will be
-    modified as appropriate to take advantage of it. This applies not
-    specifically to Windows, but to the ability of the core installer (or any
-    future community-supported installer) to work on *any* platform.
+:   The PGXN client follows the lead of the PostgreSQL core on installing
+    extensions. If support for installing extensions on Windows improves such
+    that a compiler is no longer required, the PGXN client will be modified as
+    appropriate to take advantage of it. This applies not specifically to
+    Windows, but to the ability of the core installer (or any future
+    community-supported installer) to work on *any* platform.
                    
 <span id="clientsecurity"></span>
 What kind of security does PGXN have?
 
-:   Each release package has an accompanying SHA1 hash that the PGXN client will
-    verify before installing an extension.
+:   Each release package has an accompanying SHA1 hash that the PGXN client
+    verifies before installing an extension.
 
 Contributing to PGXN
 --------------------
@@ -123,7 +125,7 @@ Contributing to PGXN
 Under what license is PGXN’s source code distributed?
 
 :   [The PostgreSQL License]. Note that the actual extensions themselves may be
-    under any open source license, according to their authors.
+    under any open source license, determined by their authors.
 
 <span id="contribute"></span>
 Can other people contribute to PGXN?
@@ -136,12 +138,11 @@ Can other people contribute to PGXN?
 <span id="owners"></span>
 Who owns and runs PGXN?
 
-:   Currently, PGXN is hosted on a box owned by [depesz]. Hopefully the
-    PostgreSQL.org Web Team eventually run PGXN on community servers. If they
-    choose not to administrate it, PGXN will be run on one or more servers to be
-    contributed to the [PostgreSQL Funds Group]. In any case, the PGXN master
-    index and server will be owned by a PostgreSQL-related nonprofit
-    organization.
+:   Currently, PGXN is hosted on a box owned by [depesz]. Eventually it may run
+    on community servers, as the  PostgreSQL.org Web Team determines. Or it may
+    end up on one or more servers to be contributed to the [PostgreSQL Funds
+    Group]. In any case, the PGXN master index and server will always be
+    contributed to the PostgreSQL community.
                    
 <span id="source"></span>
 Where is the PGXN source code hosted?
@@ -152,14 +153,14 @@ Where is the PGXN source code hosted?
 What language is PGXN written in?
 
 :   Mostly Perl. The database used by [PGXN Manager] is written in SQL,
-    PL/pgSQL, and PL/Perl (and even uses [semver], a [semantic version] data
-    type written in C and distributed right here on PGXN!)
+    PL/pgSQL, and PL/Perl — and even uses [semver], a [semantic version] data
+    type written in C and distributed right here on PGXN!
                    
 <span id="api"></span>
 Is there an API?
 
 :   Yes! The [PGXN API] provides centralized index and API of distribution
-    metadata.
+    metadata, as well as the search APIs used here.
 
   [citext]: https://www.postgresql.org/docs/current/static/citext.html
   [hstore]: https://www.postgresql.org/docs/current/static/hstore.html
