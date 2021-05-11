@@ -8,7 +8,8 @@ Revision history for Perl extension PGXN::Site
         Examples for managing PGXN can now be found in the pgxn/pgxn-ops
         repository on GitHub.
       - Updated URLs to HTTPS wherever possible and fixed some broken links.
-      - Reformatted the Multimarkdown texts to be user-friendly as plain text.
+      - Reformatted the Multimarkdown text in the source code to be
+        user-friendly as plain text.
       - Now require SemVer v0.10.0 for compatibility with proper support for the
         semver 2.0.0 spec (aside from version parts larger than 32 bits).
       - Eliminated unwanted indentation in code blocks. Thanks to Hans Ginzel
@@ -113,7 +114,7 @@ Revision history for Perl extension PGXN::Site
         to release a distribution.
       - Added redirect from `/meta/spec.html` to the new URL, `/spec/`.
       - Added links to the Google group to the About and FAQ pages.
-      - Made the background tranparent in `code` elements inside tables.
+      - Made the background transparent in `code` elements inside tables.
 
 0.6.0   2011-04-20T05:35:52
       - Requests should now all be returned with an appropriate
