@@ -67,6 +67,10 @@ h1, h2, h3, h4, h5, h6, p, dl {
   padding: 10px 15px;
 }
 
+li p {
+  padding: 10px 15px 10px 0;
+}
+
 table {
   border-collapse:collapse;
   margin: 10px 15px;
@@ -135,6 +139,10 @@ pre {
   line-height: 120%;
 }
 
+li pre {
+  margin: 10px 15px 10px 0;
+}
+
 pre code {
   padding: 0;
 }
@@ -156,6 +164,10 @@ dt {
 dd {
   margin-left: 0;
   padding-left: 15px;
+}
+
+.meta dd {
+  padding-left: 45px;
 }
 
 dd pre {
