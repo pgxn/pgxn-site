@@ -235,7 +235,7 @@
 
 .hsearch {
   width:665px;
-  background: #555 url(../img/gradient.jpg) repeat-x bottom left;
+  background: #555 url(/ui/img/gradient.jpg) repeat-x bottom left;
 }
 
 .hside h3 {
@@ -284,8 +284,8 @@
  **************************************************************/
 
 .res {
-  /* background: #555 url(../img/gradient.jpg) repeat-x top left;  */
-  background: url(../img/favicon.png) no-repeat 10px 19px;
+  /* background: #555 url(/ui/img/gradient.jpg) repeat-x top left;  */
+  background: url(/ui/img/favicon.png) no-repeat 10px 19px;
   padding:15px 15px 15px 35px;
 }
 
@@ -343,48 +343,6 @@ ul.sideMenu {
   text-decoration: none;
 }
 
-.sideMenu li a {
-  display: block;
-  margin: 0.2em 0;
-  padding: 3px 5px;    
-  
-  text-decoration: none;
-  color: #FFF;
-} 
-
-.sideMenu li a:hover, #pgxntoc li a:hover {
-  color: #65EBFF;
-  background: #5F5F5F;
-}
-
-/* Active menu item */
-.sideMenu li.here {
-  display: block;  
-  padding: 5px;
-  color: #65EBFF;
-  background: #555;
-}
-
-/* Submenu of active menu item */
-.sideMenu li.here ul {
-  margin: 0;
-  padding: 0;
-}
-
-.sideMenu li.here ul li a {
-  padding-left: 35px;
-  font: 400 0.55em "trebuchet ms", serif;
-  color: #FFF;  
-  background: url(../img/bullet.gif) no-repeat 10px 0px;
-}
-
-.sideMenu li.here ul li a:hover {
-  color: #9FF3FF;
-  background: #5F5F5F url(../img/bullet.gif) no-repeat 10px 0px;
-}
-
-
-
 /**************************************************************
    #page: Holds the main page content.
  **************************************************************/
@@ -419,7 +377,7 @@ ul.sideMenu {
   width: 100%;
   clear: both;
   margin-top: -3.5em;
-  background: #000 url(../img/footer.jpg) repeat-x top left;
+  background: #000 url(/ui/img/footer.jpg) repeat-x top left;
 }
 
 /* Sets the width of the footer content */
@@ -525,7 +483,7 @@ ul.sideMenu {
 
 .gradient, .doc #pgxnbod {
   margin-bottom: 2em;
-  background: #555 url(../img/gradient.jpg) repeat-x bottom left; 
+  background: #555 url(/ui/img/gradient.jpg) repeat-x bottom left; 
 }
 
 .error {
@@ -627,7 +585,7 @@ table .dist .name, table .dist .bday {
 table .dist .name a {
   display:block;
   padding-left: 30px;
-  background: url(../img/favicon.png) no-repeat 4px 3px;
+  background: url(/ui/img/favicon.png) no-repeat 4px 3px;
 }
 
 table code {background-color:transparent;}
@@ -639,11 +597,15 @@ table code {background-color:transparent;}
 .dist .meta .download a, .dist .meta .browse a, .dist .meta a.avatar {
   display:block;
   margin:0;
-  padding:10px 10px 5px;
+  padding:6px 6px 0;
   float: right;
 }
 .dist .meta .download a:hover, .dist .meta .browse a:hover, .dist .meta a.avatar:hover {
   background:#202020;
+}
+.controls img {
+  width: 24px;
+  height: 24px;
 }
 
 .readme #pgxntoc {

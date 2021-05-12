@@ -48,7 +48,6 @@ a:visited:after {
 /* Don't display these elements since they're not useful on paper */
 #header,
 #mainMenu,
-.sideMenu,
 #footer {
   display: none;
 }

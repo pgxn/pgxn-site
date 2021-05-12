@@ -287,7 +287,7 @@ template distribution => sub {
                             href is URI->new($args->{api_url} . $dist->download_path);
                             title is T 'Download [_1] [_2]', $dist->name, $dist->version;
                             img {
-                                src is '/ui/img/download.png';
+                                src is '/ui/img/download.svg';
                                 alt is T 'Download';
                             };
                         };
@@ -299,7 +299,7 @@ template distribution => sub {
                             href is URI->new($args->{api_url} . $dist->source_path);
                             title is T 'Browse [_1] [_2]', $dist->name, $dist->version;
                             img {
-                            src is '/ui/img/package.png';
+                            src is '/ui/img/package.svg';
                             alt is T 'Browse';
                         };
                         };
@@ -1356,7 +1356,7 @@ template release_table => sub {
                             href is URI->new($args->{api_url} . $api->source_path_for($dist => $info->{version}));
                             title is T 'Browse [_1] [_2]', $dist, $info->{version};
                             img {
-                                src is '/ui/img/package.png';
+                                src is '/ui/img/package.svg';
                                 alt is T 'Browse';
                             };
                         }
@@ -1368,7 +1368,7 @@ template release_table => sub {
                             href is URI->new($args->{api_url} . $api->download_path_for($dist => $info->{version}));
                             title is T 'Download [_1] [_2]', $dist, $info->{version};
                             img {
-                                src is '/ui/img/download.png';
+                                src is '/ui/img/download.svg';
                                 alt is T 'Download';
                             };
                         };

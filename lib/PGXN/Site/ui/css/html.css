@@ -18,7 +18,7 @@ body {
   font: 400 0.9em "trebuchet ms", serif;
   line-height: 170%;
 
-  background: #666 url(../img/header.png) repeat-x top left;
+  background: #666 url(/ui/img/header.png) repeat-x top left;
   color: #EEE;
 }
 
@@ -232,21 +232,25 @@ blockquote {
   padding-left: 27px;
   
   background-color: #444;  
-  background-image: url(../img/quote.gif);
+  background-image: url(/ui/img/quote.svg);
+  background-size: 32px;
   background-repeat: no-repeat;
-  background-position: 5px 50%;  
+  background-position: 5px 12px;  
 }
 
 blockquote.exclamation {
-  background-image: url(../img/exclamation.gif);
+  background-image: url(/ui/img/exclamation.svg);
+  background-size: 32px;
 }
 
 blockquote.stop {
-  background-image: url(../img/stop.gif);
+  background-image: url(/ui/img/stop.svg);
+  background-size: 32px;
 }
 
 blockquote.go {
-  background-image: url(../img/go.gif);
+  background-image: url(/ui/img/go.svg);
+  background-size: 32px;
 }
 
 
