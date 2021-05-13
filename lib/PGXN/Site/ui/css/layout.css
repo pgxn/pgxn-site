@@ -288,7 +288,8 @@
 
 .res {
   /* background: #555 url(/ui/img/gradient.jpg) repeat-x top left;  */
-  background: url(/ui/img/favicon.png) no-repeat 10px 19px;
+  background: url(/ui/img/icon-44.png) no-repeat 1px 2px;
+  background-size: 20px;
   padding:15px 15px 15px 35px;
 }
 
@@ -561,7 +562,7 @@ ul.sideMenu {
 }
 
 table td, table th {
-   padding: 5px;
+   padding: 5px
 }
 table tr {
  vertical-align:text-top;
@@ -588,7 +589,8 @@ table .dist .name, table .dist .bday {
 table .dist .name a {
   display:block;
   padding-left: 30px;
-  background: url(/ui/img/favicon.png) no-repeat 4px 3px;
+  background: url(/ui/img/icon-44.png) no-repeat 1px 2px;
+  background-size: 20px;
 }
 
 table code {background-color:transparent;}
@@ -606,7 +608,7 @@ table code {background-color:transparent;}
 .dist .meta .download a:hover, .dist .meta .browse a:hover, .dist .meta a.avatar:hover {
   background:#202020;
 }
-.controls img {
+.browse img, .download img {
   width: 24px;
   height: 24px;
 }

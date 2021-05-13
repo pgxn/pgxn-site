@@ -17,6 +17,9 @@ Revision history for Perl extension PGXN::Site
       - Updated the FAQ. It was pretty seriously out of date in a few ways.
       - Replaced low-res icons with SVGs from the
         [icons8 flat color collection](https://icons8.github.io/flat-color-icons/).
+      - Replaced logo graphics with high-res PNGs.
+      - Added support for different resolution favicons and other OS and browser
+        chrome stuff.
 
 0.10.3  2013-11-06T07:22:46Z
       - Updated Dalibo logo.

@@ -22,7 +22,7 @@ use Plack::Request;
 use HTTP::Message::PSGI;
 
 #plan 'no_plan';
-plan tests => 220;
+plan tests => 254;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -157,7 +157,7 @@ sub test_wrapper {
 
     # Check the head element.
     $tx->ok('/html/head', 'Test head', sub {
-        $tx->is('count(./*)', 6, qq{Should have 6 elements below "head"});
+        $tx->is('count(./*)', 14, qq{Should have 24 elements below "head"});
         $tx->is(
             './title',
             'PGXN: PostgreSQL Extension Network',
@@ -174,6 +174,7 @@ sub test_wrapper {
             'Should have description meta element',
         );
 
+        # Check the stylesheets.
         my $i = 0;
         my $v = PGXN::Site->version_string;
         for my $spec (
@@ -186,7 +187,7 @@ sub test_wrapper {
                 $tx->is(
                     './@href',
                     "/ui/css/$spec->[0].css?$v",
-                    "CSS $i should linke to $spec->[0].css"
+                    "CSS $i should link to $spec->[0].css"
                 );
                 $tx->is(
                     './@rel',
@@ -204,6 +205,68 @@ sub test_wrapper {
                     "$spec->[0] should be for $spec->[1]"
                 );
             });
+        }
+
+        # Check the SVN icon.
+        ++$i;
+        $tx->ok("./link[$i]", "Test SVG icon", sub {
+            $tx->is(
+                './@rel', 'icon',
+                "SVG Icon should be an icon",
+            );
+            $tx->is(
+                './@href', "/ui/img/icon.svg",
+                "SVG Icon link to icon.svg",
+            );
+        });
+
+        # Check the favicons.
+        for my $size (qw(16 32 128 192)) {
+            ++$i;
+            $tx->ok("./link[$i]", "Test $size icon", sub {
+                $tx->is(
+                    './@rel', 'icon',
+                    "Icon $size should be an icon",
+                );
+                $tx->is(
+                    './@href', "/ui/img/icon-$size.png",
+                    "Icon $size link to icon-$size.png",
+                );
+                $tx->is(
+                    './@type', 'image/png',
+                    "Icon $size type should be img/png",
+                );
+                $tx->is(
+                    './@sizes', "${size}x${size}",
+                    "Icon $size type should be sized",
+                );
+            });
+        }
+
+        # Check the other icon and UI stuff.
+        for my $spec (
+            {
+                rel   => 'apple-touch-icon',
+                href  => '/ui/img/icon-180.png',
+                sizes => '180x180',
+            },
+            {
+                rel  => 'manifest',
+                href => '/ui/manifest.json',
+            },
+            {
+                rel   => 'mask-icon',
+                href  => '/ui/img/logo.svg',
+                color => 'white',
+            },
+        ) {
+            ++$i;
+            $tx->ok("./link[$i]", "Test link $i", sub {
+                while (my ($k, $v) = each %{ $spec }) {
+                    $tx->is("./\@$k", $v, "Link $i rel should be $v");
+                }
+            });
+            
         }
     }); # /head
 

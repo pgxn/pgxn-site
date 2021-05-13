@@ -63,6 +63,32 @@ BEGIN { create_wrapper wrapper => sub {
                     media is $spec->[1];
                 };
             }
+            link {
+                rel is 'icon';
+                href is "/ui/img/icon.svg";
+            };
+            for my $size (qw(16 32 128 192)) {
+                link {
+                    rel is 'icon';
+                    href is "/ui/img/icon-$size.png";
+                    type is 'image/png';
+                    sizes is "${size}x${size}";
+                }
+            }
+            link {
+                rel is 'apple-touch-icon';
+                href is "/ui/img/icon-180.png";
+                sizes is "180x180";
+            }
+            link {
+                rel is 'manifest';
+                href is "/ui/manifest.json";
+            }
+            link {
+                rel is 'mask-icon';
+                href is "/ui/img/logo.svg";
+                color is 'white';
+            }
         }; # /head
 
         body {

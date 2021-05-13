@@ -1,0 +1,19 @@
+{
+    "name": "PostgreSQL Extension Network",
+    "short_name": "PGXN",
+    "icons": [
+        {
+            "src": "img/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "img/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#608eaa",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}
