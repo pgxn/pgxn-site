@@ -99,6 +99,8 @@
 
   top: 0;
   right: 32px;
+  padding-top: 48px;
+  height: 75px;
 }
 
 #header img.gear {
