@@ -29,6 +29,7 @@
 ^PGXN-Site
 ^Capfile
 ^www
+^assets
 
 # Avoid Pod tests.
 t/pod.+
