@@ -106,6 +106,7 @@
 #header img.gear {
   position: absolute;
   z-index: 2;
+  height: 130px;
 
   top: 0;
   left: 0;
