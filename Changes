@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.20.1
+0.20.1  2021-05-14T19:31:35Z
       - Fixed broken logo links on the art page.
       - Fixed favicon errors and expanded and improved favicon support for
         various browsers.
