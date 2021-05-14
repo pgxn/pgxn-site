@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.10.4
+0.20.0
       - Switched to shorter name for license links.
       - Removed the border around linked images, removed the colors for list
         items, and softened the color for definition terms.
