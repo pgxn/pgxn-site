@@ -261,8 +261,8 @@ sub test_wrapper {
             },
             {
                 rel   => 'mask-icon',
-                href  => '/ui/img/gear-black.svg',
-                color => '#608eaa',
+                href  => '/ui/img/gear-black-16.svg',
+                color => 'white',
             },
         ) {
             ++$i;

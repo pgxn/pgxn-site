@@ -86,8 +86,8 @@ BEGIN { create_wrapper wrapper => sub {
             }
             link {
                 rel is 'mask-icon';
-                href is "/ui/img/gear-black.svg";
-                color is '#608eaa';
+                href is "/ui/img/gear-black-16.svg";
+                color is 'white';
             }
             meta {
                 name is 'msapplication-config';
