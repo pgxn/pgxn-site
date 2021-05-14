@@ -86,9 +86,21 @@ BEGIN { create_wrapper wrapper => sub {
             }
             link {
                 rel is 'mask-icon';
-                href is "/ui/img/icon.svg";
-                color is 'white';
+                href is "/ui/img/gear-black.svg";
+                color is '#608eaa';
             }
+            meta {
+                name is 'msapplication-config';
+                content is '/ui/browserconfig.xml';
+            };
+            meta {
+                name is 'msapplication-TileColor';
+                content is '#608eaa';
+            };
+            meta {
+                name is 'theme-color';
+                content is '#ffffff';
+            };
         }; # /head
 
         body {
