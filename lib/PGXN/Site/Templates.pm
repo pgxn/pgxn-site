@@ -86,7 +86,7 @@ BEGIN { create_wrapper wrapper => sub {
             }
             link {
                 rel is 'mask-icon';
-                href is "/ui/img/logo.svg";
+                href is "/ui/img/icon.svg";
                 color is 'white';
             }
         }; # /head

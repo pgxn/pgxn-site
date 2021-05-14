@@ -256,7 +256,7 @@ sub test_wrapper {
             },
             {
                 rel   => 'mask-icon',
-                href  => '/ui/img/logo.svg',
+                href  => '/ui/img/icon.svg',
                 color => 'white',
             },
         ) {
