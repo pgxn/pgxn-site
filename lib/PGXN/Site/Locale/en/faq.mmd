@@ -63,6 +63,19 @@ Great, so how do I create an extension distribution and release it?
 :   Basically, you upload an archive file with a [META.json] file describing the
     distribution. Have a look at the [How To] for all the details.
 
+<span id="github"></span>
+I read that, but it seems like an awful lot of work for something that should be
+automated. Is there any way I can automatically have my extension appear on PGXN
+when I make a release on GitHub?
+
+:   Yes! You can use the [pgxn-tools] Docker image as part of your release
+    workflows. It supports both testing an extension with multiple versions of
+    Postgres, as well as releasing extensions on GitHub and PGXN. For details,
+    check out these blog posts:
+
+:   *   [Test Postgres Extensions With GitHub Actions]
+    *   [Automate Postgres Extension Releases on GitHub and PGXN]
+
 <span id="maillist">
 Is there some place I can go to ask questions and get help from like-minded PGXN
 contributors?
@@ -176,10 +189,16 @@ Is there an API?
   [troll]: https://en.wikipedia.org/wiki/Internet_troll
   [KISS]: https://en.wikipedia.org/wiki/KISS_principle
   [META.json]: https://pgxn.org/spec/
+  [pgxn-tools]: https://github.com/pgxn/docker-pgxn-tools
+  [Test Postgres Extensions With GitHub Actions]:
+    https://justatheory.com/2020/06/test-extensions-with-github-actions/
+  [Automate Postgres Extension Releases on GitHub and PGXN]:
+    https://justatheory.com/2020/10/release-postgres-extensions-with-github-actions/
   [How To]: https://manager.pgxn.org/howto
   [Google Group]: https://groups.google.com/group/pgxn-users
   [home page]: https://pgxn.org/
-  [Robert Haas says]: https://www.postgresql.org/message-id/603c8f071001061718t40e42609y59a26165bb72ff01@mail.gmail.com
+  [Robert Haas says]:
+    https://www.postgresql.org/message-id/603c8f071001061718t40e42609y59a26165bb72ff01@mail.gmail.com
   [blog]: https://blog.pgxn.org/post/5026314153/writing-a-client-for-pgxn
   [posts]: https://blog.pgxn.org/post/5118152273/new-release-for-the-pgxn-client
   [complete documentation]: https://pgxn.github.io/pgxnclient/
