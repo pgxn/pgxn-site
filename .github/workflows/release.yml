@@ -23,7 +23,7 @@ jobs:
     - name: Release on CPAN
       env:
         CPANPASS: ${{ secrets.CPAN_PASSWORD }}
-      run: cpan-upload --user DWHEELER --password "{{ $CPANPASS }}" "${{ steps.package.outputs.tarball }}"
+      run: cpan-upload --user DWHEELER --password '{{ $CPANPASS }}' '${{ steps.package.outputs.tarball }}'
     - name: Create GitHub Release
       id: release
       uses: actions/create-release@v1
