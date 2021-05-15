@@ -41,9 +41,9 @@ test_psgi $app => sub {
 # Test static file.
 test_psgi $app => sub {
     my $cb = shift;
-    ok my $res = $cb->(GET '/ui/css/html.css'), 'Fetch /pub/ui/css/html.css';
+    ok my $res = $cb->(GET '/ui/css/layout.css'), 'Fetch /pub/ui/css/layout.css';
     is $res->code, 200, 'Should get 200 response';
-    file_contents_is 'lib/PGXN/Site/ui/css/html.css', $res->content,
+    file_contents_is 'lib/PGXN/Site/ui/css/layout.css', $res->content,
         'The file should have been served';
 };
 

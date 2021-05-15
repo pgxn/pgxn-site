@@ -8,6 +8,7 @@ Revision history for Perl extension PGXN::Site
       - Removed Safari mask-icon, as Safari will use the regular favicon in
         more recent versions, and its styling wasn't quite right in any case,
         since no background color was supported.
+      - Merged html.css into layout.css, to reduce the number of files to load.
 
 0.20.1  2021-05-14T19:31:35Z
       - Fixed broken logo links on the art page.

@@ -22,7 +22,7 @@ use Plack::Request;
 use HTTP::Message::PSGI;
 
 #plan 'no_plan';
-plan tests => 257;
+plan tests => 248;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -157,7 +157,7 @@ sub test_wrapper {
 
     # Check the head element.
     $tx->ok('/html/head', 'Test head', sub {
-        $tx->is('count(./*)', 16, qq{Should have 16 elements below "head"});
+        $tx->is('count(./*)', 15, qq{Should have 15 elements below "head"});
         # Title.
         $tx->is(
             './title',
@@ -183,7 +183,6 @@ sub test_wrapper {
         my $i = 0;
         my $v = PGXN::Site->version_string;
         for my $spec (
-            [ html   => 'screen, projection, tv' ],
             [ layout => 'screen, projection, tv' ],
             [ print  => 'print'                  ],
         ) {

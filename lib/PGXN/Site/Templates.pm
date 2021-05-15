@@ -52,7 +52,6 @@ BEGIN { create_wrapper wrapper => sub {
                          . 'users, and tags on the PostgreSQL Extension Network.';
             };
             for my $spec (
-                [ html   => 'screen, projection, tv' ],
                 [ layout => 'screen, projection, tv' ],
                 [ print  => 'print'                  ],
             ) {
