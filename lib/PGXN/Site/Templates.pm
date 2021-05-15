@@ -84,11 +84,13 @@ BEGIN { create_wrapper wrapper => sub {
                 rel is 'manifest';
                 href is "/ui/manifest.json";
             }
-            link {
-                rel is 'mask-icon';
-                href is "/ui/img/gear-black-16.svg";
-                color is 'white';
-            }
+            # mask-icon no longer seems useful.
+            # https://getoutofmyhead.dev/#safari-mask-icon
+            # link {
+            #     rel is 'mask-icon';
+            #     href is "/ui/img/gear-black-16.svg";
+            #     color is 'white';
+            # }
             meta {
                 name is 'msapplication-config';
                 content is '/ui/browserconfig.xml';

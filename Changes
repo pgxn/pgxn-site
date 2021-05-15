@@ -5,6 +5,9 @@ Revision history for Perl extension PGXN::Site
       - Restored the blue margin on the right and at the bottom of the logo
         icon.
       - Fixed the incomplete sentence on the identity page (/art).
+      - Removed Safari mask-icon, as Safari will use the regular favicon in
+        more recent versions, and its styling wasn't quite right in any case,
+        since no background color was supported.
 
 0.20.1  2021-05-14T19:31:35Z
       - Fixed broken logo links on the art page.

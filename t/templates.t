@@ -157,7 +157,7 @@ sub test_wrapper {
 
     # Check the head element.
     $tx->ok('/html/head', 'Test head', sub {
-        $tx->is('count(./*)', 17, qq{Should have 17 elements below "head"});
+        $tx->is('count(./*)', 16, qq{Should have 16 elements below "head"});
         # Title.
         $tx->is(
             './title',
@@ -258,11 +258,6 @@ sub test_wrapper {
             {
                 rel  => 'manifest',
                 href => '/ui/manifest.json',
-            },
-            {
-                rel   => 'mask-icon',
-                href  => '/ui/img/gear-black-16.svg',
-                color => 'white',
             },
         ) {
             ++$i;
