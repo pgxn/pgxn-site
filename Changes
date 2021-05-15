@@ -2,6 +2,9 @@ Revision history for Perl extension PGXN::Site
 
 0.20.2
       - Fixed the Safari pin tab icon.
+      - Restored the blue margin on the right and at the bottom of the logo
+        icon.
+      - Fixed the incomplete sentence on the identity page (/art).
 
 0.20.1  2021-05-14T19:31:35Z
       - Fixed broken logo links on the art page.
@@ -9,8 +12,6 @@ Revision history for Perl extension PGXN::Site
         various browsers.
       - Added an item to the FAQ on auto-releasing to PGXN from GitHub
         workflows.
-      - Restored the blue margin on the right and at the bottom of the logo
-        icon.
 
 0.20.0  2021-05-14T03:04:15Z
       - Switched to shorter name for license links.
