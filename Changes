@@ -9,6 +9,8 @@ Revision history for Perl extension PGXN::Site
         various browsers.
       - Added an item to the FAQ on auto-releasing to PGXN from GitHub
         workflows.
+      - Restored the blue margin on the right and at the bottom of the logo
+        icon.
 
 0.20.0  2021-05-14T03:04:15Z
       - Switched to shorter name for license links.
