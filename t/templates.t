@@ -22,7 +22,7 @@ use Plack::Request;
 use HTTP::Message::PSGI;
 
 #plan 'no_plan';
-plan tests => 241;
+plan tests => 238;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -157,7 +157,7 @@ sub test_wrapper {
 
     # Check the head element.
     $tx->ok('/html/head', 'Test head', sub {
-        $tx->is('count(./*)', 14, qq{Should have 14 elements below "head"});
+        $tx->is('count(./*)', 11, qq{Should have 11 elements below "head"});
         # Title.
         $tx->is(
             './title',
@@ -169,9 +169,6 @@ sub test_wrapper {
         for my $spec (
             ['keywords', 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network'],
             ['description', 'Search all indexed extensions, distributions, users, and tags on the PostgreSQL Extension Network.'],
-            ['msapplication-config', '/ui/browserconfig.xml'],
-            ['msapplication-TileColor', '#608eaa'],
-            ['theme-color', '#ffffff'],
         ) {
             $tx->is(
                 qq{./meta[\@name="$spec->[0]"]/\@content}, $spec->[1],

@@ -95,20 +95,6 @@ BEGIN { create_wrapper wrapper => sub {
                 rel is 'manifest';
                 href is "/ui/manifest.json";
             };
-            # Can probably remove these next three; newer versions of Windows no
-            # longer require them.
-            meta {
-                name is 'msapplication-config';
-                content is '/ui/browserconfig.xml';
-            };
-            meta {
-                name is 'msapplication-TileColor';
-                content is '#608eaa';
-            };
-            meta {
-                name is 'theme-color';
-                content is '#ffffff';
-            };
         }; # /head
 
         body {

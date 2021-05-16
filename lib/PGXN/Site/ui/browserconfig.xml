@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<browserconfig>
-    <msapplication>
-        <tile>
-            <square150x150logo src="/ui/img/gear-150.png"/>
-            <TileColor>#608eaa</TileColor>
-        </tile>
-    </msapplication>
-</browserconfig>

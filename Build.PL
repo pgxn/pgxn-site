@@ -114,5 +114,5 @@ my $build = $class->new(
     },
 );
 
-$build->add_build_element($_) for qw(css gif png jpg js mmd eps svg json xml ico);
+$build->add_build_element($_) for qw(css gif png jpg js mmd eps svg json ico);
 $build->create_build_script;
