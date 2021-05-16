@@ -63,33 +63,40 @@ BEGIN { create_wrapper wrapper => sub {
                 };
             }
             # https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs
+            # SVG covers majority of cases.
             link {
                 rel   is 'icon';
                 href  is "/ui/img/icon.svg";
                 type  is 'image/svg+xml';
             };
+            # ICO covers most other cases. Generated from the 32px PNG in
+            # Preview.app by holding down option for additional export options.
             link {
                 rel   is 'icon';
                 href  is "/ui/img/icon.ico";
             };
-            # Sizes used in gmail favicon.ico.
+            # Include a couple PNGs to be safe.
             for my $size (qw(256 32)) {
                 link {
                     rel is 'icon';
                     href is "/ui/img/icon-$size.png";
                     type is 'image/png';
                     sizes is "${size}x${size}";
-                }
+                };
             }
+            # Special case for Apple touch devices.
             link {
                 rel is 'apple-touch-icon';
                 href is "/ui/img/icon-180.png";
                 sizes is "180x180";
-            }
+            };
+            # Special case for Android devices.
             link {
                 rel is 'manifest';
                 href is "/ui/manifest.json";
-            }
+            };
+            # Can probably remove these next three; newer versions of Windows no
+            # longer require them.
             meta {
                 name is 'msapplication-config';
                 content is '/ui/browserconfig.xml';
