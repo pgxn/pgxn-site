@@ -62,11 +62,18 @@ BEGIN { create_wrapper wrapper => sub {
                     media is $spec->[1];
                 };
             }
+            # https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs
             link {
-                rel is 'icon';
-                href is "/ui/img/icon.svg";
+                rel   is 'icon';
+                href  is "/ui/img/icon.svg";
+                type  is 'image/svg+xml';
             };
-            for my $size (qw(16 32 128 192)) {
+            link {
+                rel   is 'icon';
+                href  is "/ui/img/icon.ico";
+            };
+            # Sizes used in gmail favicon.ico.
+            for my $size (qw(256 32)) {
                 link {
                     rel is 'icon';
                     href is "/ui/img/icon-$size.png";
@@ -83,13 +90,6 @@ BEGIN { create_wrapper wrapper => sub {
                 rel is 'manifest';
                 href is "/ui/manifest.json";
             }
-            # mask-icon no longer seems useful.
-            # https://getoutofmyhead.dev/#safari-mask-icon
-            # link {
-            #     rel is 'mask-icon';
-            #     href is "/ui/img/gear-black-16.svg";
-            #     color is 'white';
-            # }
             meta {
                 name is 'msapplication-config';
                 content is '/ui/browserconfig.xml';

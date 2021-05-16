@@ -22,7 +22,7 @@ use Plack::Request;
 use HTTP::Message::PSGI;
 
 #plan 'no_plan';
-plan tests => 248;
+plan tests => 241;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -157,7 +157,7 @@ sub test_wrapper {
 
     # Check the head element.
     $tx->ok('/html/head', 'Test head', sub {
-        $tx->is('count(./*)', 15, qq{Should have 15 elements below "head"});
+        $tx->is('count(./*)', 14, qq{Should have 14 elements below "head"});
         # Title.
         $tx->is(
             './title',
@@ -211,7 +211,7 @@ sub test_wrapper {
             });
         }
 
-        # Check the SVN icon.
+        # Check the SVG icon.
         ++$i;
         $tx->ok("./link[$i]", "Test SVG icon", sub {
             $tx->is(
@@ -224,13 +224,26 @@ sub test_wrapper {
             );
         });
 
+        # Check the ICO icon.
+        ++$i;
+        $tx->ok("./link[$i]", "Test ICO icon", sub {
+            $tx->is(
+                './@rel', 'icon',
+                "ICO Icon should be an icon",
+            );
+            $tx->is(
+                './@href', "/ui/img/icon.ico",
+                "ICO Icon link to icon.ico",
+            );
+        });
+
         # Check the favicons.
-        for my $size (qw(16 32 128 192)) {
+        for my $size (qw(256 32)) {
             ++$i;
             $tx->ok("./link[$i]", "Test $size icon", sub {
                 $tx->is(
                     './@rel', 'icon',
-                    "Icon $size should be an icon",
+                    qq{Icon $size should be an "icon"},
                 );
                 $tx->is(
                     './@href', "/ui/img/icon-$size.png",
