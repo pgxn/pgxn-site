@@ -11,6 +11,7 @@ Revision history for Perl extension PGXN::Site
       - Simplified the favicon config, removing older stuff and stuff unlikely
         to be used.
       - Merged html.css into layout.css, to reduce the number of files to load.
+      - Added PNG links to the art page.
 
 0.20.1  2021-05-14T19:31:35Z
       - Fixed broken logo links on the art page.
