@@ -86,7 +86,7 @@ Returns a string representation of the PGXN::Site version.
 
 =head1 Author
 
-David E. Wheeler <david.wheeler@pgexperts.com>
+David E. Wheeler <david@justatheory.com>
 
 =head1 Copyright and License
 
