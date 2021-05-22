@@ -1,6 +1,7 @@
 Revision history for Perl extension PGXN::Site
 
 0.20.3
+      - Switched to HTTPS for Gravatar images.
 
 0.20.2  2021-05-16T02:15:33Z
       - Fixed the Safari pin tab icon.

@@ -138,9 +138,7 @@ sub app {
         resource qr{^/(cont(?:ributors|act)|mirroring|faq|meta/spec)[.]html$} => sub {
             GET {
                 my ($env, $args) = @_;
-                my $res = Plack::Response->new;
-                $res->redirect($url_for{ $args->{splat}[0] }, 301);
-                $res->finalize;
+                $controller->redirect($url_for{ $args->{splat}[0] }, 301)
             };
         };
     };

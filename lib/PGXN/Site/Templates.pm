@@ -697,6 +697,7 @@ template user => sub {
                             rating  => 'pg',
                             email   => $user->email,
                             size    => 80,
+                            https   => 1,
                             default => $req->base . 'ui/img/shirt.png',
                         );
                     };
