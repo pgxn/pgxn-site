@@ -331,7 +331,7 @@ template distribution => sub {
                             href is URI->new($args->{api_url} . $dist->source_path);
                             title is T 'Browse [_1] [_2]', $dist->name, $dist->version;
                             img {
-                            src is '/ui/img/package.svg';
+                            src is '/ui/img/opened_folder.svg';
                             alt is T 'Browse';
                         };
                         };
@@ -1389,7 +1389,7 @@ template release_table => sub {
                             href is URI->new($args->{api_url} . $api->source_path_for($dist => $info->{version}));
                             title is T 'Browse [_1] [_2]', $dist, $info->{version};
                             img {
-                                src is '/ui/img/package.svg';
+                                src is '/ui/img/opened_folder.svg';
                                 alt is T 'Browse';
                             };
                         }
