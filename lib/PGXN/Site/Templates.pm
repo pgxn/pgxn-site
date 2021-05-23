@@ -25,8 +25,8 @@ BEGIN { create_wrapper wrapper => sub {
     outs_raw '<!DOCTYPE html>';
     html {
         attr {
-            xmlns      => 'https://www.w3.org/1999/xhtml',
-            'xml:lang' => 'en',
+            # xmlns      => 'https://www.w3.org/1999/xhtml',
+            # 'xml:lang' => 'en',
             lang       => 'en',
         };
         outs_raw( "\n", join "\n",
@@ -41,6 +41,11 @@ BEGIN { create_wrapper wrapper => sub {
         );
 
         head {
+            meta { charset is 'utf-8' };
+            meta {
+                name is 'viewport';
+                content is 'width=device-width, initial-scale=1.0';
+            };
             title { $args->{title} };
             meta {
                 name is 'keywords';
@@ -390,7 +395,7 @@ template distribution => sub {
                                         value is '/dist/' . lc $dist->name . lc "/$rel->{version}/";
                                         selected is 'selected' if $rel->{version} eq $version;
                                         (my $date = $rel->{date}) =~ s{T.+}{};
-                                        $dist->name . " $rel->{version} — $date";
+                                        "$rel->{version} — $date";
                                     };
                                 }
                             };

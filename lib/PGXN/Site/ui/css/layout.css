@@ -1,3 +1,18 @@
+/* https://meyerweb.com/eric/tools/css/reset/ */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em,
+img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i,
+center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption,
+tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section,
+summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline
+}
 /**************************************************************
    NAME:    html.css
    AUTHOR:  Pat Heard (fullahead.org)
@@ -493,7 +508,7 @@ img.floatLeft {
 
 .hside {
   margin-left:20px;
-  width:230px;
+  width:310px;
   padding-bottom: 0;
 }
 
@@ -521,6 +536,10 @@ img.floatLeft {
 #homesearch fieldset {
   border:0;
   text-align:center;
+}
+
+#homesearch .submitin {
+  padding-top: 0.6em;
 }
 
 #resultsearch fieldset {
@@ -623,7 +642,7 @@ ul.sideMenu {
 }
 
 #homepage {
-  width:915px;
+  width:995px;
 }
 
 #info > div {
@@ -913,3 +932,14 @@ table code {background-color:transparent;}
 .tagcloud11 a {color:#FF4B33;}
 .tagcloud12 {font-size: 340%;}
 .tagcloud12 a {color:#d30;}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  #homepage { max-width: 380px; }
+  .hsearch { width: 94%}
+  .hside { width: 94%; margin-left:0;}
+  #htmltagcloud { display: none;}
+  #header img.right { height: 58px; right: 12px; padding-top: 62px;}
+  .width90 {width: 82%;}
+  #crumb {float: none}
+  #crumb + ul { display: none}
+}
