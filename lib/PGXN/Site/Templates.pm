@@ -331,9 +331,9 @@ template distribution => sub {
                             href is URI->new($args->{api_url} . $dist->source_path);
                             title is T 'Browse [_1] [_2]', $dist->name, $dist->version;
                             img {
-                            src is '/ui/img/opened_folder.svg';
-                            alt is T 'Browse';
-                        };
+                                src is '/ui/img/opened_folder.svg';
+                                alt is T 'Browse';
+                            };
                         };
                     }; # /span.download
                 }; # /div.controls
@@ -1514,7 +1514,7 @@ sub _license($) {
     return $class;
 }
 
-# XXX https://rt.cpan.org/Ticket/Display.html?id=67706
+# XXX https://github.com/Perl-Toolchain-Gang/Software-License/issues/78
 sub _license_name($) {
     my $class = ref $_[0] || $_[0];
     my ($name) = $class =~ /([^:]+)$/; # Grab the package name.
