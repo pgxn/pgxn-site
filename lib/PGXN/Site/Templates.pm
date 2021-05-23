@@ -14,7 +14,7 @@ use File::Basename qw(basename);
 use SemVer;
 use Gravatar::URL;
 #use namespace::autoclean; # Do not use; breaks sort {}
-our $VERSION = v0.20.4;
+our $VERSION = v0.21.0;
 
 my $l = PGXN::Site::Locale->get_handle('en');
 sub T { $l->maketext(@_) }
@@ -698,7 +698,7 @@ template user => sub {
                             email   => $user->email,
                             size    => 80,
                             https   => 1,
-                            default => $req->base . 'ui/img/shirt.png',
+                            default => "$args->{base_url}/ui/img/shirt.png",
                         );
                     };
                 };
@@ -1185,7 +1185,7 @@ template donors => sub {
                                 'Schemaverse';
                             }};
                             li {a{
-                                href is 'http:/www.midstorm.org/~telles//';
+                                href is 'https://github.com/fabiotr/';
                                 'Fábio Telles Rodriguez';
                             }};
                             li {a{

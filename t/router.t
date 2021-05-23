@@ -7,7 +7,7 @@ use Test::More;
 #use Test::More 'no_plan';
 eval "use PGXN::API::Searcher";
 plan skip_all => "PGXN::API::Searcher required for router testing" if $@;
-plan tests => 369;
+plan tests => 371;
 
 use Plack::Test;
 use HTTP::Request::Common;
@@ -19,10 +19,11 @@ use_ok 'PGXN::Site::Router' or die;
 
 local $@;
 eval { PGXN::Site::Router->app };
-is $@, "Missing required parameters api_url, errors_to, errors_from, and feedback_to\n",
+is $@, "Missing required parameters base_url, api_url, errors_to, errors_from, and feedback_to\n",
     'Should get proper error for missing parameters';
 
 ok my $app = PGXN::Site::Router->app(
+    base_url        => 'https://test.pgxn.org/',
     api_url         => 'https://api.pgxn.org/',
     private_api_url => 'file:t/api',
     errors_to       => 'alerts@pgxn.org',
@@ -231,6 +232,15 @@ test_psgi $app => sub {
         ok $res->is_success, 'Should be a success';
         like $res->content, qr{\Q<h1 class="fn">David E. Wheeler</h1>},
             "The body should have the h1 with user's name";
+        my $grav = Template::Declare::Tags::_postprocess(Gravatar::URL::gravatar_url(
+            rating  => 'pg',
+            email   => 'david@justatheory.com',
+            size    => 80,
+            https   => 1,
+            default => "https://test.pgxn.org/ui/img/shirt.png",
+        ));
+        like $res->content, qr{<img src="\Q$grav" />},
+            'The body should have the full Gravatar URL';
 
         # Make sure we get 404 for nonexistent user.
         (my $bad = $uri) =~ s/theory/nonesuch/;

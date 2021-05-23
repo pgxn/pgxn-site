@@ -12,7 +12,7 @@ use Encode;
 use WWW::PGXN;
 use List::MoreUtils qw(any);
 use namespace::autoclean;
-our $VERSION = v0.20.4;
+our $VERSION = v0.21.0;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -31,15 +31,17 @@ my %code_for = (
 sub new {
     my ($class, %p) = @_;
 
-    unless ($p{api_url} && $p{errors_to} && $p{errors_from} && $p{feedback_to}) {
-        die "Missing required parameters api_url, errors_to, errors_from, and feedback_to\n";
+    unless ($p{base_url} && $p{api_url} && $p{errors_to} && $p{errors_from} && $p{feedback_to}) {
+        die "Missing required parameters base_url, api_url, errors_to, errors_from, and feedback_to\n";
     }
 
-    (my $api_url = $p{api_url}) =~ s{/$}{};
+    (my $api_url  = $p{api_url})  =~ s{/+$}{};
+    (my $base_url = $p{base_url}) =~ s{/+$}{};
     bless {
         errors_to   => $p{errors_to},
         errors_from => $p{errors_from},
         feedback_to => $p{feedback_to},
+        base_url    => URI->new($base_url),
         api_url     => URI->new($api_url),
         api         => WWW::PGXN->new(
             url   =>  $p{private_api_url} || $api_url,
@@ -49,10 +51,11 @@ sub new {
 }
 
 sub api         { shift->{api}         }
+sub base_url    { shift->{base_url}    }
 sub api_url     { shift->{api_url}     }
 sub errors_to   { shift->{errors_to}   }
 sub errors_from { shift->{errors_from} }
-sub feedback_to { shift->{feedback_to}   }
+sub feedback_to { shift->{feedback_to} }
 
 sub render {
     my ($self, $template, $p) = @_;
@@ -185,9 +188,10 @@ sub user {
     my $user = $self->api->get_user($nick) or return $self->missing($env);
 
     $self->render('/user', { env => $env, vars => {
-        user    => $user,
-        api     => $self->api,
-        api_url => $self->api_url,
+        user     => $user,
+        api      => $self->api,
+        api_url  => $self->api_url,
+        base_url => $self->base_url,
     }});
 }
 
@@ -392,6 +396,12 @@ Returns a L<WWW::PGXN> object used to access the PGXN API.
 Returns the URL used to link to the API in the UI. If C<private_api_url> is
 not passed to C<new()>, this URL is also used for communicating with the API
 via the L<WWW::PGXN> object returned by C<api>.
+
+=head3 C<base_url>
+
+  my $base_url = $controller->base_url;
+
+Returns the base URL for the site. Used for links that must be absolute.
 
 =head3 C<errors_to>
 
