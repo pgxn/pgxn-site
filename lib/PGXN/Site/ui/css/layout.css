@@ -873,6 +873,10 @@ table code {background-color:transparent;}
 .dist .meta .controls {
     float:right;
 }
+.dist .meta .controls img {
+  width: 32px;
+  height: 32px;
+}
 
 .dist .meta .download a, .dist .meta .browse a, .dist .meta a.avatar {
   display:block;
@@ -942,6 +946,4 @@ table code {background-color:transparent;}
   .width90 {width: 82%;}
   #crumb {float: none}
   #crumb + ul { display: none}
-  /* Find a way to restore menu below crumb? */
-  /* Work on TOC for documentation pages. */
 }

@@ -6,6 +6,8 @@ Revision history for Perl extension PGXN::Site
       - Moved the code to load another distribution version from the version
         select list to a script element, so that it can be allowed via a
         content security policy hash.
+      - Increased the size of the download and browse buttons on the
+        distribution page.
 
 0.20.3  2021-05-23T14:02:05Z
       - Switched to HTTPS for Gravatar images.
