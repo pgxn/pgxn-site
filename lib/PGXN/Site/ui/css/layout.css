@@ -942,4 +942,6 @@ table code {background-color:transparent;}
   .width90 {width: 82%;}
   #crumb {float: none}
   #crumb + ul { display: none}
+  /* Find a way to restore menu below crumb? */
+  /* Work on TOC for documentation pages. */
 }

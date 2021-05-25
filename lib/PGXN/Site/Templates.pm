@@ -387,7 +387,7 @@ template distribution => sub {
                         dt { class is 'other'; T 'Other Releases' };
                         dd {
                             select {
-                                onchange is 'window.location.href = this.options[this.selectedIndex].value';
+                                id is 'vnav';
                                 my $version = $dist->version;
                                 for my $rel (@rels) {
                                     # Include release status in the option name?
@@ -399,6 +399,12 @@ template distribution => sub {
                                     };
                                 }
                             };
+                            script {
+                                # https://content-security-policy.com/examples/allow-inline-script/
+                                # Hash for Content-Security-Policy header to allow this JS to execute.
+                                # script-src 'sha256-GN1zhliF5ZZMDFdFdgbLI+BAIxikH+5wEBDQEdf4Ryk='
+                                outs_raw q{document.getElementById("vnav").addEventListener("change",function(){window.location.href=this.options[this.selectedIndex].value})};
+                            }
                         };
                     }
                     dt { T 'Abstract' };
