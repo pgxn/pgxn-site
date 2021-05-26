@@ -441,6 +441,9 @@ img.floatLeft {
   margin-right: 0;
 }
 
+#crumb {float: none; overflow-x: auto; overflow-y: hidden; white-space: nowrap;}
+#crumb li {float:none; display: inline-block; padding: 5px 0 10px}
+
 #crumb li.sub:before {
     content:"❯";
 }
@@ -943,6 +946,10 @@ table code {background-color:transparent;}
   #pgxnbod { float: right }
 }
 
+@media (max-width: 768px) {
+  #pgxnbod table code {word-break:break-word}
+}
+
 @media (min-width: 320px) and (max-width: 480px) {
   #homepage { max-width: 380px; }
   .hsearch { width: 94%}
@@ -950,8 +957,6 @@ table code {background-color:transparent;}
   #htmltagcloud { display: none;} /* XXX Move to own page */
   #header img.right { height: 58px; right: 12px; padding-top: 62px;}
   .width90 {width: 82%;}
-  #crumb {float: none}
   #crumb + ul { display: none} /* Find a way to restore menu below crumb? */
-  #pgxntoc { margin-bottom: 1rem;}
-  #pgxnbod table code {word-break:break-word}
+  #pgxntoc { margin-bottom: 1rem}
 }
