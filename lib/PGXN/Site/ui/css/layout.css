@@ -455,7 +455,6 @@ img.floatLeft {
 
 #pgxntoc {
   background: #555;
-  margin-left:-21px;
   padding-left:26px;
   padding-bottom: 25px;
 }
@@ -680,7 +679,7 @@ ul.sideMenu {
   width: 100%;
 }
 
-.width75, .doc #pgxnbod {
+.width75 {
   width: 74%;
 }
 
@@ -692,7 +691,7 @@ ul.sideMenu {
   width: 32.7%;
 }
 
-.width25, .doc #pgxntoc {
+.width25 {
   width: 24.7%;
 }
 
@@ -708,11 +707,11 @@ ul.sideMenu {
    Alignment classes
  **************************************************************/
 
-.floatLeft, .doc #pgxntoc {
+.floatLeft {
   float: left;
 }
 
-.floatRight, .doc #pgxnbod {
+.floatRight {
   float: right;
 }
 
@@ -937,13 +936,22 @@ table code {background-color:transparent;}
 .tagcloud12 {font-size: 340%;}
 .tagcloud12 a {color:#d30;}
 
+@media (min-width: 480px) {
+  #pgxntoc { width: 24.7% }
+  #pgxnbod { width: 74% }
+  #pgxntoc { float: left;margin-left:-21px; }
+  #pgxnbod { float: right }
+}
+
 @media (min-width: 320px) and (max-width: 480px) {
   #homepage { max-width: 380px; }
   .hsearch { width: 94%}
   .hside { width: 94%; margin-left:0;}
-  #htmltagcloud { display: none;}
+  #htmltagcloud { display: none;} /* XXX Move to own page */
   #header img.right { height: 58px; right: 12px; padding-top: 62px;}
   .width90 {width: 82%;}
   #crumb {float: none}
-  #crumb + ul { display: none}
+  #crumb + ul { display: none} /* Find a way to restore menu below crumb? */
+  #pgxntoc { margin-bottom: 1rem;}
+  #pgxnbod table code {word-break:break-word}
 }
