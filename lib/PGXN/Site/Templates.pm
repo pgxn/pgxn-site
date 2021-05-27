@@ -41,7 +41,6 @@ BEGIN { create_wrapper wrapper => sub {
         );
 
         head {
-            meta { charset is 'utf-8' };
             meta {
                 name is 'viewport';
                 content is 'width=device-width, initial-scale=1.0';
