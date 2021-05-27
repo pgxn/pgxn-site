@@ -20,7 +20,7 @@ summary, time, mark, audio, video {
    PURPOSE: Styles the html elements
  **************************************************************/
 
- html {
+html {
   height: 100%;
 }
 
@@ -936,11 +936,9 @@ table code {background-color:transparent;}
 .tagcloud12 {font-size: 340%;}
 .tagcloud12 a {color:#d30;}
 
-@media (min-width: 480px) {
-  #pgxntoc { width: 24.7% }
-  #pgxnbod { width: 74% }
-  #pgxntoc { float: left;margin-left:-21px; }
-  #pgxnbod { float: right }
+@media (min-width: 1024px) {
+  #pgxntoc { width: 24.7%;float: left;margin-left:-21px; }
+  .doc #pgxnbod { width: 74%;float: right }
   #info > div { width:670px }
 }
 
@@ -948,7 +946,7 @@ table code {background-color:transparent;}
   #pgxnbod table code {word-break:break-word}
 }
 
-@media (min-width: 320px) and (max-width: 480px) {
+@media (max-width: 480px) {
   #homepage { max-width: 380px; }
   .hsearch { width: 94%}
   .hside { width: 94%; margin-left:0;}
