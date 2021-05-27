@@ -544,6 +544,8 @@ img.floatLeft {
   padding-top: 0.6em;
 }
 
+#homesearch fieldset.query input {width: 50%}
+
 #resultsearch fieldset {
   border:0;
   display:inline;
