@@ -441,7 +441,7 @@ img.floatLeft {
   margin-right: 0;
 }
 
-#crumb {float: none; overflow-x: auto; overflow-y: hidden; white-space: nowrap;}
+#crumb {float: left; overflow-x: auto; overflow-y: hidden; white-space: nowrap;}
 #crumb li {float:none; display: inline-block; padding: 5px 0 10px}
 
 #crumb li.sub:before {
@@ -549,10 +549,6 @@ img.floatLeft {
   display:inline;
 }
 
-#resultsearch fieldset.query input {
-  width: 250px;
-}
-
 #resultsearch fieldset {
   padding:0;
 }
@@ -648,7 +644,6 @@ ul.sideMenu {
 }
 
 #info > div {
-  width:670px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -944,6 +939,7 @@ table code {background-color:transparent;}
   #pgxnbod { width: 74% }
   #pgxntoc { float: left;margin-left:-21px; }
   #pgxnbod { float: right }
+  #info > div { width:670px }
 }
 
 @media (max-width: 768px) {
@@ -957,6 +953,8 @@ table code {background-color:transparent;}
   #htmltagcloud { display: none;} /* XXX Move to own page */
   #header img.right { height: 58px; right: 12px; padding-top: 62px;}
   .width90 {width: 82%;}
+  #crumb {float: none !important}
   #crumb + ul { display: none} /* Find a way to restore menu below crumb? */
   #pgxntoc { margin-bottom: 1rem}
+  #resultsearch input.button {display:none}
 }

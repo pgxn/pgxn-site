@@ -1323,7 +1323,6 @@ template search_form => sub {
             class is 'query';
             input {
                 type      is 'text';
-                class     is 'width50';
                 name      is 'q';
                 autofocus is 'autofocus' if $args->{autofocus};
                 value     is $args->{query};
