@@ -22,6 +22,7 @@ sub T { $l->maketext(@_) }
 BEGIN { create_wrapper wrapper => sub {
     my ($code, $req, $args) = @_;
     $l = PGXN::Site::Locale->accept($req->env->{HTTP_ACCEPT_LANGUAGE});
+    my $v = PGXN::Site->version_string;
     outs_raw '<!DOCTYPE html>';
     html {
         attr {
@@ -62,7 +63,7 @@ BEGIN { create_wrapper wrapper => sub {
                 link {
                     rel   is 'stylesheet';
                     type  is 'text/css';
-                    href  is "/ui/css/$spec->[0].css?" . PGXN::Site->version_string;
+                    href  is "/ui/css/$spec->[0].css?$v";
                     media is $spec->[1];
                 };
             }
@@ -98,6 +99,10 @@ BEGIN { create_wrapper wrapper => sub {
             link {
                 rel is 'manifest';
                 href is "/ui/manifest.json";
+            };
+            meta {
+                name is 'generator';
+                content is "PGXN::Site $v";
             };
         }; # /head
 
@@ -148,8 +153,6 @@ BEGIN { create_wrapper wrapper => sub {
                             for my $spec (
                                 [ '/recent/', 'Recent Releases',            'Recent'  ],
                                 [ '/users/',  'PGXN Users',                 'Users'   ],
-                                [ '/about/',  'About PGXN',                 'About'   ],
-                                [ '/faq/',    'Frequently Asked Questions', 'FAQ'     ],
                             ) {
                                 li {
                                     class is 'here' if $path eq $spec->[0];
@@ -176,31 +179,6 @@ BEGIN { create_wrapper wrapper => sub {
                     id is 'width';
                     span {
                         class is 'floatLeft';
-                        outs +PGXN::Site->version_string;
-                        span { class is 'grey'; '|' };
-                        outs 'code';
-                        a {
-                            href is 'https://www.justatheory.com/';
-                            title is T 'Go to [_1]', 'Just a Theory';
-                            'theory';
-                        };
-                        span { class is 'grey'; '|' };
-                        outs ' design';
-                        a {
-                            href is 'https://fullahead.org/';
-                            title is T 'Go to [_1]', 'Fullahead';
-                            'Fullahead';
-                        };
-                        span { class is 'grey'; '|' };
-                        outs ' logo';
-                        a {
-                            href is 'https://www.strongrrl.com/';
-                            title is T 'Go to [_1]', 'Strongrrl';
-                            'Strongrrl';
-                        };
-                    }; # /span.floatLeft
-                    span {
-                        class is 'floatRight';
                         a {
                             href is 'https://blog.pgxn.org/';
                             title is T 'PGXN Blog';
@@ -218,23 +196,25 @@ BEGIN { create_wrapper wrapper => sub {
                             title is T 'Release it on PGXN';
                             T 'Release It';
                         };
+                    };
+                    span {
+                        class is 'floatRight';
+                        a {
+                            href is '/about/';
+                            title is T 'About PGXN';
+                            T 'About';
+                        };
+                        span { class is 'grey'; '|' };
+                        a {
+                            href is '/faq/';
+                            title is T 'Frequently Asked Questions';
+                            T 'FAQ';
+                        };
                         span { class is 'grey'; '|' };
                         a {
                             href is '/mirroring/';
                             title is T 'Mirroring';
                             T 'Mirroring';
-                        };
-                        span { class is 'grey'; '|' };
-                        a {
-                            href is '/donors/';
-                            title is T 'Donors';
-                            T 'Donors';
-                        };
-                        span { class is 'grey'; '|' };
-                        a {
-                            href is '/art/';
-                            title is T 'Identity';
-                            T 'Identity';
                         };
                         span { class is 'grey'; '|' };
                         a {

@@ -1,6 +1,8 @@
 Revision history for Perl extension PGXN::Site
 
 0.21.1
+      - Reorganized the nav and footer links. There are now fewer of them, and
+        the nav links focus on content, while the footer focuses on metadata.
 
 0.21.0  2021-05-28T02:07:56Z
       - Added required --base-url option. Required for absolute URLs, such as
