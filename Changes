@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.21.0
+0.21.0  2021-05-28T02:07:56Z
       - Added required --base-url option. Required for absolute URLs, such as
         the fallback icon for Gravatar.
       - Moved the code to load another distribution version from the version
