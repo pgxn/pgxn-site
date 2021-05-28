@@ -1,3 +1,18 @@
+/* https://meyerweb.com/eric/tools/css/reset/ */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em,
+img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i,
+center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption,
+tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section,
+summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline
+}
 /**************************************************************
    NAME:    html.css
    AUTHOR:  Pat Heard (fullahead.org)
@@ -5,7 +20,7 @@
    PURPOSE: Styles the html elements
  **************************************************************/
 
- html {
+html {
   height: 100%;
 }
 
@@ -16,7 +31,7 @@ body {
   padding: 0;
   text-align: center;
 
-  font: 400 0.9em "trebuchet ms", serif;
+  font: 400 1em "trebuchet ms", serif;
   line-height: 170%;
 
   background: #666 url(/ui/img/header.png) repeat-x top left;
@@ -111,7 +126,7 @@ b {
 
 ol, ul {
   margin: 10px 0 0 0;
-  padding: 0 0 0 30px;
+  padding: 0 0 0 38px;
 }
 
 ol span {
@@ -426,6 +441,9 @@ img.floatLeft {
   margin-right: 0;
 }
 
+#crumb {float: left; overflow-x: auto; overflow-y: hidden; white-space: nowrap;}
+#crumb li {float:none; display: inline-block; padding: 5px 0 10px}
+
 #crumb li.sub:before {
     content:"❯";
 }
@@ -440,7 +458,6 @@ img.floatLeft {
 
 #pgxntoc {
   background: #555;
-  margin-left:-21px;
   padding-left:26px;
   padding-bottom: 25px;
 }
@@ -493,7 +510,7 @@ img.floatLeft {
 
 .hside {
   margin-left:20px;
-  width:230px;
+  width:310px;
   padding-bottom: 0;
 }
 
@@ -523,13 +540,15 @@ img.floatLeft {
   text-align:center;
 }
 
+#homesearch .submitin {
+  padding-top: 0.6em;
+}
+
+#homesearch fieldset.query input {width: 50%}
+
 #resultsearch fieldset {
   border:0;
   display:inline;
-}
-
-#resultsearch fieldset.query input {
-  width: 250px;
 }
 
 #resultsearch fieldset {
@@ -623,11 +642,10 @@ ul.sideMenu {
 }
 
 #homepage {
-  width:915px;
+  width:995px;
 }
 
 #info > div {
-  width:670px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -661,7 +679,7 @@ ul.sideMenu {
   width: 100%;
 }
 
-.width75, .doc #pgxnbod {
+.width75 {
   width: 74%;
 }
 
@@ -673,7 +691,7 @@ ul.sideMenu {
   width: 32.7%;
 }
 
-.width25, .doc #pgxntoc {
+.width25 {
   width: 24.7%;
 }
 
@@ -689,11 +707,11 @@ ul.sideMenu {
    Alignment classes
  **************************************************************/
 
-.floatLeft, .doc #pgxntoc {
+.floatLeft {
   float: left;
 }
 
-.floatRight, .doc #pgxnbod {
+.floatRight {
   float: right;
 }
 
@@ -854,6 +872,10 @@ table code {background-color:transparent;}
 .dist .meta .controls {
     float:right;
 }
+.dist .meta .controls img {
+  width: 32px;
+  height: 32px;
+}
 
 .dist .meta .download a, .dist .meta .browse a, .dist .meta a.avatar {
   display:block;
@@ -885,35 +907,54 @@ table code {background-color:transparent;}
 #htmltagcloud span a { margin:4px; padding:4px; line-height:1.1em; }
 #htmltagcloud span a:hover{background-color:#444;}
 
-.tagcloud0 {font-size: 10pt;}
-.tagcloud0 a {color:white;}
-.tagcloud1 {font-size: 12pt;}
+.tagcloud0 {font-size: 100%;}
+.tagcloud0 a {color:#ffffff;}
+.tagcloud1 {font-size: 120%;}
 .tagcloud1 a {color:white;}
-
-.tagcloud2 {font-size: 14pt;}
+.tagcloud2 {font-size: 140%;}
 .tagcloud2 a {color:9FF3FF;}
-.tagcloud3 {font-size: 16pt;}
+.tagcloud3 {font-size: 160%;}
 .tagcloud3 a {color:9FF3FF;}
-
-.tagcloud4 {font-size: 18pt;}
+.tagcloud4 {font-size: 180%;}
 .tagcloud4 a {color:#F8D766;}
-.tagcloud5 {font-size: 20pt;}
+
+.tagcloud5 {font-size: 200%;}
 .tagcloud5 a {color:#F8D766;}
-
-.tagcloud6 {font-size: 22pt;}
+.tagcloud6 {font-size: 220%;}
 .tagcloud6 a {color:#F39F01;}
-.tagcloud7 {font-size: 24pt;}
+.tagcloud7 {font-size: 240%;}
 .tagcloud7 a {color:#F39F01;}
-
-.tagcloud8 {font-size: 26pt;}
+.tagcloud8 {font-size: 260%;}
 .tagcloud8 a {color:#F17400;}
-.tagcloud9 {font-size: 28pt;}
+.tagcloud9 {font-size: 280%;}
 .tagcloud9 a {color:#F17400;}
 
-.tagcloud10 {font-size: 30pt;}
+.tagcloud10 {font-size: 300%;}
 .tagcloud10 a {color:#FF4B33;}
-.tagcloud11 {font-size: 32pt;}
+.tagcloud11 {font-size: 320%;}
 .tagcloud11 a {color:#FF4B33;}
-
-.tagcloud12 {font-size: 34pt;}
+.tagcloud12 {font-size: 340%;}
 .tagcloud12 a {color:#d30;}
+
+@media (min-width: 1024px) {
+  #pgxntoc { width: 24.7%;float: left;margin-left:-21px; }
+  .doc #pgxnbod { width: 74%;float: right }
+  #info > div { width:670px }
+}
+
+@media (max-width: 768px) {
+  #pgxnbod table code {word-break:break-word}
+}
+
+@media (max-width: 480px) {
+  #homepage { max-width: 380px; }
+  .hsearch { width: 94%}
+  .hside { width: 94%; margin-left:0;}
+  #htmltagcloud { display: none;} /* XXX Move to own page */
+  #header img.right { height: 58px; right: 12px; padding-top: 62px;}
+  .width90 {width: 82%;}
+  #crumb {float: none !important}
+  #crumb + ul { display: none} /* Find a way to restore menu below crumb? */
+  #pgxntoc { margin-bottom: 1rem}
+  #resultsearch input.button {display:none}
+}

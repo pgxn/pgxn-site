@@ -157,7 +157,7 @@ sub test_wrapper {
 
     # Check the head element.
     $tx->ok('/html/head', 'Test head', sub {
-        $tx->is('count(./*)', 11, qq{Should have 11 elements below "head"});
+        $tx->is('count(./*)', 12, qq{Should have 12 elements below "head"});
         # Title.
         $tx->is(
             './title',
@@ -167,6 +167,7 @@ sub test_wrapper {
 
         # Check the meta tags.
         for my $spec (
+            ['viewport', 'width=device-width, initial-scale=1.0'],
             ['keywords', 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network'],
             ['description', 'Search all indexed extensions, distributions, users, and tags on the PostgreSQL Extension Network.'],
         ) {
@@ -447,7 +448,6 @@ sub test_search_form {
             $tx->is('./@class', 'query', 'Class should be "query"');
             $tx->is('count(./*)', 1, 'Should have 1 sub-element');
             $tx->ok('./input[@type="text"]', 'Test query input' => sub {
-                $tx->is('./@class', 'width50', 'Class should be "width50"');
                 $tx->is('./@name', 'q', 'Name should be "q"');
                 $tx->is('./@value', $q, qq{Value should be "$q"});
                 $tx->is(

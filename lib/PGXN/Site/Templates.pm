@@ -25,8 +25,8 @@ BEGIN { create_wrapper wrapper => sub {
     outs_raw '<!DOCTYPE html>';
     html {
         attr {
-            xmlns      => 'https://www.w3.org/1999/xhtml',
-            'xml:lang' => 'en',
+            # xmlns      => 'https://www.w3.org/1999/xhtml',
+            # 'xml:lang' => 'en',
             lang       => 'en',
         };
         outs_raw( "\n", join "\n",
@@ -41,6 +41,10 @@ BEGIN { create_wrapper wrapper => sub {
         );
 
         head {
+            meta {
+                name is 'viewport';
+                content is 'width=device-width, initial-scale=1.0';
+            };
             title { $args->{title} };
             meta {
                 name is 'keywords';
@@ -382,7 +386,7 @@ template distribution => sub {
                         dt { class is 'other'; T 'Other Releases' };
                         dd {
                             select {
-                                onchange is 'window.location.href = this.options[this.selectedIndex].value';
+                                id is 'vnav';
                                 my $version = $dist->version;
                                 for my $rel (@rels) {
                                     # Include release status in the option name?
@@ -390,10 +394,16 @@ template distribution => sub {
                                         value is '/dist/' . lc $dist->name . lc "/$rel->{version}/";
                                         selected is 'selected' if $rel->{version} eq $version;
                                         (my $date = $rel->{date}) =~ s{T.+}{};
-                                        $dist->name . " $rel->{version} — $date";
+                                        "$rel->{version} — $date";
                                     };
                                 }
                             };
+                            script {
+                                # https://content-security-policy.com/examples/allow-inline-script/
+                                # Hash for Content-Security-Policy header to allow this JS to execute.
+                                # script-src 'sha256-GN1zhliF5ZZMDFdFdgbLI+BAIxikH+5wEBDQEdf4Ryk='
+                                outs_raw q{document.getElementById("vnav").addEventListener("change",function(){window.location.href=this.options[this.selectedIndex].value})};
+                            }
                         };
                     }
                     dt { T 'Abstract' };
@@ -1312,7 +1322,6 @@ template search_form => sub {
             class is 'query';
             input {
                 type      is 'text';
-                class     is 'width50';
                 name      is 'q';
                 autofocus is 'autofocus' if $args->{autofocus};
                 value     is $args->{query};
