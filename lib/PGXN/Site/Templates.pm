@@ -151,8 +151,9 @@ BEGIN { create_wrapper wrapper => sub {
                             class is 'floatRight';
                             my $path = $req->uri->path;
                             for my $spec (
-                                [ '/recent/', 'Recent Releases',            'Recent'  ],
-                                [ '/users/',  'PGXN Users',                 'Users'   ],
+                                [ '/users/',  'PGXN Users',      'Users'  ],
+                                [ '/tags/',   'Release Tags',    'Tags'   ],
+                                [ '/recent/', 'Recent Releases', 'Recent' ],
                             ) {
                                 li {
                                     class is 'here' if $path eq $spec->[0];
@@ -612,7 +613,6 @@ template distribution => sub {
     };
 };
 
-
 template document => sub {
     my ($self, $req, $args) = @_;
     my $dist = $args->{dist};
@@ -727,6 +727,25 @@ template user => sub {
     } $req, {
         title => _title_with $user->name . ' (' . $user->nickname . ')',
     };
+};
+
+template tags => sub {
+    my ($self, $req, $args) = @_;
+    wrapper {
+        div {
+            id is 'page';
+            h1 { T 'Release Tags' };
+            div {
+                class is 'gradient';
+                show search_form => {
+                    id       => 'homesearch',
+                    in        => 'tags',
+                    autofocus => 1,
+                };
+                outs_raw $args->{cloud}->html;
+            };
+        };
+    } $req, { title => T 'Tags' };
 };
 
 template tag => sub {

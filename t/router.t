@@ -7,7 +7,7 @@ use Test::More;
 #use Test::More 'no_plan';
 eval "use PGXN::API::Searcher";
 plan skip_all => "PGXN::API::Searcher required for router testing" if $@;
-plan tests => 371;
+plan tests => 377;
 
 use Plack::Test;
 use HTTP::Request::Common;
@@ -249,6 +249,16 @@ test_psgi $app => sub {
         is $res->code, 404, 'Should get 404 response';
         like $res->content, qr/Resource not found\./,
             'The body should have the error';
+    }
+};
+
+# Test /tags/
+test_psgi $app => sub {
+    my $cb = shift;
+    for my $uri ('/tags', '/tags/') {
+        ok my $res = $cb->(GET $uri), "Fetch $uri";
+        is $res->code, 200, 'Should get 200 response';
+        like $res->content, qr{\Q<h1>Release Tags</h1>}, 'The body should look correct';
     }
 };
 

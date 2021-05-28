@@ -950,7 +950,8 @@ table code {background-color:transparent;}
   #homepage { max-width: 380px; }
   .hsearch { width: 94%}
   .hside { width: 94%; margin-left:0;}
-  #htmltagcloud { display: none;} /* XXX Move to own page */
+  #homepage #htmltagcloud { display: none;} /* XXX Move to own page */
+  #htmltagcloud span {white-space:normal;}
   #header img.right { height: 58px; right: 12px; padding-top: 62px;}
   .width90 {width: 82%;}
   #crumb {float: none !important}

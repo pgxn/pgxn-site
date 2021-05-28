@@ -45,6 +45,7 @@ our %Lexicon = (
     Identity => 'Identity',
     Extensions => 'Extensions',
     Tags => 'Tags',
+    'Release Tags' => 'Release Tags',
     Distributions => 'Distributions',
     'PGXN Search' => 'PGXN Search',
     pgxn_summary_paragraph => 'PGXN, the PostgreSQL Extension network, is a central distribution system for open-source PostgreSQL extension libraries.',

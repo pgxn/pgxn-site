@@ -55,6 +55,11 @@ sub app {
             };
         };
 
+        # /tags
+        resource qr{^/tags/?$} => sub {
+            GET { $controller->tags(shift) };
+        };
+
         # /tag/{tag}/
         resource qr{/tag/([^/]+)/?$} => sub {
             GET {

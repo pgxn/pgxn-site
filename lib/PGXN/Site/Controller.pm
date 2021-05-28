@@ -80,18 +80,23 @@ sub missing {
     $self->render('/notfound', { env => $env, code => $code_for{notfound} });
 }
 
-sub home {
-    my $self  = shift;
+sub _cloud {
+    my $self = shift;
     my $cloud = HTML::TagCloud->new(levels => 12);
     my $tags  = $self->api->get_stats('tag');
     $cloud->add($_->{tag}, "/tag/$_->{tag}/", $_->{dists})
         for grep { $_->{tag} = lc $_->{tag} } @{ $tags->{popular} };
+    return $cloud;
+}
+
+sub home {
+    my $self  = shift;
     my $dists = $self->api->get_stats('dist')->{recent};
     splice @{ $dists }, 5;
     $self->render('/home', {
         env => shift,
         vars => {
-            cloud => $cloud,
+            cloud => _cloud($self),
             dists => $dists,
         },
     });
@@ -225,6 +230,14 @@ sub users {
         api   => $self->api,
         users => $char ? $self->api->get_userlist($char) : undef,
     }});
+}
+
+sub tags {
+    my $self = shift;
+    $self->render('/tags', {
+        env  => shift,
+        vars => { cloud => _cloud($self) },
+    });
 }
 
 sub tag {
@@ -501,6 +514,12 @@ Displays the HTML for the user page.
   PGXN::Site::Controller->users($env);
 
 Displays the HTML for the users search page.
+
+=head3 C<tags>
+
+  PGXN::Site::Controller->tags($env);
+
+Displays the HTML for the tags page, including search form and tag cloud.
 
 =head3 C<tag>
 
