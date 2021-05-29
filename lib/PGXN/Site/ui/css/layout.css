@@ -240,28 +240,29 @@ input.button {
 
 blockquote {
   margin: 10px 15px;
-  padding-left: 27px;
+  padding-left: 42px;
 
   background-color: #444;
   background-image: url(/ui/img/quote.svg);
   background-size: 32px;
   background-repeat: no-repeat;
-  background-position: 5px 12px;
+  background-position: 12px;
+}
+
+blockquote.exclamation, blockquote.stop, blockquote.go {
+  padding: 4px 4px 4px 42px;
 }
 
 blockquote.exclamation {
   background-image: url(/ui/img/exclamation.svg);
-  background-size: 32px;
 }
 
 blockquote.stop {
   background-image: url(/ui/img/stop.svg);
-  background-size: 32px;
 }
 
 blockquote.go {
   background-image: url(/ui/img/go.svg);
-  background-size: 32px;
 }
 
 /**************************************************************
@@ -906,6 +907,10 @@ table code {background-color:transparent;}
 #htmltagcloud span {white-space:nowrap;}
 #htmltagcloud span a { margin:4px; padding:4px; line-height:1.1em; }
 #htmltagcloud span a:hover{background-color:#444;}
+
+#llist { padding: 0 15px;display: flex;
+  justify-content: space-between;}
+#llist li { list-style:none; display:inline;}
 
 .tagcloud0 {font-size: 100%;}
 .tagcloud0 a {color:#ffffff;}

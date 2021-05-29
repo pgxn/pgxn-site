@@ -734,9 +734,9 @@ template tags => sub {
     wrapper {
         div {
             id is 'page';
-            h1 { T 'Release Tags' };
             div {
                 class is 'gradient';
+                h1 { T 'Release Tags' };
                 show search_form => {
                     id       => 'homesearch',
                     in        => 'tags',
@@ -794,38 +794,44 @@ template users => sub {
     my ($self, $req, $args) = @_;
     my $api   = $args->{api};
     my $users = $args->{users};
-    my $title = T 'Users';
+    my $title = T 'Search Users';
     my $char  = $args->{char} || '';
 
     wrapper {
         div {
-            class is 'width10 floatLeft leftColumn';
-            ul {
-                my $uri = $req->uri->path;
-                for my $c ('a'..'z') {
-                    li {
-                        $c eq $char ? $c : a {
-                            href is "$uri?c=$c";
-                            $c;
-                        };
+            id is 'page';
+            div {
+                class is 'gradient';
+                if ($char && $users) {
+                    h1 { $title = T 'Nicknames starting with "[_1]"', $char }
+                    id is 'results';
+                    if (@{ $users }) {
+                        $args->{params} = [ c => $char ];
+                        show 'results/users' => $users;
+                    } else {
+                        h3 { T 'None found' };
+                    }
+                } else {
+                    h1 { $title };
+                    show search_form => {
+                        id => 'homesearch',
+                        in => 'users',
+                    };
+                    h3 { T 'Or select a letter' };
+                    ul {
+                        id is 'llist';
+                        my $uri = $req->uri->path;
+                        for my $c ('a'..'z') {
+                            li {
+                                a {
+                                    href is "$uri?c=$c";
+                                    $c;
+                                };
+                            };
+                        }
                     };
                 }
             };
-        };
-        div {
-            class is 'width90 floatRight gradient';
-            h1 { $title };
-            if ($users) {
-                id is 'results';
-                if (@{ $users }) {
-                    $args->{params} = [ c => $char ];
-                    show 'results/users' => $users;
-                } else {
-                    p { T 'No user nicknames found starting with "[_1]"', $char };
-                }
-            } else {
-                h3 { T '<- Select a letter' };
-            }
         };
     } $req, {
         title => _title_with $title,

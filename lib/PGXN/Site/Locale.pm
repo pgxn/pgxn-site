@@ -113,8 +113,10 @@ our %Lexicon = (
     'PGXN Meta Spec' => 'PGXN Meta Spec',
     'Bad Request' => 'Bad Request',
     'Bad request: Missing or invalid "[_1]" query parameter.' => 'Bad request: Missing or invalid “[_1]” query parameter.',
-    '<- Select a letter' => '⬅ Select a letter',
-    'Pick a letter at left' => 'Pick a letter at left',
+    'Search Users' => 'Search Users',
+    'Or select a letter' => 'Or select a letter',
+    'Nicknames starting with "[_1]"' => 'User nicknames starting with “[_1]”',
+    'None found' => 'None found',
     'No user nicknames found starting with "[_1]"' => 'No user nicknames found starting with “[_1]”',
 
     donors_intro => 'All the great folks who funded the inital development of PGXN will be listed in perpetuity here on the “Donors” page of PGXN.org. All donors are invited to the PGXN Launch Party at <a href="https://www.pgcon.org/2011/">PGCon</a> in May, 2011.',

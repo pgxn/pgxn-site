@@ -7,7 +7,7 @@ use Test::More;
 #use Test::More 'no_plan';
 eval "use PGXN::API::Searcher";
 plan skip_all => "PGXN::API::Searcher required for router testing" if $@;
-plan tests => 377;
+plan tests => 385;
 
 use Plack::Test;
 use HTTP::Request::Common;
@@ -335,7 +335,7 @@ test_psgi $app => sub {
     my $uri = '/users';
     ok my $res = $cb->(GET $uri), "Fetch $uri";
     is $res->code, 200, 'Should get 200 response';
-    like $res->content, qr{\Q<h1>Users</h1>}, 'The body should look correct';
+    like $res->content, qr{\Q<h1>Search Users</h1>}, 'The body should look correct';
 
     # Try char params with both /users and /users/.
     for my $char ('', qw(a b t)) {
@@ -343,13 +343,29 @@ test_psgi $app => sub {
             my $uri = "/users?c=$char";
             ok my $res = $cb->(GET $uri), "Fetch $uri";
             is $res->code, 200, 'Should get 200 response';
-            like $res->content, qr{\Q<h1>Users</h1>}, 'The body should look correct';
             no utf8;
-            like $res->content,
-                  $char eq 't' ? qr{\Q<a href="/user/theory">theory</a>}
-                : $char eq ''  ? qr{\Q<h3>⬅ Select a letter</h3>}
-                               : qr{<p>\QNo user nicknames found starting with “$char”</p>},
-                'And the content should look correct';
+            if ($char) {
+                like $res->content,
+                    qr{\Q<h1>User nicknames starting with “$char”</h1>},
+                    "The h1 should reference letter $char";
+                if ($char eq 't') {
+                    like $res->content, qr{\Q<a href="/user/theory">theory</a>},
+                        'There should be a user starting with t';
+                } else {
+                    like $res->content,
+                        qr{<h3>\QNone found</h3>},
+                        "Should find no nicknames starting with $char";
+                }
+                unlike $res->content, qr{\Q<form id="homesearch"},
+                    'There should be no search form';
+            } else {
+                like $res->content, qr{\Q<h1>Search Users</h1>},
+                    'The h1 should be “Search Users”';
+                like $res->content, qr{\Q<form id="homesearch"},
+                    'There should be a search form';
+                like $res->content, qr{\Q<h3>Or select a letter</h3>},
+                    'And it should prompt to select a letter';
+            }
         }
     }
 
