@@ -30,11 +30,8 @@ body {
   margin: 0;
   padding: 0;
   text-align: center;
-
   font: 400 1em "trebuchet ms", serif;
   line-height: 170%;
-
-  background: #666 url(/ui/img/header.png) repeat-x top left;
   color: #EEE;
 }
 
@@ -951,13 +948,21 @@ table code {background-color:transparent;}
   #pgxnbod table code {word-break:break-word}
 }
 
+@media (min-width:481px) {
+  body { background: #666 url(/ui/img/header.png) repeat-x top left }
+}
+
 @media (max-width: 480px) {
+  body { background: #666 url(/ui/img/header-small.png) repeat-x top left }
+  /* body {background-position: top -40px left} */
+  #header {height: 103px}
+  #header img.gear {height: 89px;}
   #homepage { max-width: 380px; }
   .hsearch { width: 94%}
   .hside { width: 94%; margin-left:0;}
-  #homepage #htmltagcloud { display: none;} /* XXX Move to own page */
+  #homepage #htmltagcloud { display: none;} 
   #htmltagcloud span {white-space:normal;}
-  #header img.right { height: 58px; right: 12px; padding-top: 62px;}
+  #header img.right { height: 58px; right: 12px; padding-top: 21px;}
   .width90 {width: 82%;}
   #crumb {float: none !important}
   #crumb + ul { display: none} /* Find a way to restore menu below crumb? */
