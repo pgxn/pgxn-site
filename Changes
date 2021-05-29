@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.22.0
+0.22.0  2021-05-29T21:32:54Z
       - Reorganized the nav and footer links. There are now fewer of them, and
         the nav links focus on content, while the footer focuses on metadata.
       - Added a "Colophon" section to the About page, including links to credit
