@@ -22,7 +22,7 @@ use Plack::Request;
 use HTTP::Message::PSGI;
 
 #plan 'no_plan';
-plan tests => 215;
+plan tests => 227;
 
 Template::Declare->init( dispatch_to => ['PGXN::Site::Templates'] );
 
@@ -44,8 +44,11 @@ my $dists = [
     { dist => 'Baz', version => '0.4.0', abstract => 'Pg Baz' },
 ];
 
-ok my $html = Template::Declare->show('home', $req, { cloud => $cloud, dists => $dists }),
-    'Call the home template';
+ok my $html = Template::Declare->show('home', $req, {
+    cloud => $cloud,
+    dists => $dists,
+    base_url => 'https://test.pgxn.org',
+}), 'Call the home template';
 
 is_well_formed_xml $html, 'The HTML should be well-formed';
 
@@ -157,7 +160,7 @@ sub test_wrapper {
 
     # Check the head element.
     $tx->ok('/html/head', 'Test head', sub {
-        $tx->is('count(./*)', 13, qq{Should have 13 elements below "head"});
+        $tx->is('count(./*)', 25, qq{Should have 25 elements below "head"});
         # Title.
         $tx->is(
             './title',
@@ -168,14 +171,26 @@ sub test_wrapper {
         # Check the meta tags.
         my $v = PGXN::Site->version_string;
         for my $spec (
-            ['viewport', 'width=device-width, initial-scale=1.0'],
-            ['keywords', 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network'],
-            ['description', 'Search all indexed extensions, distributions, users, and tags on the PostgreSQL Extension Network.'],
-            ['generator', "PGXN::Site $v"],
+            ['name', 'viewport', 'width=device-width, initial-scale=1.0'],
+            ['name', 'keywords', 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network'],
+            ['name', 'description', 'Search all indexed extensions, distributions, users, and tags on the PostgreSQL Extension Network.'],
+            ['name', 'twitter:card', 'summary'],
+            ['name', 'twitter:site', '@pgxn'],
+            ['name', 'twitter:title', 'PGXN: PostgreSQL Extension Network'],
+            ['name', 'twitter:description', 'Search all indexed extensions, distributions, users, and tags on the PostgreSQL Extension Network.'],
+            ['name', 'twitter:image', 'https://test.pgxn.org/ui/img/icon-512.png'],
+            ['name', 'twitter:image:alt', 'PGXN gear logo'],
+            ['name', 'generator', "PGXN::Site $v"],
+            ['property', 'og:type', 'website'],
+            ['property', 'og:url', 'https://test.pgxn.org/'],
+            ['property', 'og:title', 'PGXN: PostgreSQL Extension Network'],
+            ['property', 'og:site_name', 'PGXN: PostgreSQL Extension Network'],
+            ['property', 'og:description', 'Search all indexed extensions, distributions, users, and tags on the PostgreSQL Extension Network.'],
+            ['property', 'og:image', 'https://test.pgxn.org/ui/img/icon-512.png'],
         ) {
             $tx->is(
-                qq{./meta[\@name="$spec->[0]"]/\@content}, $spec->[1],
-                "Should have $spec->[0] keywords meta element",
+                qq{./meta[\@$spec->[0]="$spec->[1]"]/\@content}, $spec->[2],
+                "Should have $spec->[1] meta element",
             );
         }
 

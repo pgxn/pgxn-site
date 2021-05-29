@@ -25,11 +25,7 @@ BEGIN { create_wrapper wrapper => sub {
     my $v = PGXN::Site->version_string;
     outs_raw '<!DOCTYPE html>';
     html {
-        attr {
-            # xmlns      => 'https://www.w3.org/1999/xhtml',
-            # 'xml:lang' => 'en',
-            lang       => 'en',
-        };
+        lang is 'en';
         outs_raw( "\n", join "\n",
             '<!--',
             '____________________________________________________________',
@@ -47,15 +43,6 @@ BEGIN { create_wrapper wrapper => sub {
                 content is 'width=device-width, initial-scale=1.0';
             };
             title { $args->{title} };
-            meta {
-                name is 'keywords';
-                content is 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network';
-            };
-            meta {
-                name is 'description';
-                content is 'Search all indexed extensions, distributions, '
-                         . 'users, and tags on the PostgreSQL Extension Network.';
-            };
             for my $spec (
                 [ layout => 'screen, projection, tv' ],
                 [ print  => 'print'                  ],
@@ -100,10 +87,33 @@ BEGIN { create_wrapper wrapper => sub {
                 rel is 'manifest';
                 href is "/ui/manifest.json";
             };
-            meta {
-                name is 'generator';
-                content is "PGXN::Site $v";
-            };
+
+            # Metadata. Twitter and Facebook unfurls as described in
+            # https://medium.com/p/e64b4bb9254
+            my $desc = $args->{description} || T 'Search all indexed extensions, distributions, users, and tags on the PostgreSQL Extension Network.';
+            for my $spec (
+                [ name => 'generator', content => "PGXN::Site $v" ],
+                [ name => 'keywords', content => $args->{keywords} || 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network' ],
+                [ name => 'description', content => $desc ],
+                [ property => 'og:type', content => 'website' ],
+                [ property => 'og:url',  content => $args->{base_url} . $req->path ],
+                [ property => 'og:title', content => $args->{title} ],
+                [ property => 'og:site_name', content => T 'hometitle' ],
+                [ property => 'og:description', content => $desc ],
+                [ property => 'og:image', content => "$args->{base_url}/ui/img/icon-512.png" ],
+                [ name => 'twitter:card', content => 'summary' ],
+                [ name => 'twitter:site', content => '@pgxn' ],
+                [ name => 'twitter:title', content => $args->{title} ],
+                [ name => 'twitter:description', content => $desc ],
+                [ name => 'twitter:image', content => "$args->{base_url}/ui/img/icon-512.png" ],
+                [ name => 'twitter:image:alt', content => 'PGXN gear logo' ],
+                ( $args->{user_twitter}
+                    ? [ name => 'twitter:creator', content => '@' .$args->{user_twitter} ]
+                    : ()
+                ),
+            ) {
+                meta { attr sub { @{ $spec } } }
+            }
         }; # /head
 
         body {
@@ -239,7 +249,7 @@ template home => sub {
             div {
                 class is 'hsearch floatLeft';
                 show search_form => {
-                    id       => 'homesearch',
+                    id        => 'homesearch',
                     in        => 'doc',
                     autofocus => 1,
                 };
@@ -279,7 +289,7 @@ template home => sub {
             }; # /div.hside floatLeft gradient
 
         }; # /div#homepage
-    } $req, { title => T 'hometitle' };
+    } $req, { %{ $args }, title => T 'hometitle' };
 };
 
 sub _title_with($) {
@@ -594,7 +604,11 @@ template distribution => sub {
             }
         }; # /div#page
     } $req, {
-        title => _title_with $args->{dist_name} . ': ' . $dist->abstract,
+        %{ $args },
+        title        => _title_with $args->{dist_name} . ': ' . $dist->abstract,
+        description  => $dist->description,
+        keywords     => join(', ' => $dist->tags),
+        user_twitter => $args->{user}->twitter,
         crumb => sub {
             li { a {
                 href is '/user/' . lc $dist->user;
@@ -626,7 +640,11 @@ template document => sub {
             outs_raw $args->{body};
         }; # /div#page
     } $req, {
+        %{ $args },
         title => _title_with $title . ($info->{abstract} ? ": $info->{abstract}" : ''),
+        description  => $info->{abstract},
+        keywords     => join(', ' => $dist->tags),
+        user_twitter => $args->{user}->twitter,
         crumb => sub {
             li { a {
                 href is '/user/' . lc $dist->user;
@@ -664,14 +682,15 @@ template spec => sub {
             outs_raw $args->{body};
         }; # /div#page
     } $req, {
-        title => _title_with $title,
+        %{ $args },
+        title       => _title_with $title,
+        description => 'The PGXN distribution metadata specification',
     };
 };
 
 template user => sub {
     my ($self, $req, $args) = @_;
     my $user = $args->{user};
-    my $api  = $args->{api};
 
     wrapper {
         div {
@@ -725,7 +744,10 @@ template user => sub {
             show release_table => $req, $user->releases, $args;
         }; # /div#page
     } $req, {
-        title => _title_with $user->name . ' (' . $user->nickname . ')',
+        %{ $args },
+        title        => _title_with $user->name . ' (' . $user->nickname . ')',
+        description => T('Contact and extension release information for PGXN user "[_1]"', $user->nickname),
+        keywords    => 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network, user, ' . $user->nickname,
     };
 };
 
@@ -738,20 +760,24 @@ template tags => sub {
                 class is 'gradient';
                 h1 { T 'Release Tags' };
                 show search_form => {
-                    id       => 'homesearch',
+                    id        => 'homesearch',
                     in        => 'tags',
                     autofocus => 1,
                 };
                 outs_raw $args->{cloud}->html;
             };
         };
-    } $req, { title => T 'Tags' };
+    } $req, {
+        %{ $args },
+        title       => T('Tags'),
+        description => T('Search for tags on PostgreSQL extension releases on PGXN'),
+        keywords    => 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network, tags, search',
+    };
 };
 
 template tag => sub {
     my ($self, $req, $args) = @_;
     my $tag = $args->{tag};
-    my $api = $args->{api};
     my $title = T 'Tag: [_1]', $tag->name;
 
     wrapper {
@@ -762,7 +788,10 @@ template tag => sub {
             show release_table => $req, $tag->releases, $args;
         }; # /div#page
     } $req, {
-        title => _title_with $title,
+        %{ $args },
+        title       => _title_with $title,
+        description => T('A list of PGXN extensions tagged "[_1]"', $tag),
+        keywords    => "PostgreSQL, extensions, PGXN, PostgreSQL Extension Network, tags, $tag",
     };
 };
 
@@ -786,13 +815,15 @@ template recent => sub {
             }; # /div.gradient
         }; # div#page
     } $req, {
-        title => _title_with $title,
-    }
+        %{ $args },
+        title       => _title_with $title,
+        description => T('Recent PostgreSQL extension releases on PGXN'),
+        keywords    => 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network, distribution, release, recent',
+    };
 };
 
 template users => sub {
     my ($self, $req, $args) = @_;
-    my $api   = $args->{api};
     my $users = $args->{users};
     my $title = T 'Search Users';
     my $char  = $args->{char} || '';
@@ -834,13 +865,15 @@ template users => sub {
             };
         };
     } $req, {
-        title => _title_with $title,
+        %{ $args },
+        title       => _title_with $title,
+        description => T('Search for PostgreSQL Extension Network users'),
+        keywords    => 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network, users, search',
     };
 };
 
 template search => sub {
     my ($self, $req, $args) = @_;
-    my $api  = $args->{api};
     my $res = $args->{results};
 
     wrapper {
@@ -862,7 +895,10 @@ template search => sub {
             }; # /div.gradient
         }; # div#page
     } $req, {
-        title => $args->{results}{query} . ' / ' . T('PGXN Search'),
+        %{ $args },
+        title       => $args->{results}{query} . ' / ' . T('PGXN Search'),
+        description => T('PGXN [_1] search results for "[_2]"', $args->{in}, $args->{results}{query}),
+        keywords    => 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network, search',
         crumb => sub {
             li {
                 class is 'notmenu';
@@ -1061,7 +1097,10 @@ template feedback => sub {
             };
         };
     } $req, {
-        title => _title_with T 'Feedback',
+        %{ $args },
+        title       => _title_with T 'Feedback',
+        description => T('Submit feedback to PGXN or join the mail list'),
+        keywords    => 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network, contact, email, questions, community',
     };
 };
 
@@ -1079,7 +1118,10 @@ template about => sub {
             };
         };
     } $req, {
-        title => _title_with T 'About PGXN',
+        %{ $args },
+        title       => _title_with T 'About PGXN',
+        description => T('Background on PGXN'),
+        keywords    => 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network, metadata, about, manager, api, client, search',
     };
 };
 
@@ -1218,7 +1260,10 @@ template donors => sub {
             };
         };
     } $req, {
-        title => _title_with $title,
+        %{ $args },
+        title       => _title_with $title,
+        description => T('donor description'),
+        keywords    => 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network, donors, support, funding thanks',
     };
 };
 
@@ -1233,7 +1278,10 @@ template art => sub {
             };
         };
     } $req, {
-        title => _title_with 'Identity',
+        %{ $args },
+        title       => _title_with 'Identity',
+        description => T('identity description'),
+        keywords    => 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network, identity, logo, gear, type, download, asset',
     };
 };
 
@@ -1248,7 +1296,10 @@ template faq => sub {
             };
         };
     } $req, {
-        title => _title_with 'FAQ',
+        %{ $args },
+        title       => _title_with 'FAQ',
+        description => T('faq description'),
+        keywords    => 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network, faq, questions, answers, releasing, registring, client, conttributing',
     };
 };
 
@@ -1263,7 +1314,10 @@ template mirroring => sub {
             };
         };
     } $req, {
-        title => _title_with T 'Mirroring PGXN',
+        %{ $args },
+        title       => _title_with T('Mirroring PGXN'),
+        description => T('mirroring description'),
+        keywords    => 'PostgreSQL, extensions, PGXN, PostgreSQL Extension Network, mirror, rsync',
     };
 };
 
@@ -1282,6 +1336,7 @@ my $err = sub {
             };
         };
     } $req, {
+        %{ $args },
         title => _title_with T $args->{title},
     };
 };
@@ -1289,6 +1344,7 @@ my $err = sub {
 template notfound => sub {
     my ($self, $req, $args) = @_;
     $err->($req => {
+        %{ $args },
         class   => 'exclamation',
         title   => T('Not Found'),
         message => T('Resource not found.'),
@@ -1298,6 +1354,7 @@ template notfound => sub {
 template badrequest => sub {
     my ($self, $req, $args) = @_;
     $err->($req => {
+        %{ $args },
         class   => 'stop',
         title   => T('Bad Request'),
         message => T(
@@ -1310,6 +1367,7 @@ template badrequest => sub {
 template servererror => sub {
     my ($self, $req, $args) = @_;
     $err->($req => {
+        %{ $args },
         class   => 'stop',
         title   => T('Internal Server Error'),
         message => T('Internal server error.'),

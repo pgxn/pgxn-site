@@ -15,6 +15,8 @@ Revision history for Perl extension PGXN::Site
       - Opened up the spacing in block quotes so that the icon doesn't crowd
         the text. Applies to error, warning, and success blocks, too.
       - Knocked 40px off the height of the header on mobile devices.
+      - Added OpenGraph/Twitter unfurl support to all pages. Should make
+        excerpts look nicer for links posted on social media.
 
 0.21.0  2021-05-28T02:07:56Z
       - Added required --base-url option. Required for absolute URLs, such as

@@ -117,8 +117,20 @@ our %Lexicon = (
     'Or select a letter' => 'Or select a letter',
     'Nicknames starting with "[_1]"' => 'User nicknames starting with “[_1]”',
     'None found' => 'None found',
+    'Search all indexed extensions, distributions, users, and tags on the PostgreSQL Extension Network.' => 'Search all indexed extensions, distributions, users, and tags on the PostgreSQL Extension Network.',
     'No user nicknames found starting with "[_1]"' => 'No user nicknames found starting with “[_1]”',
-
+    'Contact and extension release information for PGXN user "[_1]"' => 'Contact and extension release information for PGXN user “[_1]”',
+    'Search for tags on PostgreSQL extension releases on PGXN' => 'Search for tags on PostgreSQL extension releases on PGXN',
+    'Search for PostgreSQL Extension Network users' => 'Search for PostgreSQL Extension Network users',
+    'A list of PGXN extensions tagged "[_1]"' => 'A list of PGXN extensions tagged “[_1]”',
+    'PGXN [_1] search results for "[_2]"' => 'PGXN [_1] search results for “[_2]”',
+    'Submit feedback to PGXN or join the mail list' => 'Submit feedback to PGXN or join the mail list',
+    'Background on PGXN' => 'All about PGXN, what it’s for, what it contains, who made it, and why',
+    'donor description' => 'Many thanks to these fine organizations and people who contributed support to make the develpoment of PGXN possible',
+    'identity description' => 'All about the PGXN identity: who created it, its license, and downloadable assets',
+    'faq description' => 'Frequently asked questions about the PostgreSQL Extension Network',
+    'mirroring description' => 'Step-by-step instructions for mirroring PGXN on your own server',
+    'Recent PostgreSQL extension releases on PGXN' => 'Recent PostgreSQL extension releases on PGXN',
     donors_intro => 'All the great folks who funded the inital development of PGXN will be listed in perpetuity here on the “Donors” page of PGXN.org. All donors are invited to the PGXN Launch Party at <a href="https://www.pgcon.org/2011/">PGCon</a> in May, 2011.',
 );
 

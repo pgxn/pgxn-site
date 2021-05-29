@@ -5,7 +5,6 @@ use utf8;
 #use aliased 'PGXN::Site::Request';
 use Plack::Request;
 use Plack::Response;
-use PGXN::Site::Locale;
 use PGXN::Site::Templates;
 use HTML::TagCloud;
 use Encode;
@@ -61,6 +60,7 @@ sub render {
     my ($self, $template, $p) = @_;
     my $req = $p->{req} ||= Plack::Request->new($p->{env});
     my $res = $req->new_response($p->{code} || 200);
+    $p->{vars}{base_url} = $self->base_url;
     my $body = encode_utf8 +Template::Declare->show($template, $p->{req}, $p->{vars});
     $res->body($body);
     $res->content_length(length $body);
@@ -166,6 +166,7 @@ sub distribution {
         dist      => $dist,
         api_url   => $self->api_url,
         dist_name => $dist->{name} . ($version ? " $version" : ''),
+        user      => $self->api->get_user($dist->user),
     }});
 }
 
@@ -185,6 +186,7 @@ sub document {
         body      => $doc,
         dist_uri  => $dist_uri,
         dist_name => $dist_name,
+        user      => $self->api->get_user($dist->user),
     }});
 }
 
@@ -193,10 +195,9 @@ sub user {
     my $user = $self->api->get_user($nick) or return $self->missing($env);
 
     $self->render('/user', { env => $env, vars => {
-        user     => $user,
-        api      => $self->api,
-        api_url  => $self->api_url,
-        base_url => $self->base_url,
+        user    => $user,
+        api     => $self->api,
+        api_url => $self->api_url,
     }});
 }
 
