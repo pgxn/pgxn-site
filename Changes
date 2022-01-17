@@ -1,5 +1,7 @@
 Revision history for Perl extension PGXN::Site
 
+0.22.2
+
 0.22.1  2022-01-17T18:52:06Z
       - Updated the "Recent Releases" box on the home page to filter out=
         duplicate distributions, so as to avoid redundancy. 
