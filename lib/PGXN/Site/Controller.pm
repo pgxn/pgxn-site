@@ -91,13 +91,11 @@ sub _cloud {
 
 sub home {
     my $self  = shift;
-    my $dists = $self->api->get_stats('dist')->{recent};
-    splice @{ $dists }, 5;
     $self->render('/home', {
         env => shift,
         vars => {
             cloud => _cloud($self),
-            dists => $dists,
+            dists => $self->api->get_stats('dist')->{recent},
         },
     });
 }
