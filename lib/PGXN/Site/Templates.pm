@@ -87,6 +87,11 @@ BEGIN { create_wrapper wrapper => sub {
                 rel is 'manifest';
                 href is "/ui/manifest.json";
             };
+            # Mastadon IT ME
+            link {
+                rel is 'me';
+                href is 'https://botsin.space/@pgxn';
+            };
 
             # Metadata. Twitter and Facebook unfurls as described in
             # https://medium.com/p/e64b4bb9254
@@ -197,9 +202,10 @@ BEGIN { create_wrapper wrapper => sub {
                         };
                         span { class is 'grey'; '|' };
                         a {
-                            href is 'https://twitter.com/pgxn/';
-                            title is T 'Follow PGXN on Twitter';
-                            T 'Twitter';
+                            rel is 'me';
+                            href is 'https://botsin.space/@pgxn';
+                            title is T 'Follow PGXN on Mastodon';
+                            T 'Mastodon';
                         };
                         span { class is 'grey'; '|' };
                         a {
