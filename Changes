@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.22.2  2023-02-18T23:22:42Z
+0.22.2  2023-02-18T23:25:58Z
       - Replaced Twitter link with Mastodon and added a rel link to Mastodon
         to the header.
 
