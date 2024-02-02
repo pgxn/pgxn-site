@@ -1161,16 +1161,10 @@ template donors => sub {
                         h2 { T 'Sponsors' };
                         ul {
                             li { 'Richard Broersma' };
-                            li {a{
-                                href is 'https://tigerlead.com/';
-                                'TigerLead';
-                            }};
+                            li { 'TigerLead' };
                             li { 'Thom Brown' };
                             li { 'Hitoshi Harada' };
-                            li {a{
-                                href is 'https://www.25th-floor.com/';
-                                '25th-floor - de Pretis & Helmberger KG';
-                            }};
+                            li { '25th-floor - de Pretis & Helmberger KG' };
                         };
                     };
 
@@ -1178,13 +1172,10 @@ template donors => sub {
                         class is 'width50 floatRight';
                         h2 { T 'Advocates' };
                         ul {
-                            li {a{
-                                href is 'https://www.hubbellgrp.com/';
-                                'Hubbell Group Inc.';
-                            }};
+                            li { 'Hubbell Group Inc.' };
                             li { 'John S. Gage' };
                             li {a{
-                                href is 'https://www.2ndquadrant.us/';
+                                href is 'https://www.crunchydata.com/blog/author/greg-smith';
                                 'Greg Smith';
                             }};
                             li {a{
@@ -1196,7 +1187,7 @@ template donors => sub {
                                 'depesz';
                             }};
                             li {a{
-                                href is 'https://jim.nasby.net/';
+                                href is 'https://www.linkedin.com/in/decibel';
                                 'Jim Nasby';
                             }};
                             li {a{
@@ -1219,17 +1210,14 @@ template donors => sub {
                                 'David Golden';
                             }};
                             li {a{
-                                href is 'https://thoughts.j-davis.com/';
+                                href is 'http://thoughts.davisjeff.com/';
                                 'Jeff Davis';
                             }};
                             li {a{
                                 href is 'https://www.estately.com/';
                                 'Estately';
                             }};
-                            li {a{
-                                href is 'https://www.full-table-scan.com/';
-                                'Chris Spotts';
-                            }};
+                            li { 'Chris Spotts' };
                         };
                     };
 
@@ -1238,30 +1226,18 @@ template donors => sub {
 
                         h2 { T 'Boosters' };
                         ul {
+                            li {'Kineticode, Inc.' };
+                            li {'CxNet (Chile)' };
                             li {a{
-                                href is 'https://www.kineticode.com/';
-                                'Kineticode, Inc.';
-                            }};
-                            li {a{
-                                href is 'https://www.cxnet.cl/';
-                                'CxNet (Chile)';
-                            }};
-                            li {a{
-                                href is 'https://www.schemaverse.com/';
+                                href is 'https://github.com/Abstrct/Schemaverse';
                                 'Schemaverse';
                             }};
                             li {a{
                                 href is 'https://github.com/fabiotr/';
                                 'Fábio Telles Rodriguez';
                             }};
-                            li {a{
-                                href is 'https://www.nextbio.com/b/search/author/Wenjian%20Yang';
-                                'Wenjian Yang';
-                            }};
-                            li {a{
-                                href is 'https://pgdba.net/blog/';
-                                'Michael Nacos';
-                            }};
+                            li { 'Wenjian Yang' };
+                            li { 'Michael Nacos' };
                             li { 'August Zajonc' };
                         };
                     };
@@ -1519,7 +1495,7 @@ template founders => sub {
             };
         };
         a {
-            href is 'https://www.dalibo.org/en/';
+            href is 'https://www.dalibo.org/';
             title is 'Dalibo';
             img {
                 src is '/ui/img/dalibo.png';
@@ -1533,15 +1509,12 @@ template patrons => sub {
     div {
         id is 'patrons';
         h3 {
-            a {
-                href is 'https://www.enovafinancial.com/';
+            img {
+                src is '/ui/img/enova.png';
+                alt is 'e';
                 title is 'Enova Financial';
-                img {
-                    src is '/ui/img/enova.png';
-                    alt is 'e';
-                };
-                outs ' Enova Financial';
             };
+            outs ' Enova Financial';
         };
     };
 };
