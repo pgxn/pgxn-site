@@ -2,6 +2,11 @@ Revision history for Perl extension PGXN::Site
 
 0.22.3
       - Updated the donor links, removing or replacing dead URLs.
+      - Changed the default search index from "Documentation" to "Distributions".
+        Few releases include documentation other than a README, which pgxn-api
+        indexes in the distributions index and not the documentation index. So
+        make distribution search the default to improve the default search
+        experience.
 
 0.22.2  2023-02-18T23:25:58Z
       - Replaced Twitter link with Mastodon and added a rel link to Mastodon

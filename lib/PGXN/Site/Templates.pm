@@ -1383,9 +1383,9 @@ template search_form => sub {
                 name is 'in';
                 my $in = $args->{in};
                 for my $spec (
+                    [ dists      => 'Distributions' ],
                     [ docs       => 'Documentation' ],
                     [ extensions => 'Extensions'    ],
-                    [ dists      => 'Distributions' ],
                     [ users      => 'Users'         ],
                     [ tags       => 'Tags'          ]
                 ) {

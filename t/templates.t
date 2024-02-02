@@ -479,9 +479,9 @@ sub test_search_form {
 
                 my $i = 0;
                 for my $spec (
+                    [ dists      => 'Distributions' ],
                     [ docs       => 'Documentation' ],
                     [ extensions => 'Extensions'    ],
-                    [ dists      => 'Distributions' ],
                     [ users      => 'Users'         ],
                     [ tags       => 'Tags'          ],
                 ) {
