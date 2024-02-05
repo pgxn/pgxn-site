@@ -6,19 +6,16 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        perl: [ '5.36', '5.34', '5.32', '5.30', '5.28', '5.26', '5.24', '5.22', '5.20', '5.18', '5.16', '5.14' ]
+        os: [ubuntu, macos]
+        perl: [ '5.38', '5.36', '5.34', '5.32', '5.30', '5.28', '5.26', '5.24', '5.22', '5.20', '5.18', '5.16', '5.14' ]
     name: 🐪 Perl ${{ matrix.perl }} on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup perl
+      - name: Setup Perl ${{ matrix.perl }}
         uses: shogo82148/actions-setup-perl@v1
-        with:
-          perl-version: ${{ matrix.perl }}
-      - run: perl -V
-      - run: |-
-          cpanm -qn Module::Build Software::License
-          perl Build.PL
-          PERL_MM_USE_DEFAULT=1 ./Build installdeps --cpan_client 'cpanm -qn'
-          ./Build test
+        with: { perl-version: "${{ matrix.perl }}" }
+      - name: Install Dependencies
+        run: cpanm -vn Module::Build && cpanm -vn --installdeps --with-recommends .
+      - name: Run Tests
+        run: perl Build.PL ./Build && ./Build test

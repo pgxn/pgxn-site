@@ -14,7 +14,7 @@ use File::Basename qw(basename);
 use SemVer;
 use Gravatar::URL;
 #use namespace::autoclean; # Do not use; breaks sort {}
-our $VERSION = v0.22.2;
+our $VERSION = v0.23.0;
 
 my $l = PGXN::Site::Locale->get_handle('en');
 sub T { $l->maketext(@_) }
@@ -209,9 +209,9 @@ BEGIN { create_wrapper wrapper => sub {
                         };
                         span { class is 'grey'; '|' };
                         a {
-                            href is 'https://manager.pgxn.org/';
-                            title is T 'Release it on PGXN';
-                            T 'Release It';
+                            href is 'https://manager.pgxn.org/howto';
+                            title is T 'How to release extensions on PGXN';
+                            T 'Release on PGXN';
                         };
                     };
                     span {
@@ -1687,7 +1687,7 @@ David E. Wheeler <david@justatheory.com>
 
 =head1 Copyright and License
 
-Copyright (c) 2010-2021 David E. Wheeler.
+Copyright (c) 2010-2024 David E. Wheeler.
 
 This module is free software; you can redistribute it and/or modify it under
 the L<PostgreSQL License|https://www.opensource.org/licenses/postgresql>.

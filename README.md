@@ -31,7 +31,7 @@ extensions that do exist. I’d like to solve that problem. Care to help?
 Copyright and License
 ---------------------
 
-Copyright (c) 2010-2021 David E. Wheeler.
+Copyright (c) 2010-2024 David E. Wheeler.
 
 This module is free software; you can redistribute it and/or modify it under the
 [PostgreSQL License].

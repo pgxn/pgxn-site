@@ -2,7 +2,7 @@ package PGXN::Site;
 
 use 5.10.0;
 use utf8;
-our $VERSION = v0.22.2;
+our $VERSION = v0.23.0;
 
 sub version_string {
     sprintf 'v%vd', $VERSION;
@@ -90,7 +90,7 @@ David E. Wheeler <david@justatheory.com>
 
 =head1 Copyright and License
 
-Copyright (c) 2010-2021 David E. Wheeler.
+Copyright (c) 2010-2024 David E. Wheeler.
 
 This module is free software; you can redistribute it and/or modify it under
 the L<PostgreSQL License|https://www.opensource.org/licenses/postgresql>.

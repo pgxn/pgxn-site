@@ -1,12 +1,16 @@
 Revision history for Perl extension PGXN::Site
 
-0.22.3
-      - Updated the donor links, removing or replacing dead URLs.
+0.23.0
+      - Updated links in the static pages, removing or replacing dead URLs.
       - Changed the default search index from "Documentation" to "Distributions".
         Few releases include documentation other than a README, which pgxn-api
         indexes in the distributions index and not the documentation index. So
         make distribution search the default to improve the default search
         experience.
+      - Updated the build metadata to comply with CPAN Meta spec v2.
+      - Changed the "Release It!" link in the footer to "Release on PGXN" to
+        make its intent clearer.
+      - Added a Python one-liner to serve a mirror to `mirroring.mmd`.
 
 0.22.2  2023-02-18T23:25:58Z
       - Replaced Twitter link with Mastodon and added a rel link to Mastodon
