@@ -1,5 +1,7 @@
 Revision history for Perl extension PGXN::Site
 
+0.23.1
+
 0.23.0  2024-02-05T20:26:43Z
       - Updated links in the static pages, removing or replacing dead URLs.
       - Changed the default search index from "Documentation" to "Distributions".
