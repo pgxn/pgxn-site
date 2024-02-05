@@ -2,6 +2,8 @@ package PGXN::Site::Router;
 
 use 5.10.0;
 use utf8;
+use strict;
+use warnings;
 use PGXN::Site::Controller;
 use Router::Resource;
 use Plack::Builder;

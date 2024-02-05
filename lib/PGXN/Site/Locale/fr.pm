@@ -2,6 +2,8 @@ package PGXN::Site::Locale::fr;
 
 use 5.10.0;
 use utf8;
+use strict;
+use warnings;
 use parent 'PGXN::Site::Locale';
 our $VERSION = v0.23.1;
 

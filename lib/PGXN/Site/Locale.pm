@@ -2,6 +2,8 @@ package PGXN::Site::Locale;
 
 use 5.10.0;
 use utf8;
+use strict;
+use warnings;
 use parent 'Locale::Maketext';
 use I18N::LangTags::Detect;
 use File::Spec;

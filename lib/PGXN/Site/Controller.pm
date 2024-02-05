@@ -2,6 +2,8 @@ package PGXN::Site::Controller;
 
 use 5.10.0;
 use utf8;
+use strict;
+use warnings;
 #use aliased 'PGXN::Site::Request';
 use Plack::Request;
 use Plack::Response;

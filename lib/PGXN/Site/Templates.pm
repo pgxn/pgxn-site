@@ -2,6 +2,8 @@ package PGXN::Site::Templates;
 
 use 5.10.0;
 use utf8;
+use strict;
+use warnings;
 use parent 'Template::Declare';
 use PGXN::Site;
 use PGXN::Site::Locale;
@@ -281,7 +283,7 @@ template home => sub {
                                 join ' ', @vals
                             } };
                             dd { $dist->{abstract} };
-                            last if ++$i == 5;
+                            last if ++$count == 5;
                         };
                     };
                     h6 {

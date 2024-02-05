@@ -2,6 +2,8 @@ package PGXN::Site;
 
 use 5.10.0;
 use utf8;
+use strict;
+use warnings;
 our $VERSION = v0.23.1;
 
 sub version_string {

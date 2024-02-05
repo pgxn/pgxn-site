@@ -1,6 +1,8 @@
 Revision history for Perl extension PGXN::Site
 
 0.23.1
+      - Restored the limit on the list of recent release on the home page to five.
+        Was inadvertently removed in v0.22.1.
 
 0.23.0  2024-02-05T20:26:43Z
       - Updated links in the static pages, removing or replacing dead URLs.
@@ -19,7 +21,7 @@ Revision history for Perl extension PGXN::Site
         to the header.
 
 0.22.1  2022-01-17T18:52:06Z
-      - Updated the "Recent Releases" box on the home page to filter out=
+      - Updated the "Recent Releases" box on the home page to filter out
         duplicate distributions, so as to avoid redundancy.
 
 0.22.0  2021-05-29T21:32:54Z
