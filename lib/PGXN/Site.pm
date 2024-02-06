@@ -86,6 +86,15 @@ The PGXN::Site class itself consists of a single class method.
 
 Returns a string representation of the PGXN::Site version.
 
+=head1 Support
+
+This module is stored in an open
+L<GitHub repository|https://github.com/pgxn/pgxn-site/>. Feel free to
+fork and contribute!
+
+Please file bug reports via
+L<GitHub Issues|https://github.com/pgxn/pgxn-site/issues/>.
+
 =head1 Author
 
 David E. Wheeler <david@justatheory.com>

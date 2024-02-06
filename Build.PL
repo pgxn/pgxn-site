@@ -79,7 +79,7 @@ my $build = $class->new(
         'List::Util'                   => '1.20',
         'List::MoreUtils'              => '0.28',
         'namespace::autoclean'         => '0.11',
-        'perl'                         => 5.014,
+        'perl'                         => '5.14.0',
         'Plack'                        => '0.9956',
         'Plack::App::File'             => 0,
         'Plack::Builder'               => 0,
@@ -92,6 +92,14 @@ my $build = $class->new(
         'Template::Declare::Tags'      => '0.43',
         'WWW::PGXN'                    => '0.12.0',
     },
+    test_requires => {
+        'HTTP::Message::PSGI'   => 0,
+        'HTTP::Request::Common' => '5.824',
+        'Plack::Test'          => 0,
+        'Test::File::Contents' => '0.20',
+        'Test::More'           => '0.70',
+        'Test::MockModule'     => '0.05',
+    },
     meta_merge => {
         'meta-spec' => { version => 2 },
         resources => {
@@ -101,14 +109,6 @@ my $build = $class->new(
         },
         prereqs => {
             test => {
-                requires => {
-                    'HTTP::Message::PSGI'   => 0,
-                    'HTTP::Request::Common' => '5.824',
-                    'Plack::Test'          => 0,
-                    'Test::File::Contents' => '0.20',
-                    'Test::More'           => '0.70',
-                    'Test::MockModule'     => '0.05',
-                },
                 recommends => {
                     'Test::Pod'             => '1.41',
                     'Test::Pod::Coverage'   => '1.06',

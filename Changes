@@ -1,6 +1,11 @@
 Revision history for Perl extension PGXN::Site
 
-0.23.4
+0.23.4  2024-02-06T23:47:18Z
+      - Fixed the dependency configuration in `Build.PL` so it actually knows
+        to install modules required for testing. Thanks to Slaven Rezic for the
+        report!
+      - Added a link to the GitHub repo and issues to the docs and README.
+      - Updated some wayward http URLs to https.
 
 0.23.3  2024-02-06T20:20:13Z
       - Fixed 404 "Not Found" errors for documentation with uppercase characters
