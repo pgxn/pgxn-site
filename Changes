@@ -1,6 +1,10 @@
 Revision history for Perl extension PGXN::Site
 
-0.23.3
+0.23.3  2024-02-06T20:20:13Z
+      - Fixed 404 "Not Found" errors for documentation with uppercase characters
+        in the file name, such as `/dist/vectorize/vector-serve/README.html`,
+        and fixes another letter casing issue for links to between stable,
+        testing, and unstable states on the distribution page.
 
 0.23.2  2024-02-05T21:28:11Z
       - Restored the limit on the list of recent release on the home page to five.

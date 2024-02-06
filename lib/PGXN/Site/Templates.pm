@@ -377,7 +377,7 @@ template distribution => sub {
                                     my $datetime = $dist->date_for(lc $status);
                                     (my $date = $datetime) =~ s{T.+}{};
                                     a {
-                                        href is '/dist/' . $dist->name . lc "/$stat_version/";
+                                        href is '/dist/' . lc $dist->name . "/$stat_version/";
                                         outs $dist->name . " $stat_version — ";
                                         outs_raw qq{<time datetime="$datetime">$date</time>};
                                     }
@@ -393,7 +393,7 @@ template distribution => sub {
                                 for my $rel (@rels) {
                                     # Include release status in the option name?
                                     option {
-                                        value is '/dist/' . lc $dist->name . lc "/$rel->{version}/";
+                                        value is '/dist/' . lc $dist->name . "/$rel->{version}/";
                                         selected is 'selected' if $rel->{version} eq $version;
                                         (my $date = $rel->{date}) =~ s{T.+}{};
                                         "$rel->{version} — $date";
@@ -989,7 +989,7 @@ sub _detailed_results {
             h2 {
                 if ($hit->{docpath}) {
                     a {
-                        href is '/dist/' . lc $hit->{dist} . "/$hit->{docpath}.html";
+                        href is "/dist/\L$hit->{dist}\E/$hit->{docpath}.html";
                         $hit->{$label}
                     };
                 } else {
