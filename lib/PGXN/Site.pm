@@ -4,7 +4,7 @@ use 5.10.0;
 use utf8;
 use strict;
 use warnings;
-our $VERSION = v0.23.3;
+our $VERSION = v0.23.4;
 
 sub version_string {
     sprintf 'v%vd', $VERSION;
