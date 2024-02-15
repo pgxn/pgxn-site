@@ -468,6 +468,7 @@ img.floatLeft {
 /* Override the margin from html.css. */
 #pgxntoc ul {
   margin: 0;
+  padding-left: 18px;
 }
 
 #pgxntoc h3 {
