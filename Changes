@@ -1,6 +1,8 @@
 Revision history for Perl extension PGXN::Site
 
 0.23.5
+      - Restored the README to releases where the README is also listed as
+        extension documentation (#17).
 
 0.23.4  2024-02-06T23:47:18Z
       - Fixed the dependency configuration in `Build.PL` so it actually knows

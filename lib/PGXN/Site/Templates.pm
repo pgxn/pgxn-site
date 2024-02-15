@@ -560,7 +560,8 @@ template distribution => sub {
                         my $path = $info->{docpath};
                         dt {
                             if ($path) {
-                                delete $docs->{$path};
+                                # Exclude from doc list except for root readme.
+                                delete $docs->{$path} unless $path eq 'README';
                                 a {
                                     href is $req->uri->path . "$sep$path.html";
                                     span { class is 'fn';       $ext             };
