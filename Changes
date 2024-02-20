@@ -6,6 +6,8 @@ Revision history for Perl extension PGXN::Site
      - Fixed broken SVG images. Turns out browsers don't know that
        `https://www.w3.org/2000/svg` is valid. Reverting them to
        `http://www.w3.org/2000/svg` fixes the issue.
+     - Regenerated all the logo images. Most are a bit smaller now, and
+       some superfluous data was removed from a few others.
 
 0.23.5  2024-02-15T19:56:46Z
       - Restored the README to releases where the README is also listed as
