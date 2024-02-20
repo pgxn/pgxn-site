@@ -1,6 +1,7 @@
 Revision history for Perl extension PGXN::Site
 
-0.23.6
+0.23.7
+      - Removed duplicate CC license image and link on the /art page.
 
 0.23.6 2024-02-20T20:56:52Z
       - Tweaked the indentation of list items in the documentation "Contents"
