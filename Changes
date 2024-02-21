@@ -2,6 +2,11 @@ Revision history for Perl extension PGXN::Site
 
 0.23.7
       - Removed duplicate CC license image and link on the /art page.
+      - Moved the generation of HTML from Multimarkdown files from build
+        time to release time, and switched from Text::Multimarkdown to
+        the `multimarkdown` CLI.
+      - Tweaked the CSS for definition lists to open up space a bit more
+        between terms and definitions.
 
 0.23.6 2024-02-20T20:56:52Z
       - Tweaked the indentation of list items in the documentation "Contents"
