@@ -1,6 +1,7 @@
 Revision history for Perl extension PGXN::Site
 
 0.23.8
+      - Fixed formatting of the image and first paragraph of the /art page.
 
 0.23.7  2024-02-22T20:50:06Z
       - Removed duplicate CC license image and link on the /art page.
