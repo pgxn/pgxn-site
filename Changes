@@ -1,6 +1,6 @@
 Revision history for Perl extension PGXN::Site
 
-0.23.7
+0.23.7  2024-02-22T20:50:06Z
       - Removed duplicate CC license image and link on the /art page.
       - Moved the generation of HTML from Multimarkdown files from build
         time to release time, and switched from Text::Multimarkdown to
