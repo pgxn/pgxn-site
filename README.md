@@ -39,7 +39,7 @@ Please file bug reports via [GitHub Issues].
 Copyright and License
 ---------------------
 
-Copyright (c) 2010-2024 David E. Wheeler.
+Copyright (c) 2010-2026 David E. Wheeler.
 
 This module is free software; you can redistribute it and/or modify it under the
 [PostgreSQL License].
